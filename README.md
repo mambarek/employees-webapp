@@ -62,6 +62,7 @@ ein npm Baerer Token realm under Realms
 
 ## Publish th API to nmp
 Go to ./build/openapi
+
 #### Authentication and npm Registry
 in package.json add the npm registry to publish to
 >  "publishConfig": {
@@ -72,9 +73,26 @@ Add new authentication to npm registry file .npmrc with following content
 >registry=http://localhost:8081/repository/npm-group/
  YWRtaW46YWRtaW4xMjM0
 
-Publish the API Library to npm registry
- 
->npm publish
+### Building
+
+To install the required dependencies and to build the typescript sources run:
+```
+npm install
+npm run build
+```
+
+### publishing
+
+First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
+
+### consuming
+
+Navigate to the folder of your consuming project and run one of next commands.
+
+_published:_
+
+
+npm install @angular-it2go/project-management-api@1.0.0-SNAPSHOT.202008211012 --save
 
 
 ## Install the generated API
@@ -87,3 +105,7 @@ Now you can import and use the stubs in your Application
 ## It works but this not practical 
 It's ok now the API Library is in npm registry and it s available for all developer so 
 anyone can now use it with npm install or add it to dependencies in package.json
+
+## Consume the API
+The Generated API containing every thing you need. the files contains Service Classes 
+so you don't have to implement them manually 
