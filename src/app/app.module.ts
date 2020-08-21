@@ -12,6 +12,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EditCarComponent } from './cars/edit-car/edit-car.component';
 import { CarListComponent } from './cars/car-list/car-list.component';
+import {FormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import { ApiModule as ProjectsApiModule } from '@angular-it2go/project-management-api';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { CarListComponent } from './cars/car-list/car-list.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ProjectsApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
