@@ -1,0 +1,79 @@
+<!-- HEADER -->
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          {{project.name}} ({{project.status}})</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a routerLink="/projects" class="btn btn-light btn-block">
+          <i class="fas fa-arrow-left"></i> Back To Projects
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="#" class="btn btn-success btn-block" (click)="submitForm($event)">
+          <i class="fas fa-check"></i> Save Changes
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="/projects" class="btn btn-danger btn-block">
+          <i class="fas fa-trash"></i> Delete Project
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Edit Project</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="saveProject()" #projectForm="ngForm">
+              <div class="form-group">
+                <label for="project-name">Name</label>
+                <input id="project-name" type="text" class="form-control" [(ngModel)]="project.name"
+                       name="project-name">
+              </div>
+              <div class="form-group">
+                <label for="status">Status</label>
+                <select class="form-control" id="status" [(ngModel)]="project.status" name="status">
+                  <option *ngFor="let status of projectStatusList"
+                          [ngValue]="status.key">{{status.value}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="image">Upload Image</label>
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" id="image">
+                  <label for="image" class="custom-file-label">Choose File</label>
+                </div>
+                <small class="form-text text-muted">Max Size 3mb</small>
+              </div>
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" class="form-control"
+                          [(ngModel)]="project.description"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

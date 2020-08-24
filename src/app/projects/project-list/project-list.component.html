@@ -39,53 +39,28 @@
             <thead class="thead-dark">
             <tr>
               <th>#</th>
-              <th>Title</th>
-              <th>Date</th>
+              <th>Name</th>
+              <th>Budget</th>
+              <th>Pl. start Date</th>
+              <th>Pl. finish Date</th>
+              <th>Status</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>1</td>
-              <td>Web Development</td>
-              <td>May 10 2018</td>
+            <tr *ngFor="let project of projects; index as i">
+              <td>{{i}}</td>
+              <td>{{project.name}}</td>
+              <td>{{project.budget | currency:'EUR':'symbol':'1.2':'en-us'}}</td>
+              <td>{{project.planedStartDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{project.planedFinishDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{project.status}}</td>
               <td>
-                <a href="details.html" class="btn btn-secondary">
+                <a routerLink="details/{{project.publicId}}" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
             </tr>
-            <tr>
-              <td>2</td>
-              <td>Tech Gadgets</td>
-              <td>May 11 2018</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Business</td>
-              <td>May 13 2018</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Health & Wellness</td>
-              <td>May 15 2018</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-
             </tbody>
           </table>
 
