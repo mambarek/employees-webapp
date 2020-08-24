@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ProjectControllerService} from '@angular-it2go/project-management-api';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  projectsCount = 0;
 
-  ngOnInit(): void {
+  constructor(private projectControllerService: ProjectControllerService) {
   }
 
+  ngOnInit(): void {
+    this.initView();
+  }
+
+  initView(): void {
+    this.projectControllerService.getProjectsCount().subscribe(result => this.projectsCount = result,
+      error => console.error(error));
+  }
 }
