@@ -108,4 +108,13 @@ anyone can now use it with npm install or add it to dependencies in package.json
 
 ## Consume the API
 The Generated API containing every thing you need. the files contains Service Classes 
-so you don't have to implement them manually 
+so you don't have to implement them manually.
+
+## Caching search list when gos to details view
+Caching Components in Angluar is complex and there is no standard strategy
+So after trying some ideas from the internet it works but there are a lost of bugs 
+because of object references. The idea is to build a cache service, tha provides a cache for
+components data. Routing is then programmatically. we should save the data to cache service
+before changing the route. When initialize the parent route we should read the data from cache then 
+clean the cache data to be reinitialized from calling routing method.    
+  

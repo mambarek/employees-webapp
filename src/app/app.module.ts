@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ApiModule as ProjectsApiModule} from '@angular-it2go/project-management-api';
 import {ErrorComponent} from './error/error.component';
+import {RouteReuseStrategy} from '@angular/router';
 
 @NgModule({
   declarations: [
