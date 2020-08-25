@@ -31,17 +31,19 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <a href="#" class="btn btn-success btn-block" data-toggle="modal" data-target="#addPostModal">
+        <a href="" class="btn btn-success btn-block"
+           (click)="$event.preventDefault();showProjectModal=true">
           <i class="fas fa-plus"></i> Add Project
         </a>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-warning btn-block" data-toggle="modal" data-target="#addCategoryModal">
+        <a href="" class="btn btn-warning btn-block"
+           (click)="$event.preventDefault();showEmployeeModal=true">
           <i class="fas fa-plus"></i> Add Employee
         </a>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-info btn-block" data-toggle="modal" data-target="#addUserModal">
+        <a href="#" class="btn btn-info btn-block">
           <i class="fas fa-plus"></i> Add Car
         </a>
       </div>
@@ -174,3 +176,91 @@
   </div>
 </section>
 
+<!-- MODALS -->
+<!-- ADD PROJECT MODAL -->
+<app-modal [show]="showProjectModal" [title]="'Add Project'" [bodyTemplate]="projectTemplate"
+           [headerNgClass]="'bg-success text-white'" [submitButtonNgClass]="'btn-success'"
+           #projectModal>
+  <ng-template #projectTemplate>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select class="form-control">
+          <option value="">Web Development</option>
+          <option value="">Tech Gadgets</option>
+          <option value="">Business</option>
+          <option value="">Health & Wellness</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="image">Upload Image</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="image">
+          <label for="image" class="custom-file-label">Choose File</label>
+        </div>
+        <small class="form-text text-muted">Max Size 3mb</small>
+      </div>
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea id="comment" name="editor1" class="form-control"></textarea>
+      </div>
+    </form>
+  </ng-template>
+</app-modal>
+
+
+<!-- ADD EMPLOYEE MODAL -->
+<app-modal [show]="showEmployeeModal" [title]="'Add Employee'" [bodyTemplate]="employeeTemplate"
+           [headerNgClass]="'bg-warning text-white'" [submitButtonNgClass]="'btn-warning'"
+           #employeeModal>
+  <ng-template #employeeTemplate>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control">
+      </div>
+    </form>
+  </ng-template>
+</app-modal>
+
+
+<!-- ADD USER MODAL -->
+<div class="modal fade" id="addUserModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-white">
+        <h5 class="modal-title">Add User</h5>
+        <button class="close" data-dismiss="modal">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>

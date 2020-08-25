@@ -1,0 +1,26 @@
+<div class="modal-backdrop fade" [ngClass]="{'show': show}"
+     [style]="show? 'display:block':'display:none'"></div>
+<div class="modal fade" [ngClass]="{'show': show}"
+     [style]="show? 'display:block':'display:none'" id="addProjectModal"
+     #addProjectModal>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header" [ngClass]="headerNgClass">
+        <h5 class="modal-title">{{title}}</h5>
+        <button class="close" data-dismiss="modal" (click)="show=false">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngTemplateOutlet="bodyTemplate? bodyTemplate:defaultTemplate"></ng-container>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" [ngClass]="submitButtonNgClass" data-dismiss="modal">Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #defaultTemplate>
+  <p>Please fill your content!</p>
+</ng-template>

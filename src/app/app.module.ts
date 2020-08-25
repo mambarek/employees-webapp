@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ApiModule as ProjectsApiModule} from '@angular-it2go/project-management-api';
 import {ErrorComponent} from './error/error.component';
 import {RouteReuseStrategy} from '@angular/router';
+import {ModalComponent} from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {RouteReuseStrategy} from '@angular/router';
     DashboardComponent,
     EditCarComponent,
     CarListComponent,
-    ErrorComponent
+    ErrorComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
