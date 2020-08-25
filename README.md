@@ -61,7 +61,7 @@ To authenticate clients that communicate with nexus-npm you have to add under se
 ein npm Baerer Token realm under Realms
 
 ## Publish th API to nmp
-Go to ./build/openapi
+### IMPORTANT Go to ./build/openapi
 
 #### Authentication and npm Registry
 in package.json add the npm registry to publish to
@@ -70,8 +70,8 @@ in package.json add the npm registry to publish to
    }
 
 Add new authentication to npm registry file .npmrc with following content
->registry=http://localhost:8081/repository/npm-group/
- YWRtaW46YWRtaW4xMjM0
+>registry=http://localhost:8081/repository/npm-group/    
+> YWRtaW46YWRtaW4xMjM0
 
 ### Building
 
@@ -80,10 +80,27 @@ To install the required dependencies and to build the typescript sources run:
 npm install
 npm run build
 ```
-
+When compiler error occurred while building you can set the right TypeScript compiler in package.json
+>
+ > "devDependencies": {  
+    "@angular/common": "^10.0.9",  
+    "@angular/compiler": "^10.0.9",  
+    "@angular/compiler-cli": "^10.0.9",  
+    "@angular/core": "^10.0.9",  
+    "@angular/platform-browser": "^10.0.9",  
+    "ng-packagr": "^9.0.1",  
+    "reflect-metadata": "^0.1.3",  
+    "rxjs": "^6.5.3",  
+    "tsickle": "^0.38.0",  
+    <b>"typescript": ">=3.9.2 <4.0.0"</b>,  
+    "zone.js": "^0.10.2"  
+  }
+    
 ### publishing
-
 First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
+> cd build/openapi
+build/openapi> npm publish dist
+
 
 ### consuming
 

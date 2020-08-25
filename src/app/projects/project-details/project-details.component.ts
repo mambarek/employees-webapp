@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Project, ProjectControllerService} from '@angular-it2go/project-management-api';
+import {Project as IProject, ProjectControllerService} from '@angular-it2go/project-management-api';
 import {ActivatedRoute, Router} from '@angular/router';
-import StatusEnum = Project.StatusEnum;
+import StatusEnum = IProject.StatusEnum;
 import {NgForm} from '@angular/forms';
 
 @Component({
@@ -13,7 +13,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   @ViewChild('projectForm', {static: false}) projectForm: NgForm;
 
-  project: Project;
+  project: IProject;
   projectStatusList: ProjectStatus[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private projectControllerService: ProjectControllerService) {
@@ -27,7 +27,7 @@ export class ProjectDetailsComponent implements OnInit {
   private initModel(): void {
     const publicId: string = this.route.snapshot.params.id;
     // while the getById is async so set a dummy to-do on loading page, otherwise an NP exception is thrown
-    this.project = new DummyProjectModel();
+    this.project = {publicId: ''};
 
     if (!publicId) {
       return;
@@ -64,6 +64,20 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
+  deleteProject(): void {
+    console.log('deleteProject call!', this.project);
+    if (this.project.publicId) {
+      this.projectControllerService.deleteProject(this.project.publicId).subscribe(
+        response => {
+          console.log('Project delete SUCCESS');
+        },
+        error => console.error(error)
+      );
+    } else {
+      this.projectControllerService.saveProject(this.project);
+    }
+  }
+
   getStatusList(): ProjectStatus[] {
     const projectStatus: Array<ProjectStatus> = [];
     projectStatus.push(new ProjectStatus(StatusEnum.WAITING, 'Is waiting'));
@@ -85,6 +99,3 @@ class ProjectStatus {
   }
 }
 
-class DummyProjectModel implements Project {
-  publicId: string;
-}
