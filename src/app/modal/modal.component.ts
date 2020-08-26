@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, Output, SimpleChange, TemplateRef} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, Output, SimpleChange, TemplateRef, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -18,10 +18,16 @@ export class ModalComponent implements OnInit {
   @Input()
   submitButtonNgClass = 'bg-primary';
 
+  @Output()
+  saveEvent = new EventEmitter<string>();
+
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
+  save(): void {
+    this.saveEvent.emit();
+  }
 }

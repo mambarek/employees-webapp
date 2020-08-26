@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ProjectControllerService} from '@angular-it2go/project-management-api';
 import {ModalComponent} from '../modal/modal.component';
 
@@ -7,7 +7,7 @@ import {ModalComponent} from '../modal/modal.component';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
   projectsCount = 0;
   private _showProjectModal = false;
@@ -16,12 +16,39 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('projectModal') projectModal: ModalComponent;
   @ViewChild('employeeModal') employeeModal: ModalComponent;
+  @ViewChild('carModal') carModal: ModalComponent;
 
   constructor(private projectControllerService: ProjectControllerService) {
   }
 
   ngOnInit(): void {
     this.initView();
+  }
+
+  ngAfterViewInit(): void {
+    this.projectModal.saveEvent.subscribe(() => {
+      console.log('++ Save event fired!');
+      // here you can validate the input
+      // if ok call save and close
+      this.showProjectModal = false;
+      // else show error to modal
+    });
+
+    this.employeeModal.saveEvent.subscribe(() => {
+      console.log('++ Save event fired!');
+      // here you can validate the input
+      // if ok call save and close
+      this.showEmployeeModal = false;
+      // else show error to modal
+    });
+
+    this.carModal.saveEvent.subscribe(() => {
+      console.log('++ Save event fired!');
+      // here you can validate the input
+      // if ok call save and close
+      this.showCarModal = false;
+      // else show error to modal
+    });
   }
 
   get showProjectModal(): boolean {
@@ -32,7 +59,6 @@ export class DashboardComponent implements OnInit {
     this._showProjectModal = value;
     this.projectModal.show = value;
   }
-
 
   get showEmployeeModal(): boolean {
     return this._showEmployeeModal;
@@ -49,6 +75,7 @@ export class DashboardComponent implements OnInit {
 
   set showCarModal(value: boolean) {
     this._showCarModal = value;
+    this.carModal.show = value;
   }
 
   initView(): void {
@@ -56,9 +83,4 @@ export class DashboardComponent implements OnInit {
       error => console.error(error));
   }
 
-  showProjectModalDialog(event: Event): void {
-    console.log('--showProjectModalDialog() call!');
-    event.preventDefault();
-    this._showProjectModal = !this._showProjectModal;
-  }
 }

@@ -15,7 +15,8 @@
         <ng-container *ngTemplateOutlet="bodyTemplate? bodyTemplate:defaultTemplate"></ng-container>
       </div>
       <div class="modal-footer">
-        <button class="btn" [ngClass]="submitButtonNgClass" data-dismiss="modal">Save Changes
+        <button class="btn" [ngClass]="submitButtonNgClass" data-dismiss="modal"
+                (click)="save()">Save Changes
         </button>
       </div>
     </div>
