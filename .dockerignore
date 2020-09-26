@@ -1,0 +1,12 @@
+.git
+.firebase
+.editorconfig
+/build
+/dist
+/docker
+/node_modules
+/e2e
+/docs
+.gitignore
+*.zip
+*.md
