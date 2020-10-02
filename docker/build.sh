@@ -1,1 +1,1 @@
-docker build -f docker/Dockerfile -t mmbarek/employees-test-image .
+docker build -f Dockerfile -t mmbarek/employees-webapp ../

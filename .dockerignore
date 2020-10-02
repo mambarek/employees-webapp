@@ -3,7 +3,6 @@
 .editorconfig
 /build
 /dist
-/docker
 /node_modules
 /e2e
 /docs
