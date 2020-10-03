@@ -92,8 +92,8 @@ npm install
 npm run build
 ```
 When compiler error occurred while building you can set the right TypeScript compiler in package.json
->
- > "devDependencies": {  
+```
+  "devDependencies": {  
     "@angular/common": "^10.0.9",  
     "@angular/compiler": "^10.0.9",  
     "@angular/compiler-cli": "^10.0.9",  
@@ -106,7 +106,7 @@ When compiler error occurred while building you can set the right TypeScript com
     <b>"typescript": ">=3.9.2 <4.0.0"</b>,  
     "zone.js": "^0.10.2"  
   }
-    
+ ```   
 ### publishing
 First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
 > cd build/openapi
@@ -136,7 +136,35 @@ anyone can now use it with npm install or add it to dependencies in package.json
 
 ## Consume the API
 The Generated API containing every thing you need. the files contains Service Classes 
-so you don't have to implement them manually.
+so you don't have to implement them manually. You have to configure them like set the BASE_PATH for the API  
+
+It's generally a good practice to extend the src/environments/*.ts files by adding a corresponding base path:
+```
+export const environment = {  
+   production: false,  
+   employeesApiUrl: 'http://localhost:8010/api/v1/employees',  
+   projectsApiUrl: 'http://localhost:8020/api/v1/pojects'  
+ };
+```
+The shortest possible setup looks like this:
+```
+// src/app/app.module.ts
+import { HttpClientModule } from '@angular/common/http';
+import { ApiModule, BASE_PATH } from '@angular-schule/book-monkey-api';
+import { environment } from '../environments/environment';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [
+    HttpClientModule,
+    ApiModule
+  ],
+  providers: [{ provide: BASE_PATH, useValue: environment.projectsApiUrl }],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+This works now for one API (Projects API) but we have to add the employees API and Carfleet too
 
 ## Caching search list when gos to details view
 Caching Components in Angluar is complex and there is no standard strategy
@@ -144,5 +172,19 @@ So after trying some ideas from the internet it works but there are a lost of bu
 because of object references. The idea is to build a cache service, tha provides a cache for
 components data. Routing is then programmatically. we should save the data to cache service
 before changing the route. When initialize the parent route we should read the data from cache then 
-clean the cache data to be reinitialized from calling routing method.    
+clean the cache data to be reinitialized from calling routing method.
+
+## Environment and Application Variable
+Angular has no concept of deployment variable. To get rid of setting application variable at deployment time.  
+The community has present many solutions on the internet.
+One of them using a env template with a placeholder and substitute them with the unix "envsubst" command.
+
+>https://pumpingco.de/blog/environment-variables-angular-docker/     
+
+we add under assets two new files env.js and env.template.js
+The placeholder in env.template.js can be substituted with deployment values in deployment scripts.  
+In the Dockerfile we add this
+
+```CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]``` 
+ 
   

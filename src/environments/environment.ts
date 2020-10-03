@@ -2,10 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// The env values are defined in /assets/env.template.js
 export const environment = {
   production: false,
-  employeesApiUrl: 'http://localhost:8010/api/v1/employees',
-  projectsApiUrl: 'http://localhost:8020/api/v1/pojects'
+  employeesApiUrl: window['env']['employeesApiUrl'] || 'http://localhost:8010',
+  projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:8020'
 };
 
 /*

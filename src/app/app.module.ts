@@ -14,10 +14,11 @@ import { EditCarComponent } from './cars/edit-car/edit-car.component';
 import { CarListComponent } from './cars/car-list/car-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {ApiModule as ProjectsApiModule} from '@angular-it2go/project-management-api';
+import {ApiModule as ProjectsApiModule, BASE_PATH} from '@angular-it2go/project-management-api';
 import {ErrorComponent} from './error/error.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {ModalComponent} from './modal/modal.component';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,7 @@ import {ModalComponent} from './modal/modal.component';
     HttpClientModule,
     ProjectsApiModule
   ],
-  providers: [],
+  providers: [{provide: BASE_PATH, useValue: environment.projectsApiUrl}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
