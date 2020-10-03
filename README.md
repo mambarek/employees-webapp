@@ -172,7 +172,7 @@ So after trying some ideas from the internet it works but there are a lost of bu
 because of object references. The idea is to build a cache service, tha provides a cache for
 components data. Routing is then programmatically. we should save the data to cache service
 before changing the route. When initialize the parent route we should read the data from cache then 
-clean the cache data to be reinitialized from calling routing method.
+clean the cache data to be reinitialized from calling routing method.   
 
 ## Environment and Application Variable
 Angular has no concept of deployment variable. To get rid of setting application variable at deployment time.  
@@ -187,4 +187,4 @@ In the Dockerfile we add this
 
 ```CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]``` 
  
-  
+   
