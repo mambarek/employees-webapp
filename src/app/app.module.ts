@@ -14,7 +14,8 @@ import { EditCarComponent } from './cars/edit-car/edit-car.component';
 import { CarListComponent } from './cars/car-list/car-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {ApiModule as ProjectsApiModule, BASE_PATH} from '@angular-it2go/project-management-api';
+import {ApiModule as ProjectsApiModule, BASE_PATH as projectBasePath} from '@angular-it2go/project-management-api';
+import {ApiModule as CarApiModule, BASE_PATH as carBasePath} from '@angular-it2go/car-fleet-api';
 import {ErrorComponent} from './error/error.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {ModalComponent} from './modal/modal.component';
@@ -42,7 +43,10 @@ import {environment} from '../environments/environment';
     HttpClientModule,
     ProjectsApiModule
   ],
-  providers: [{provide: BASE_PATH, useValue: environment.projectsApiUrl}],
+  providers: [
+    {provide: projectBasePath, useValue: environment.projectsApiUrl},
+    {provide: carBasePath, useValue: environment.carfleetApiUrl}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

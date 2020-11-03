@@ -6,7 +6,8 @@
 export const environment = {
   production: false,
   employeesApiUrl: window['env']['employeesApiUrl'] || 'http://localhost:8010',
-  projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:8020'
+  projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:8020',
+  carfleetApiUrl: window['env']['carfleetApiUrl'] || 'http://localhost:8030'
 };
 
 /*

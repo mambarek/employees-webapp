@@ -16,9 +16,9 @@
     <div class="row">
       <div class="col-md-6 ml-auto">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Car...">
+          <input type="text" class="form-control" placeholder="Search Car..." [(ngModel)]="searchText">
           <div class="input-group-append">
-            <button class="btn btn-info">Search</button>
+            <button class="btn btn-info" (click)="searchCars()">Search</button>
           </div>
         </div>
       </div>
@@ -40,85 +40,23 @@
             <tr>
               <th>#</th>
               <th>Brand</th>
+              <th>Model</th>
               <th>Color</th>
               <th>Year</th>
+              <th>Status</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>1</td>
-              <td>Volkswagen</td>
-              <td>Yellow</td>
-              <td>2015</td>
+            <tr *ngFor="let car of carTableItems; index as i">
+              <td>{{i}}</td>
+              <td>{{car.brand}}</td>
+              <td>{{car.model}}</td>
+              <td>{{car.color}}</td>
+              <td>{{car.manufacturingDate | date:'yyyy-MM-dd' }}</td>
+              <td>{{car.status}}</td>
               <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Renault</td>
-              <td>Black</td>
-              <td>2016</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Fiat</td>
-              <td>White</td>
-              <td>2015</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td>Mercedes</td>
-              <td>Maroon</td>
-              <td>2018</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td>BMW</td>
-              <td>Orange</td>
-              <td>2017</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>BMW</td>
-              <td>Blue</td>
-              <td>2017</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td>Mercedes</td>
-              <td>Silver</td>
-              <td>2019</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
+                <a routerLink="details/{{car.publicId}}" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
@@ -144,6 +82,8 @@
               <li class="page-item">
                 <a href="#" class="page-link">Next</a>
               </li>
+              <li class="page-item disabled">
+                <a href="#" class="page-link">Total: {{itemsCount}}</a></li>
             </ul>
           </nav>
         </div>

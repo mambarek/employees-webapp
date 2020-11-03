@@ -9,10 +9,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:project-api": "openapi-generator generate -g typescript-angular -i http://localhost:8020/v3/api-docs.yaml -o ./build/openapi -c project-api-config.json"
+    "generate:project-api": "openapi-generator generate -g typescript-angular -i http://localhost:8020/v3/api-docs.yaml -o ./build/openapi -c project-api-config.json",
+    "generate:car-fleet-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o ./build/openapi -c car-fleet-api-config.json"
   },
   "private": true,
   "dependencies": {
+    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202011030052",
     "@angular-it2go/project-management-api": "^1.0.0-SNAPSHOT.202008251248",
     "@angular/animations": "~10.0.9",
     "@angular/common": "~10.0.9",
@@ -49,6 +51,6 @@
     "typescript": "~3.9.5"
   },
   "publishConfig": {
-    "registry": "http://localhost:8081/repository/npm-private/"
+    "registry": "http://localhost:9181/repository/npm-private/"
   }
 }

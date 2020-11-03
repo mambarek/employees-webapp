@@ -77,12 +77,18 @@ ein npm Baerer Token realm under Realms
 #### Authentication and npm Registry
 in package.json add the npm registry to publish to
 >  "publishConfig": {
-     "registry": "http://localhost:8081/repository/npm-private/"
+     "registry": "http://localhost:9181/repository/npm-private/"
    }
 
 Add new authentication to npm registry file .npmrc with following content
 >registry=http://localhost:8081/repository/npm-group/    
 > YWRtaW46YWRtaW4xMjM0
+
+build/openapi/.npmrc
+```
+registry=http://localhost:9181/repository/npm-group/
+_auth=YWRtaW46YWRtaW4xMjM0
+```
 
 ### Building
 
@@ -103,10 +109,24 @@ When compiler error occurred while building you can set the right TypeScript com
     "reflect-metadata": "^0.1.3",  
     "rxjs": "^6.5.3",  
     "tsickle": "^0.38.0",  
-    <b>"typescript": ">=3.9.2 <4.0.0"</b>,  
+    "typescript": ">=3.9.2 <4.1.0",  
     "zone.js": "^0.10.2"  
   }
  ```   
+
+### update build/openapi/dist directory
+build/openapi/dist/.npmrc
+```
+registry=http://localhost:9181/repository/npm-group/
+_auth=YWRtaW46YWRtaW4xMjM0
+```
+in package.json add at the bottom
+```
+"publishConfig": {
+     "registry": "http://localhost:9181/repository/npm-private/"
+   }
+```
+
 ### publishing
 First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
 > cd build/openapi
