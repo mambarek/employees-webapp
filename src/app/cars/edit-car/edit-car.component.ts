@@ -21,8 +21,15 @@ export class EditCarComponent implements OnInit {
 
   private initModel(): void {
     const publicId: string = this.route.snapshot.params.id;
-    // while the getById is async so set a dummy to-do on loading page, otherwise an NP exception is thrown
-    this.project = {publicId: ''};
+    // since the getById is async so set a dummy to-do on loading page, otherwise an NP exception is thrown
+    this.car = {
+      brand: "",
+      color: "",
+      engineType: undefined,
+      manufacturingDate: "",
+      model: "",
+      publicId: ""
+    };
 
     if (!publicId) {
       return;
@@ -59,7 +66,7 @@ export class EditCarComponent implements OnInit {
     }
   }
 
-  deleteProject(): void {
+  deleteCar(): void {
     console.log('deleteCar call!', this.car);
     if (this.car.publicId) {
       this.carsService.deleteCar(this.car.publicId).subscribe(

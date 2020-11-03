@@ -25,6 +25,7 @@ export class CarListComponent implements OnInit {
   searchCars(): void {
     const brandRule: IRule = {field: 'brand', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
     const modelRule: IRule = {field: 'model', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
+    // color is translated so this search will work only if you give the color id may use a dropdownlist for colors
     const colorRule: IRule = {field: 'color', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
     const group: IGroup = {rules: [brandRule, modelRule, colorRule]};
     group.groupOp = GroupOpEnum.OR;
