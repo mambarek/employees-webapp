@@ -33,6 +33,7 @@ import {environment} from '../environments/environment';
     DashboardComponent,
     EditCarComponent,
     CarListComponent,
+    EditCarComponent,
     ErrorComponent,
     ModalComponent
   ],

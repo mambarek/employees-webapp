@@ -73,8 +73,6 @@ export class ProjectDetailsComponent implements OnInit {
         },
         error => console.error(error)
       );
-    } else {
-      this.projectControllerService.saveProject(this.project);
     }
   }
 
