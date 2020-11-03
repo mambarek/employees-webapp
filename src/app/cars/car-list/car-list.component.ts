@@ -32,8 +32,40 @@ export class CarListComponent implements OnInit {
     const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model'};
 
     this.carSearchService.search(searchTemplate).subscribe(response => {
-      this.carTableItems = response.rows;
+      //this.carTableItems = response.rows;
+      this.setGridItems(response.rows);
       this.itemsCount = response.records;
     }, error => console.error(error))
   }
+
+  setGridItems(items: ICarTableItem[]){
+    // as example take de
+    const locale = 'DE'
+    const resultList: ICarTableItem[] = [];
+    items.forEach(item => {
+      const newItem = {...item}; // shallow copy
+      newItem.status = this.TRANSLATIONS[locale].CAR_STATUS[item.status];
+      newItem.color = this.TRANSLATIONS[locale].COLOR[item.color];
+      resultList.push(newItem);
+    })
+
+    this.carTableItems = resultList;
+  }
+
+  // Translation should be offered from the called microservice
+  // via Restful interface
+  TRANSLATIONS = {'DE': {
+      'CAR_STATUS': {
+        'READY': 'Bereit',
+        'UNDER_REPAIR': 'In Reparatur',
+        'BROKEN': 'Kaputt'
+        },
+      'COLOR': {
+        'White': 'Weiß',
+        'Black': 'Schwarz',
+        'Silver': 'Silber',
+        'Red': 'Rot'
+    }
+                      }
+                }
 }

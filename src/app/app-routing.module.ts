@@ -6,6 +6,7 @@ import {EmployeesListComponent} from './employees/employees-list/employees-list.
 import {CarListComponent} from './cars/car-list/car-list.component';
 import {ErrorComponent} from './error/error.component';
 import {ProjectDetailsComponent} from './projects/project-details/project-details.component';
+import {EditCarComponent} from "./cars/edit-car/edit-car.component";
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
@@ -17,6 +18,12 @@ const routes: Routes = [
   },
   {path: 'employees', component: EmployeesListComponent},
   {path: 'cars', component: CarListComponent},
+  {
+    path: 'cars', children: [
+      {path: '', component: CarListComponent},
+      {path: 'details/:id', component: EditCarComponent}
+    ]
+  },
   {path: '**', component: ErrorComponent}
 ];
 
