@@ -179,7 +179,10 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     ApiModule
   ],
-  providers: [{ provide: BASE_PATH, useValue: environment.projectsApiUrl }],
+  providers: [
+    {provide: projectBasePath, useValue: environment.projectsApiUrl},
+    {provide: carBasePath, useValue: environment.carfleetApiUrl}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

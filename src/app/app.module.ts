@@ -16,6 +16,7 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ApiModule as ProjectsApiModule, BASE_PATH as projectBasePath} from '@angular-it2go/project-management-api';
 import {ApiModule as CarApiModule, BASE_PATH as carBasePath} from '@angular-it2go/car-fleet-api';
+import {ApiModule as EmployeesApiModule, BASE_PATH as employeesBasePath} from '@angular-it2go/employees-api';
 import {ErrorComponent} from './error/error.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {ModalComponent} from './modal/modal.component';
@@ -42,10 +43,13 @@ import {environment} from '../environments/environment';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ProjectsApiModule
+    ProjectsApiModule,
+    CarApiModule,
+    EmployeesApiModule
   ],
   providers: [
     {provide: projectBasePath, useValue: environment.projectsApiUrl},
+    {provide: employeesBasePath, useValue: environment.employeesApiUrl},
     {provide: carBasePath, useValue: environment.carfleetApiUrl}
     ],
   bootstrap: [AppComponent]

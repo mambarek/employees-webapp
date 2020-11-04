@@ -9,12 +9,14 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate:project-api": "openapi-generator generate -g typescript-angular -i http://localhost:8020/v3/api-docs.yaml -o ./build/openapi -c project-api-config.json",
-    "generate:car-fleet-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o ./build/openapi -c car-fleet-api-config.json"
+    "generate:project-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/project-api.yaml -o ./build/openapi/project -c apis/project-api-config.json",
+    "generate:car-fleet-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o ./build/openapi/cars -c apis/car-fleet-api-config.json",
+    "generate:employees-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/employees/v1/employees-api.yaml -o ./build/openapi/employees -c apis/employees-api-config.json"
   },
   "private": true,
   "dependencies": {
-    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202011041314",
+    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202011041941",
+    "@angular-it2go/employees-api": "^1.0.0-SNAPSHOT.202011041714",
     "@angular-it2go/project-management-api": "^1.0.0-SNAPSHOT.202008251248",
     "@angular/animations": "~10.0.9",
     "@angular/common": "~10.0.9",

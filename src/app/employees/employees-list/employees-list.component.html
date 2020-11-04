@@ -16,9 +16,9 @@
     <div class="row">
       <div class="col-md-6 ml-auto">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Employees...">
+          <input type="text" class="form-control" placeholder="Search Employees..." [(ngModel)]="searchText">
           <div class="input-group-append">
-            <button class="btn btn-warning">Search</button>
+            <button class="btn btn-warning" (click)="searchEmployees()">Search</button>
           </div>
         </div>
       </div>
@@ -39,38 +39,20 @@
             <thead class="thead-dark">
             <tr>
               <th>#</th>
-              <th>Name</th>
-              <th>Email</th>
+              <th>Firstname</th>
+              <th>Lastname</th>
+              <th>Birthdate</th>
               <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>1</td>
-              <td>John Doe</td>
-              <td>jdoe@gmail.com</td>
+            <tr *ngFor="let employee of employeeTableItemList.resultList; index as i">
+              <td>{{i}}</td>
+              <td>{{employee.firstName}}</td>
+              <td>{{employee.lastName}}</td>
+              <td>{{employee.birthDate | date:'yyyy-MM-dd' }}</td>
               <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Harry White</td>
-              <td>harry@yahoo.com</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Mary Johnson</td>
-              <td>mary@gmail.com</td>
-              <td>
-                <a href="details.html" class="btn btn-secondary">
+                <a routerLink="details/{{employee.publicId}}" class="btn btn-secondary">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>
