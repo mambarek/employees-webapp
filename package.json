@@ -14,7 +14,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202011030052",
+    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202011041314",
     "@angular-it2go/project-management-api": "^1.0.0-SNAPSHOT.202008251248",
     "@angular/animations": "~10.0.9",
     "@angular/common": "~10.0.9",
