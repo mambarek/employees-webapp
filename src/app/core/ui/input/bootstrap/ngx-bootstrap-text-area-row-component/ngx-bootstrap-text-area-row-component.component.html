@@ -1,0 +1,27 @@
+<div class="form-group">
+  <label for="{{name}}">{{label}}</label>
+  <textarea id="{{name}}" type="text" class="form-control" [(ngModel)]="model[attributeName]"
+         name="{{name}}"
+         maxlength="{{maxLength}}"
+         minlength="{{minLength}}"
+         #input_box="ngModel" #box
+         [class.is-invalid]="input_box.dirty && input_box.invalid"
+         [class.is-valid]="input_box.dirty && input_box.valid"
+         *ngIf="!isRequired else required_template"
+  ></textarea>
+  <div class="invalid-feedback">
+    {{invalidText}}
+  </div>
+</div>
+
+<ng-template #required_template>
+  <textarea id="{{name}}" type="text" class="form-control" [(ngModel)]="model[attributeName]"
+         name="{{name}}"
+         required
+         maxlength="{{maxLength}}"
+         minlength="{{minLength}}"
+         #input_box="ngModel" #box
+         [class.is-invalid]="input_box.dirty && input_box.invalid"
+         [class.is-valid]="input_box.dirty && input_box.valid"
+  ></textarea>
+</ng-template>

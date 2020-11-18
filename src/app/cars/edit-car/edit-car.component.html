@@ -44,36 +44,47 @@
           </div>
           <div class="card-body">
             <form (ngSubmit)="saveCar()" #carForm="ngForm">
-              <div class="form-group">
-                <label for="car-brand">Brand</label>
-                <input id="car-brand" type="text" class="form-control" [(ngModel)]="car.brand"
-                       name="car-brand">
-              </div>
-              <div class="form-group">
-                <label for="car-model">Brand</label>
-                <input id="car-model" type="text" class="form-control" [(ngModel)]="car.model"
-                       name="car-model">
-              </div>
-<!--              <div class="form-group">
-                <label for="status">Status</label>
-                <select class="form-control" id="status" [(ngModel)]="project.status" name="status">
-                  <option *ngFor="let status of projectStatusList"
-                          [ngValue]="status.key">{{status.value}}</option>
-                </select>
-              </div>-->
-              <div class="form-group">
-                <label for="image">Upload Image</label>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="image">
-                  <label for="image" class="custom-file-label">Choose File</label>
-                </div>
-                <small class="form-text text-muted">Max Size 3mb</small>
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-control"
-                          [(ngModel)]="car.description"></textarea>
-              </div>
+              <ngx-bootstrap-text-input-row
+                name="brand"
+                label="Brand"
+                [model]="car"
+                attributeName="brand"
+                maxLength="10"
+                minLength="3"
+                isRequired="true"
+                invalidText="Please enter a valid Brand."
+              ></ngx-bootstrap-text-input-row>
+
+              <ngx-bootstrap-text-input-row
+                name="model"
+                label="Model"
+                [model]="car"
+                attributeName="model"
+                maxLength="10"
+                minLength="3"
+                isRequired="true"
+                invalidText="Please enter a model name."
+              ></ngx-bootstrap-text-input-row>
+
+              <ngx-bootstrap-text-area-row-component
+                name="car-desc"
+                label="Description"
+                [model]="car"
+                attributeName="description"
+                isRequired="true"
+                invalidText="Please enter a model description."
+              ></ngx-bootstrap-text-area-row-component>
+
+              <ngx-bootstrap-select-row-component
+                name="fuelType"
+                label="Fuel type"
+                [model]="car"
+                attributeName="fuelType"
+                [items]="fuelTypes"
+                itemKey="id"
+                itemLabel="value"
+              >
+              </ngx-bootstrap-select-row-component>
             </form>
           </div>
         </div>

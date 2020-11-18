@@ -21,6 +21,7 @@ import {ErrorComponent} from './error/error.component';
 import {RouteReuseStrategy} from '@angular/router';
 import {ModalComponent} from './modal/modal.component';
 import {environment} from '../environments/environment';
+import {CoreModule} from "./core/core.module";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {environment} from '../environments/environment';
     HttpClientModule,
     ProjectsApiModule,
     CarApiModule,
-    EmployeesApiModule
+    EmployeesApiModule,
+    CoreModule
   ],
   providers: [
     {provide: projectBasePath, useValue: environment.projectsApiUrl},
