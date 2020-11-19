@@ -7,6 +7,7 @@ import {NgxBootstrapDateInputRowComponentComponent} from './ui/input/bootstrap/n
 import {NgxBootstrapSelectRowComponentComponent} from './ui/input/bootstrap/ngx-bootstrap-select-row-component/ngx-bootstrap-select-row-component.component';
 import {NgxBootstrapRadiosRowComponentComponent} from './ui/input/bootstrap/ngx-bootstrap-radios-row-component/ngx-bootstrap-radios-row-component.component';
 import {NgxBootstrapCheckBoxsRowComponentComponent} from './ui/input/bootstrap/ngx-bootstrap-check-boxs-row-component/ngx-bootstrap-check-boxs-row-component.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {NgxBootstrapCheckBoxsRowComponentComponent} from './ui/input/bootstrap/n
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ]
 })
 export class CoreModule {

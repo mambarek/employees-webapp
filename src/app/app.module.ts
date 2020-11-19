@@ -18,10 +18,10 @@ import {ApiModule as ProjectsApiModule, BASE_PATH as projectBasePath} from '@ang
 import {ApiModule as CarApiModule, BASE_PATH as carBasePath} from '@angular-it2go/car-fleet-api';
 import {ApiModule as EmployeesApiModule, BASE_PATH as employeesBasePath} from '@angular-it2go/employees-api';
 import {ErrorComponent} from './error/error.component';
-import {RouteReuseStrategy} from '@angular/router';
 import {ModalComponent} from './modal/modal.component';
 import {environment} from '../environments/environment';
 import {CoreModule} from "./core/core.module";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import {CoreModule} from "./core/core.module";
     FormsModule,
     HttpClientModule,
     ProjectsApiModule,
+    NgbModule,
     CarApiModule,
     EmployeesApiModule,
     CoreModule

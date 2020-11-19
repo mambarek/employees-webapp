@@ -1,1 +1,29 @@
-<p>ngx-bootstrap-date-input-row-component works!</p>
+<div class="form-group">
+  <label for="{{name}}">{{label}}</label>
+  <input id="{{name}}" type="text" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+         ngbDatepicker #d="ngbDatepicker"
+         (dateSelect)="onDateSelect($event)"
+         [(ngModel)]="dateStruct"
+         (click)="d.toggle()"
+         #input_box="ngModel" #box
+         [class.is-invalid]="input_box.dirty && input_box.invalid"
+         [class.is-valid]="input_box.dirty && input_box.valid"
+         *ngIf="!isRequired else required_template"
+  />
+  <div class="invalid-feedback">
+    Small text
+  </div>
+</div>
+
+<ng-template #required_template>
+  <input id="{{name}}" type="text" class="form-control" placeholder="yyyy-mm-dd" name="dp"
+         ngbDatepicker #d="ngbDatepicker"
+         (dateSelect)="onDateSelect($event)"
+         [(ngModel)]="dateStruct"
+         (click)="d.toggle()"
+         #input_box="ngModel" #box
+         [class.is-invalid]="input_box.dirty && input_box.invalid"
+         [class.is-valid]="input_box.dirty && input_box.valid"
+         required
+  />
+</ng-template>

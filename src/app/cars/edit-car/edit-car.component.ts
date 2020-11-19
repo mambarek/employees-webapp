@@ -40,7 +40,7 @@ export class EditCarComponent implements OnInit, OnDestroy {
     } // it mean we create a new to do
 
     // otherwise fetch the one and edit it
-    var subscription = this.carsService.getCarByPublicId(publicId).subscribe(
+    const subscription = this.carsService.getCarByPublicId(publicId).subscribe(
       response => {
         console.log('Car loaded ', response);
         this.car = response;
@@ -90,8 +90,4 @@ export class EditCarComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  onInputChange(element: HTMLElement, model: any) {
-    console.log(model);
-    //element.st
-  }
 }
