@@ -38,7 +38,7 @@ export class NgxBootstrapTextInputRowComponent implements OnInit, AfterViewInit 
   }
 
   ngAfterViewInit(): void {
-    console.log("--> ngAfterViewInit");
+    console.log("--> ngAfterViewInit", this.model);
 /*    console.log("--> ngAfterViewInit");
     console.log(this.input_box);
     console.log(this.box.nativeElement)

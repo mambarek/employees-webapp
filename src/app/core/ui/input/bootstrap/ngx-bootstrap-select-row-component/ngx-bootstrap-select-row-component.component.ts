@@ -21,13 +21,9 @@ export class NgxBootstrapSelectRowComponentComponent implements OnInit, AfterVie
   constructor() { }
 
   ngOnInit(): void {
-    //this.items = [{id: 'DISEL', value: 'DIESEL'}, {id: 'PETROL', value: 'PETROL'}];
-    console.log("-- ngOnInit Select log model " + this.model);
-    console.log("-- ngOnInit Select log items " + this.items);
   }
 
   ngAfterViewInit(): void {
-    console.log("-- ngAfterViewInit Select log items " + this.items);
   }
 
 }
