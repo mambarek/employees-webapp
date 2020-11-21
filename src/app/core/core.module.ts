@@ -8,6 +8,9 @@ import {NgxBootstrapSelectRowComponentComponent} from './ui/input/bootstrap/ngx-
 import {NgxBootstrapRadiosRowComponentComponent} from './ui/input/bootstrap/ngx-bootstrap-radios-row-component/ngx-bootstrap-radios-row-component.component';
 import {NgxBootstrapCheckBoxsRowComponentComponent} from './ui/input/bootstrap/ngx-bootstrap-check-boxs-row-component/ngx-bootstrap-check-boxs-row-component.component';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {AuthInterceptor} from "./interceptors/auth.interceptor";
+import {LoggingInterceptor} from "./interceptors/logging.interceptor";
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     CommonModule,
     FormsModule,
     NgbModule
-  ]
+  ],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}]
 })
 export class CoreModule {
 }

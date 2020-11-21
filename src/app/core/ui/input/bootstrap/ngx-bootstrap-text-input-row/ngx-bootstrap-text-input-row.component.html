@@ -1,13 +1,15 @@
 <div class="form-group">
   <label for="{{name}}">{{label}}</label>
 
-  <input id="{{name}}" type="text" class="form-control" [(ngModel)]="model[attributeName]"
+  <input id="{{name}}" type="{{type}}" class="form-control"
+         [(ngModel)]="model[attributeName]"
          name="{{name}}"
          maxlength="{{maxLength}}"
          minlength="{{minLength}}"
          #input_box="ngModel" #box
          [class.is-invalid]="input_box.dirty && input_box.invalid"
          [class.is-valid]="input_box.dirty && input_box.valid"
+
          *ngIf="!isRequired else required_template"
   />
 
@@ -17,7 +19,7 @@
 </div>
 
 <ng-template #required_template>
-  <input id="{{name}}" type="text" class="form-control" [(ngModel)]="model[attributeName]"
+  <input id="{{name}}" type="{{type}}" class="form-control" [(ngModel)]="model[attributeName]"
          name="{{name}}"
          required
          maxlength="{{maxLength}}"

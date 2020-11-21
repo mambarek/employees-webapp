@@ -22,6 +22,8 @@ import {ModalComponent} from './modal/modal.component';
 import {environment} from '../environments/environment';
 import {CoreModule} from "./core/core.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
     CarListComponent,
     EditCarComponent,
     ErrorComponent,
-    ModalComponent
+    ModalComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

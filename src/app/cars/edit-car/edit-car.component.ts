@@ -26,6 +26,7 @@ export class EditCarComponent implements OnInit, OnDestroy {
   private initModel(): void {
     const publicId: string = this.route.snapshot.params.id;
     // since the getById is async so set a dummy to-do on loading page, otherwise an NP exception is thrown
+/*
     this.car = {
       brand: "",
       color: "",
@@ -34,6 +35,7 @@ export class EditCarComponent implements OnInit, OnDestroy {
       model: "",
       publicId: ""
     };
+*/
 
     if (!publicId) {
       return;
@@ -55,8 +57,7 @@ export class EditCarComponent implements OnInit, OnDestroy {
 
   submitForm(event: Event): void {
     event.preventDefault();
-
-      this.carForm.ngSubmit.emit();
+    this.carForm.ngSubmit.emit();
   }
 
   saveCar(): void {

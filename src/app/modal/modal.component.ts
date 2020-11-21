@@ -17,6 +17,8 @@ export class ModalComponent implements OnInit {
   headerNgClass = 'bg-primary text-white';
   @Input()
   submitButtonNgClass = 'bg-primary';
+  @Input()
+  saveButtonText = 'Save';
 
   @Output()
   saveEvent = new EventEmitter<string>();

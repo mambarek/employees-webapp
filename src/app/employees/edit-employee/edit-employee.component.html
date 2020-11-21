@@ -1,1 +1,84 @@
-<p>edit-employee works!</p>
+<!-- HEADER -->
+<header id="main-header" class="py-2 bg-warning text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 *ngIf="employee">
+          {{employee.data.firstName}} {{employee.data.lastName}}</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4 bg-light" *ngIf="employee">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <a routerLink="/employees" class="btn btn-light btn-block">
+          <i class="fas fa-arrow-left"></i> Back To Projects
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a href="#" class="btn btn-warning btn-block" (click)="submitForm($event)">
+          <i class="fas fa-check"></i> Save Changes
+        </a>
+      </div>
+      <div class="col-md-3">
+        <a routerLink="/cars" class="btn btn-danger btn-block" (click)="deleteEmployee()">
+          <i class="fas fa-trash"></i> Delete Employee
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DETAILS -->
+<section id="details" *ngIf="employee">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Edit Car</h4>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm">
+              <ngx-bootstrap-text-input-row
+                name="firstName"
+                label="Firstname"
+                [model]="employee.data"
+                attributeName="firstName"
+                maxLength="10"
+                minLength="3"
+                isRequired="true"
+                invalidText="Please enter a valid Firstname."
+              ></ngx-bootstrap-text-input-row>
+
+              <ngx-bootstrap-text-input-row
+                name="lastName"
+                label="Lastname"
+                [model]="employee.data"
+                attributeName="lastName"
+                maxLength="10"
+                minLength="3"
+                isRequired="true"
+                invalidText="Please enter a valid Lastname."
+              ></ngx-bootstrap-text-input-row>
+
+              <ngx-bootstrap-date-input-row-component
+                name="birthDate"
+                label="Birthdate"
+                [model]="employee.data"
+                attributeName="birthDate"
+                isRequired="true"
+              >
+              </ngx-bootstrap-date-input-row-component>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

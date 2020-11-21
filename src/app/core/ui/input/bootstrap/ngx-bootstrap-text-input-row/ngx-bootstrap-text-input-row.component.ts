@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   Input,
-  OnInit,
+  OnInit, TemplateRef,
   ViewChild
 } from '@angular/core';
 
@@ -23,6 +23,7 @@ export class NgxBootstrapTextInputRowComponent implements OnInit, AfterViewInit 
   @Input() isRequired = false;
   @Input() maxLength;
   @Input() minLength;
+  @Input() type = 'text';
 
   @ViewChild('box')
   box: ElementRef;
