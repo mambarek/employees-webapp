@@ -1,0 +1,11 @@
+<div class="form-group">
+  <label for="{{name}}">{{label}}</label>
+  <textarea id="{{name}}" type="text" class="form-control" [(ngModel)]="value" name="{{name}}"
+            (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
+            [class.is-invalid]="dirty && invalid" [class.is-valid]="dirty && valid"
+  ></textarea>
+  <div class="invalid-feedback">
+    {{invalidText}}
+  </div>
+</div>
+

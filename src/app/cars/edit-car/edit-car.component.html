@@ -20,12 +20,12 @@
         </a>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-info btn-block" (click)="submitForm($event)">
+        <button class="btn btn-info btn-block" (click)="submitForm($event)" #saveButton>
           <i class="fas fa-check"></i> Save Changes
-        </a>
+        </button>
       </div>
       <div class="col-md-3">
-        <a routerLink="/cars" class="btn btn-danger btn-block" (click)="deleteCar()">
+        <a routerLink="/cars" class="btn btn-danger btn-block text-white" (click)="deleteCar()">
           <i class="fas fa-trash"></i> Delete Car
         </a>
       </div>
@@ -45,55 +45,43 @@
           <div class="card-body">
             <form (ngSubmit)="saveCar()" #carForm="ngForm">
               <ngx-bootstrap-text-input-row
-                name="brand"
-                label="Brand"
-                [model]="car"
-                attributeName="brand"
-                maxLength="10"
-                minLength="3"
-                isRequired="true"
+                name="brand"  label="Brand"
+                [(ngModel)]="car.brand"
+                required minlength="3" maxlength="10"
                 invalidText="Please enter a valid Brand."
               ></ngx-bootstrap-text-input-row>
 
               <ngx-bootstrap-text-input-row
-                name="model"
-                label="Model"
-                [model]="car"
-                attributeName="model"
-                maxLength="10"
-                minLength="3"
-                isRequired="true"
+                name="model" label="Model"
+                [(ngModel)]="car.model"
+                required minlength="3" maxlength="10"
                 invalidText="Please enter a model name."
               ></ngx-bootstrap-text-input-row>
 
-              <ngx-bootstrap-text-area-row-component
-                name="car-desc"
-                label="Description"
-                [model]="car"
-                attributeName="description"
-                isRequired="true"
+              <ngx-bootstrap-text-area-row
+                name="car-desc" label="Description"
+                [(ngModel)]="car.description"
+                required
                 invalidText="Please enter a model description."
-              ></ngx-bootstrap-text-area-row-component>
+              ></ngx-bootstrap-text-area-row>
 
-              <ngx-bootstrap-select-row-component
+              <ngx-bootstrap-select-row
                 name="fuelType"
                 label="Fuel type"
-                [model]="car"
-                attributeName="fuelType"
+                [(ngModel)]="car.fuelType" required
                 [items]="fuelTypes"
                 itemKey="id"
-                itemLabel="value"
+                itemLabel="value" (input)="selectInput($event)"
               >
-              </ngx-bootstrap-select-row-component>
+              </ngx-bootstrap-select-row>
 
-              <ngx-bootstrap-date-input-row-component
+              <ngx-bootstrap-date-row
                 name="manufacturingDate"
-                label="Manufacturing date"
-                [model]="car"
-                attributeName="manufacturingDate"
-                isRequired="true"
+                label="Manufacturing Date"
+                [(ngModel)]="car.manufacturingDate"
+                required
               >
-              </ngx-bootstrap-date-input-row-component>
+              </ngx-bootstrap-date-row>
             </form>
           </div>
         </div>

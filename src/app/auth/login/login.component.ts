@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ModalComponent} from "../../modal/modal.component";
+import {Component, OnInit} from '@angular/core';
 import {LoginService} from "../../services/login.service";
 
 @Component({

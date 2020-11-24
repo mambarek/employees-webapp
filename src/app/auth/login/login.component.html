@@ -20,32 +20,24 @@
           </div>
           <div class="card-body">
             <form (ngSubmit)="loginUser()" #loginForm="ngForm">
-              <ngx-bootstrap-text-input-row
-                name="userName"
-                label="User"
-                [model]="loginData"
-                attributeName="userName"
-                maxLength="20"
-                minLength="3"
-                isRequired="true"
+              <ngx-bootstrap-text-input-row #userName
+                name="userName"  label="User"
+                [(ngModel)]="loginData.userName"
+                required minlength="3" maxlength="20"
                 invalidText="Please enter a valid user name."
               ></ngx-bootstrap-text-input-row>
 
               <ngx-bootstrap-text-input-row
-                name="password"
-                label="Password"
-                [model]="loginData"
-                attributeName="password"
+                name="password" label="Password"
+                [(ngModel)]="loginData.password"
                 type="password"
-                maxLength="10"
-                minLength="3"
-                isRequired="true"
+                required minlength="3" maxlength="10"
                 invalidText="Please enter a password."
               ></ngx-bootstrap-text-input-row>
 
-              <a href="#" class="btn btn-primary btn-block" (click)="$event.preventDefault();loginForm.ngSubmit.emit();">
-                <i class="fas fa-check"></i> Login
-              </a>
+              <button type="submit" class="btn btn-primary btn-block"
+                      [disabled]="!loginForm.valid"
+              ><i class="fas fa-check"></i> Login</button>
             </form>
           </div>
         </div>

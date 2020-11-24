@@ -1,0 +1,14 @@
+<div class="form-group">
+  <label for="{{name}}">{{label}}</label>
+  <input id="{{name}}" type="text" class="form-control" placeholder="yyyy-mm-dd" name="{{name}}"
+         ngbDatepicker #d="ngbDatepicker"
+         [(ngModel)]="value"
+         (click)="d.toggle()"
+         #control="ngModel"
+         [class.is-invalid]="control.dirty && (control.invalid || invalid)"
+         [class.is-valid]="control.dirty && (control.valid || valid)"
+  />
+  <div class="invalid-feedback">
+    Please enter a valid date.
+  </div>
+</div>

@@ -20,9 +20,9 @@
         </a>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-warning btn-block" (click)="submitForm($event)">
+        <button class="btn btn-warning btn-block text-white" (click)="submitForm()" #saveButton>
           <i class="fas fa-check"></i> Save Changes
-        </a>
+        </button>
       </div>
       <div class="col-md-3">
         <a routerLink="/cars" class="btn btn-danger btn-block" (click)="deleteEmployee()">
@@ -40,40 +40,41 @@
       <div class="col">
         <div class="card">
           <div class="card-header">
-            <h4>Edit Car</h4>
+            <h4>Edit Employee</h4>
           </div>
           <div class="card-body">
             <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm">
               <ngx-bootstrap-text-input-row
                 name="firstName"
-                label="Firstname"
-                [model]="employee.data"
-                attributeName="firstName"
-                maxLength="10"
-                minLength="3"
-                isRequired="true"
+                label="First Name"
+                [(ngModel)]="employee.data.firstName"
+                required minlength="3" maxlength="50"
                 invalidText="Please enter a valid Firstname."
-              ></ngx-bootstrap-text-input-row>
-
+              >
+              </ngx-bootstrap-text-input-row>
               <ngx-bootstrap-text-input-row
                 name="lastName"
-                label="Lastname"
-                [model]="employee.data"
-                attributeName="lastName"
-                maxLength="10"
-                minLength="3"
-                isRequired="true"
+                label="Last Name"
+                [(ngModel)]="employee.data.lastName"
+                required minlength="3" maxlength="50"
                 invalidText="Please enter a valid Lastname."
-              ></ngx-bootstrap-text-input-row>
-
-              <ngx-bootstrap-date-input-row-component
+              >
+              </ngx-bootstrap-text-input-row>
+              <ngx-bootstrap-date-row
                 name="birthDate"
                 label="Birthdate"
-                [model]="employee.data"
-                attributeName="birthDate"
-                isRequired="true"
+                [(ngModel)]="employee.data.birthDate"
+                required
+                invalidText="Please enter a valid date."
               >
-              </ngx-bootstrap-date-input-row-component>
+              </ngx-bootstrap-date-row>
+              <ngx-bootstrap-text-input-row
+                name="email"
+                label="Email"
+                [(ngModel)]="employee.data.email"
+                required minlength="3" maxlength="100"
+                invalidText="Please enter a valid Email."
+              ></ngx-bootstrap-text-input-row>
             </form>
           </div>
         </div>

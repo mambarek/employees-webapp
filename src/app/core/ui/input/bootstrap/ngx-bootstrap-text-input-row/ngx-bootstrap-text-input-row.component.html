@@ -1,31 +1,11 @@
 <div class="form-group">
   <label for="{{name}}">{{label}}</label>
-
-  <input id="{{name}}" type="{{type}}" class="form-control"
-         [(ngModel)]="model[attributeName]"
-         name="{{name}}"
-         maxlength="{{maxLength}}"
-         minlength="{{minLength}}"
-         #input_box="ngModel" #box
-         [class.is-invalid]="input_box.dirty && input_box.invalid"
-         [class.is-valid]="input_box.dirty && input_box.valid"
-
-         *ngIf="!isRequired else required_template"
+  <input id="{{name}}" type="{{type}}" class="form-control" [(ngModel)]="value" name="{{name}}"
+         (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
+         [class.is-invalid]="dirty && invalid" [class.is-valid]="dirty && valid"
   />
-
   <div class="invalid-feedback">
     {{invalidText}}
   </div>
 </div>
 
-<ng-template #required_template>
-  <input id="{{name}}" type="{{type}}" class="form-control" [(ngModel)]="model[attributeName]"
-         name="{{name}}"
-         required
-         maxlength="{{maxLength}}"
-         minlength="{{minLength}}"
-         #input_box="ngModel" #box
-         [class.is-invalid]="input_box.dirty && input_box.invalid"
-         [class.is-valid]="input_box.dirty && input_box.valid"
-  />
-</ng-template>

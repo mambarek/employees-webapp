@@ -1,22 +1,16 @@
-import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NgControl,
-  ValidationErrors,
-} from "@angular/forms";
+import {Component, Input, Optional, Output, Self, EventEmitter} from '@angular/core';
+import {ControlValueAccessor, NgControl} from "@angular/forms";
 
 @Component({
-  selector: 'ngx-bootstrap-text-input-row',
-  templateUrl: './ngx-bootstrap-text-input-row.component.html',
+  selector: 'ngx-bootstrap-text-area-row',
+  templateUrl: './ngx-bootstrap-text-area-row.component.html',
 })
-export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
+export class NgxBootstrapTextAreaRowComponent implements ControlValueAccessor {
 
   @Input() name;
   @Input() label;
   @Input() invalidText;
   @Input() isReadonly = false;
-  @Input() type: 'text' | 'password';
 
   @Output() focus = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();
@@ -26,7 +20,6 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   _touched = false;
 
   constructor(@Self() @Optional() public control: NgControl) {
-    this.type = "text";
     if ( this.control) { this.control.valueAccessor = this; }
   }
 
@@ -89,7 +82,6 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   }
 
   public get dirty(): boolean {
-    //return this.control ? this.control.dirty : false;
     return this._dirty;
   }
 
@@ -110,6 +102,4 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
     this._dirty = true;
     this.input.emit(event);
   }
-
-
 }
