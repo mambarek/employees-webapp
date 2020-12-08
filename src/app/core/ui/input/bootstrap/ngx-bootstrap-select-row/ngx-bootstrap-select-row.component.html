@@ -3,9 +3,9 @@
 
   <select id="{{name}}" type="text" class="form-control" name="{{name}}"
           [(ngModel)]="value"
-          #localControl="ngModel"
-          [class.is-invalid]="(localControl.dirty || submitted) && (localControl.invalid || externalControlInvalid)"
-          [class.is-valid]="localControl.dirty && localControl.valid && externalControlValid"
+          #selectControl="ngModel"
+          [class.is-invalid]="(selectControl.dirty || submitted) && (selectControl.invalid || externalControlInvalid)"
+          [class.is-valid]="selectControl.dirty && selectControl.valid && externalControlValid"
           (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
   >
     <option *ngFor="let item of items" [value]="item[itemKey]">{{item[itemLabel]}}</option>

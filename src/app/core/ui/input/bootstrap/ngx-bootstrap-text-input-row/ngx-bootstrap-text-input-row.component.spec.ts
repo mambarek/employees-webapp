@@ -155,22 +155,23 @@ describe('NgxBootstrapTextInputRowComponent', () => {
     expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
   }));
 
-  it('!(4) should NOT ADD class "is-invalid" when NOT submitted and NOT dirty and external control INVALID', async(() => {
+  it('!(4) should NOT ADD class "is-invalid" when NOT submitted and NOT dirty and external control INVALID',
+    async(() => {
+      ngControl = TestBed.inject(NgControl);
+      spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
+      spyOnProperty(ngControl,"valid","get").and.returnValue(false);
+      component.control = ngControl;
+      component.label = 'Firstname'
+      component.invalidText = 'Please give a valid Firstname';
 
-    ngControl = TestBed.inject(NgControl);
-    spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
-    spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-    component.control = ngControl;
-    component.label = 'Firstname'
-    component.invalidText = 'Please give a valid Firstname';
-
-    fixture.whenStable().then(() => {
-      const input = el.query(By.css('input'));
-      expect(input).toBeTruthy();
-      expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
-      expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
-    })
-  }))
+      fixture.whenStable().then(() => {
+        const input = el.query(By.css('input'));
+        expect(input).toBeTruthy();
+        expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
+        expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
+      })
+   })
+  )
 
   it('(4) should ADD class "is-invalid" when submitted and NOT dirty and external control INVALID', fakeAsync(() => {
 

@@ -4,7 +4,19 @@ import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
 import {NgxBootstrapSelectRowComponent} from "./ngx-bootstrap-select-row.component";
 import {By} from "@angular/platform-browser";
+/**
+ * Validation cases
 
+ [class.is-invalid]="(localControl.dirty || submitted) && (localControl.invalid || externalControlInvalid)"
+ [class.is-valid]="localControl.dirty && localControl.valid && externalControlValid"
+
+ is-invalid
+ 1) dirty && local_invalid = true
+ 2) dirty && external_invalid = true
+
+ 3) submitted && local_invalid = true
+ 4) submitted && external_invalid = true
+ */
 describe('NgxBootstrapSelectRowComponent', () => {
 
   let component: NgxBootstrapSelectRowComponent;
@@ -65,7 +77,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
     })
   }));
 
-  it('should change the value manually, add "is-valid" class, dirty == true', async(() => {
+  it('should change the value, add "is-valid" class, dirty == true', async(() => {
     fixture.whenStable().then(() => {
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       console.log("print select", select);
@@ -79,27 +91,59 @@ describe('NgxBootstrapSelectRowComponent', () => {
     });
   }));
 
-  it('should add class "is-invalid" when dirty and external control invalid', async(() => {
-
-    ngControl = TestBed.inject(NgControl);
-    spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
-    spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
-    component.control = ngControl;
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
+  it('(1) dirty && local_invalid component should have "is-invalid" class',
+    fakeAsync(() => {
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
-      console.log("print select", select);
+      expect(select).toBeTruthy();
+      select.value = select.options[2].value;
+      select.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+
+      // set localControl state to invalid
+      spyOnProperty(component.localControl,"valid","get").and.returnValue(false);
+      spyOnProperty(component.localControl,"invalid","get").and.returnValue(true);
+
+      fixture.detectChanges();
+
+      expect(select.classList.contains('is-invalid')).toBe(true)
+      expect(select.classList.contains('is-valid')).toBe(false)
+    })
+  )
+
+  it('(2) should ADD class "is-invalid" when dirty and external control INVALID',
+    fakeAsync(() => {
+      ngControl = TestBed.inject(NgControl);
+      spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
+      spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
+      component.control = ngControl;
+      fixture.detectChanges();
+
+      let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       select.value = select.options[2].value;
       select.dispatchEvent(new Event('change'));
       fixture.detectChanges();
       let text = select.options[select.selectedIndex].label;
       expect(text).toBe('Female');
-      console.log(select.classList);
       expect(select.classList.contains('is-invalid')).toBe(true);
       expect(select.classList.contains('is-valid')).toBe(false);
-    });
-  }));
+    })
+  );
+
+  it('(3) submitted && local invalid should ADD "is-invalid" class',
+    fakeAsync(() => {
+      // set localControl state to invalid
+      spyOnProperty(component.localControl,"valid","get").and.returnValue(false);
+      spyOnProperty(component.localControl,"invalid","get").and.returnValue(true);
+      // set component as submitted
+      spyOnProperty(component,"submitted","get").and.returnValue(true);
+      // update component
+      fixture.detectChanges();
+      let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
+      expect(select).toBeTruthy();
+      expect(select.classList.contains('is-invalid')).toBe(true);
+      expect(select.classList.contains('is-valid')).toBe(false);
+    })
+  );
 
   it('should NOT add class "is-invalid" when NOT submitted and NOT dirty and external control INVALID',
     fakeAsync(() => {
@@ -114,7 +158,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
     })
   );
 
-  it('should ADD class "is-invalid" when submitted and NOT dirty and external control INVALID',
+  it('(4) should ADD class "is-invalid" when submitted and NOT dirty and external control INVALID',
     fakeAsync(() => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);

@@ -6,7 +6,7 @@ import {
   OnInit,
   Optional,
   Output,
-  Self
+  Self, ViewChild
 } from '@angular/core';
 import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 
@@ -16,6 +16,7 @@ import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 })
 export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
 
+  @ViewChild('selectControl') _localControl: NgControl;
   @Input() mainFormControl: NgForm;
   @Input() name;
   @Input() label;
@@ -32,6 +33,10 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
 
   constructor(@Self() @Optional() public control: NgControl) {
     if ( this.control) { this.control.valueAccessor = this; }
+  }
+
+  get localControl(): NgControl {
+    return this._localControl;
   }
 
   // the callback function to register on UI change
