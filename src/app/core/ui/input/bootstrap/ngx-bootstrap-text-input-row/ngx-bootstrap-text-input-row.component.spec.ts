@@ -136,7 +136,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
     })
   }))
 
-  fit('(3) submitted && local invalid should ADD "is-invalid" class', fakeAsync(() => {
+  it('(3) submitted && local invalid should ADD "is-invalid" class', fakeAsync(() => {
 
     component.control = ngControl;
     component.label = 'Firstname'
