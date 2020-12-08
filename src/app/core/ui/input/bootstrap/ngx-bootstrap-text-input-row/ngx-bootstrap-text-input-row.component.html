@@ -1,8 +1,11 @@
 <div class="form-group">
   <label for="{{name}}">{{label}}</label>
-  <input id="{{name}}" type="{{type}}" class="form-control" [(ngModel)]="value" name="{{name}}"
+  <input id="{{name}}" type="{{type}}" class="form-control" name="{{name}}"
+         [(ngModel)]="value"
+         #inputControl="ngModel"
+         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || externalControlInvalid)"
+         [class.is-valid]="inputControl.dirty && inputControl.valid && externalControlValid"
          (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
-         [class.is-invalid]="dirty && invalid" [class.is-valid]="dirty && valid"
   />
   <div class="invalid-feedback">
     {{invalidText}}

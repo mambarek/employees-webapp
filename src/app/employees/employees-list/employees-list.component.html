@@ -14,11 +14,17 @@
 <section id="search" class="py-4 mb-4 bg-light">
   <div class="container">
     <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-warning" (click)="addNewEmployee()" id="add-employee-button">
+          <i class="fa fa-plus"></i> New Employee
+        </button>
+      </div>
       <div class="col-md-6 ml-auto">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Employees..." [(ngModel)]="searchText">
+          <input type="text" class="form-control" placeholder="Search Employees..."
+                 [(ngModel)]="searchText" id="search-text">
           <div class="input-group-append">
-            <button class="btn btn-warning" (click)="searchEmployees()">Search</button>
+            <button class="btn btn-warning" (click)="searchEmployees()" id="search-button">Search</button>
           </div>
         </div>
       </div>
@@ -52,7 +58,7 @@
               <td>{{employee.lastName}}</td>
               <td>{{employee.birthDate | date:'yyyy-MM-dd' }}</td>
               <td>
-                <a routerLink="details/{{employee.publicId}}" class="btn btn-secondary">
+                <a routerLink="details/{{employee.publicId}}" class="btn btn-secondary" id="empl-details-{{i}}">
                   <i class="fas fa-angle-double-right"></i> Details
                 </a>
               </td>

@@ -2,7 +2,9 @@
   <label for="{{name}}">{{label}}</label>
   <textarea id="{{name}}" type="text" class="form-control" [(ngModel)]="value" name="{{name}}"
             (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
-            [class.is-invalid]="dirty && invalid" [class.is-valid]="dirty && valid"
+            #localControl="ngModel"
+            [class.is-invalid]="(localControl.dirty || submitted) && (localControl.invalid || externalControlInvalid)"
+            [class.is-valid]="localControl.dirty && localControl.valid && externalControlValid"
   ></textarea>
   <div class="invalid-feedback">
     {{invalidText}}

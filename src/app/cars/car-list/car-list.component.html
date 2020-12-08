@@ -16,9 +16,9 @@
     <div class="row">
       <div class="col-md-6 ml-auto">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Car..." [(ngModel)]="searchText">
+          <input type="text" class="form-control" id="search-text" placeholder="Search Car..." [(ngModel)]="searchText">
           <div class="input-group-append">
-            <button class="btn btn-info" (click)="searchCars()">Search</button>
+            <button class="btn btn-info" id="search-button" (click)="searchCars()">Search</button>
           </div>
         </div>
       </div>
@@ -37,30 +37,30 @@
           </div>
           <table class="table table-striped">
             <thead class="thead-dark">
-            <tr>
-              <th>#</th>
-              <th>Brand</th>
-              <th>Model</th>
-              <th>Color</th>
-              <th>Year</th>
-              <th>Status</th>
-              <th></th>
-            </tr>
+              <tr>
+                <th>#</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Color</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let car of carTableItems; index as i">
-              <td>{{i}}</td>
-              <td>{{car.brand}}</td>
-              <td>{{car.model}}</td>
-              <td>{{car.color}}</td>
-              <td>{{car.manufacturingDate | date:'yyyy-MM-dd' }}</td>
-              <td>{{car.status}}</td>
-              <td>
-                <a routerLink="details/{{car.publicId}}" class="btn btn-secondary">
-                  <i class="fas fa-angle-double-right"></i> Details
-                </a>
-              </td>
-            </tr>
+              <tr *ngFor="let car of carTableItems; index as i">
+                <td>{{i}}</td>
+                <td>{{car.brand}}</td>
+                <td>{{car.model}}</td>
+                <td>{{car.color}}</td>
+                <td>{{car.manufacturingDate | date:'yyyy-MM-dd' }}</td>
+                <td>{{car.status}}</td>
+                <td>
+                  <a routerLink="details/{{car.publicId}}" class="btn btn-secondary" id="car-details-{{i}}">
+                    <i class="fas fa-angle-double-right"></i> Details
+                  </a>
+                </td>
+              </tr>
             </tbody>
           </table>
 

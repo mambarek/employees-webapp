@@ -211,3 +211,14 @@ In the Dockerfile we add this
 ```CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]``` 
  
    
+##Testing
+to add environment variables to tests we should add src/assets/env.js to angular.json
+
+```
+"test": {
+...
+"scripts": ["src/assets/env.js"]
+...
+}
+```
+

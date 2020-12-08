@@ -1,0 +1,54 @@
+{
+  "resultList":[
+    {
+      "publicId": "3effb0e9-c7f4-4882-8d79-544b54f48073",
+      "firstName": "Mohamed Ali",
+      "lastName": "Mbarek 2",
+      "birthDate":[1970, 1, 6],
+      "salary": 5000.0,
+      "traveling": true,
+      "weekendWork": false,
+      "createdAt": 1606601645.584448000
+    },
+    {
+      "publicId": "dce9b115-c5b0-4e47-880b-016319eaa0dc",
+      "firstName": "John",
+      "lastName": "Doe",
+      "birthDate":[1985, 6, 23],
+      "salary": 3500.0,
+      "traveling": true,
+      "weekendWork": true,
+      "createdAt": 1606601645.669463000
+    },
+    {
+      "publicId": "e797213e-4636-4d3a-a582-1a6aa122abca",
+      "firstName": "Alice",
+      "lastName": "Brown",
+      "birthDate":[1995, 9, 3],
+      "salary": 4500.0,
+      "traveling": false,
+      "weekendWork": true,
+      "createdAt": 1606601645.674445000
+    },
+    {
+      "publicId": "1b8adca7-0aac-4f38-bb4f-76d9b70eb221",
+      "firstName": "Angela",
+      "lastName": "Thomson",
+      "birthDate":[1995, 9, 3],
+      "salary": 5500.0,
+      "traveling": false,
+      "weekendWork": false,
+      "createdAt": 1606601645.678446000
+    },
+    {
+      "publicId": "47fe7b78-739d-4712-8905-d3971a831974",
+      "firstName": "Peter",
+      "lastName": "Pan",
+      "birthDate":[2020, 11, 3],
+      "salary": null,
+      "traveling": false,
+      "weekendWork": false,
+      "createdAt": 1606601695.180783000
+    }
+  ]
+}

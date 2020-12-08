@@ -1,9 +1,12 @@
 <div class="form-group">
   <label for="{{name}}">{{label}}</label>
 
-  <select id="{{name}}" type="text" class="form-control" [(ngModel)]="value" name="{{name}}"
+  <select id="{{name}}" type="text" class="form-control" name="{{name}}"
+          [(ngModel)]="value"
+          #localControl="ngModel"
+          [class.is-invalid]="(localControl.dirty || submitted) && (localControl.invalid || externalControlInvalid)"
+          [class.is-valid]="localControl.dirty && localControl.valid && externalControlValid"
           (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
-          [class.is-invalid]="dirty && invalid" [class.is-valid]="dirty && valid"
   >
     <option *ngFor="let item of items" [value]="item[itemKey]">{{item[itemLabel]}}</option>
   </select>

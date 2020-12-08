@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
+import {Component, EventEmitter, Input, Optional, Output, Self, ViewChild} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  NgControl,
+  NgControl, NgForm,
   ValidationErrors,
 } from "@angular/forms";
 
@@ -12,22 +12,25 @@ import {
 })
 export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
 
+  @Input() mainFormControl: NgForm;
+  @ViewChild('inputControl') _localControl: NgControl;
   @Input() name;
   @Input() label;
   @Input() invalidText;
   @Input() isReadonly = false;
-  @Input() type: 'text' | 'password';
+  @Input() type: 'text' | 'password' = 'text';
 
   @Output() focus = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();
   @Output() input = new EventEmitter<any>();
-
-  _dirty = false;
-  _touched = false;
+  _value;
 
   constructor(@Self() @Optional() public control: NgControl) {
-    this.type = "text";
     if ( this.control) { this.control.valueAccessor = this; }
+  }
+
+  get localControl(): NgControl {
+    return this._localControl;
   }
 
   // the callback function to register on UI change
@@ -37,15 +40,12 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   onTouch: any = () => {
   }
 
-  _value = '';
-
   // sets the value used by the ngModel of the element
   set value(value) {
     // this value is updated by programmatic changes
-    if (value !== undefined && this._value !== value) {
+    if (this._value !== value) {
       this._value = value;
       this.onChange(value);
-      this.onTouch(value);
     }
   }
 
@@ -70,35 +70,15 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
     this.onTouch = fn;
   }
 
-  public get valid(): boolean {
+  public get externalControlValid(): boolean {
     return this.control ? this.control.valid : true;
   }
 
-  public get invalid(): boolean {
+  public get externalControlInvalid(): boolean {
     return this.control ? this.control.invalid : false;
   }
 
-  public get showError(): boolean {
-    if (!this.control) {
-      return false;
-    }
-
-    const { dirty, touched } = this.control;
-
-    return this.invalid ? (dirty || touched) : false;
-  }
-
-  public get dirty(): boolean {
-    //return this.control ? this.control.dirty : false;
-    return this._dirty;
-  }
-
-  get touched(): boolean {
-    return this._touched
-  }
-
   onFocus(event: Event) {
-    this._touched = true;
     this.focus.emit(event);
   }
 
@@ -107,9 +87,10 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   }
 
   onInput(event: Event) {
-    this._dirty = true;
     this.input.emit(event);
   }
 
-
+  get submitted(){
+    return this.mainFormControl && this.mainFormControl.submitted;
+  }
 }

@@ -1,8 +1,17 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {Car, CarsService} from "@angular-it2go/car-fleet-api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgForm, NgModel} from "@angular/forms";
 import {Subscription} from "rxjs";
+import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-car',
@@ -11,17 +20,30 @@ import {Subscription} from "rxjs";
 })
 export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @ViewChild('nativeForm', {static: false}) nativeForm: ElementRef;
   @ViewChild('carForm', {static: false}) carForm: NgForm;
-  @ViewChild('saveButton', {static: false}) saveButton: ElementRef;
+  @ViewChild('saveButton') saveButton: ElementRef;
   car: Car;
   subscriptions: Subscription [] = [];
 
   fuelTypes = [{id: 'DISEL', value: 'DIESEL'}, {id: 'PETROL', value: 'PETROL'}];
+  testText;
+  carEditorTitle = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private carsService: CarsService) { }
 
   ngOnInit(): void {
+    console.log("SaveButton", this.saveButton);
+  }
+
+  ngAfterViewInit(): void {
     this.initModel();
+    console.log("nativeForm", this.nativeForm);
+    console.log("carForm", this.carForm);
+    console.log("SaveButton", this.saveButton);
+    //this.saveButton.nativeElement.disabled = true;
+
+
   }
 
   private initModel(): void {
@@ -36,6 +58,7 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
       response => {
         console.log('Car loaded ', response);
         this.car = response;
+        this.carEditorTitle = this.car.brand.concat(" ").concat(this.car.model).concat(" ").concat(this.car.status);
       },
       error => {
         console.error(error.message, error);
@@ -45,12 +68,7 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  submitForm(event: Event): void {
-    event.preventDefault();
-    this.carForm.ngSubmit.emit();
-  }
-
-  saveCar(): void {
+  saveCar(): void { console.log("SaveButton", this.saveButton);
     if(this.carForm.invalid) return;
     console.log('saveCar call!', this.car);
     if (this.car.publicId) {
@@ -80,9 +98,6 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
-
-  ngAfterViewInit(): void {
   }
 
   selectInput(event: Event) {

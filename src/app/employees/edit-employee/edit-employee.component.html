@@ -20,12 +20,12 @@
         </a>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-warning btn-block text-white" (click)="submitForm()" #saveButton>
+        <button class="btn btn-warning btn-block text-white" form="employeeForm" #saveButton>
           <i class="fas fa-check"></i> Save Changes
         </button>
       </div>
       <div class="col-md-3">
-        <a routerLink="/cars" class="btn btn-danger btn-block" (click)="deleteEmployee()">
+        <a routerLink="/cars" class="btn btn-danger btn-block" (click)="deleteEmployee()" *ngIf="employee.publicId">
           <i class="fas fa-trash"></i> Delete Employee
         </a>
       </div>
@@ -43,11 +43,12 @@
             <h4>Edit Employee</h4>
           </div>
           <div class="card-body">
-            <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm">
+            <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm" id="employeeForm">
               <ngx-bootstrap-text-input-row
                 name="firstName"
                 label="First Name"
                 [(ngModel)]="employee.data.firstName"
+                [mainFormControl]="employeeForm"
                 required minlength="3" maxlength="50"
                 invalidText="Please enter a valid Firstname."
               >
@@ -56,6 +57,7 @@
                 name="lastName"
                 label="Last Name"
                 [(ngModel)]="employee.data.lastName"
+                [mainFormControl]="employeeForm"
                 required minlength="3" maxlength="50"
                 invalidText="Please enter a valid Lastname."
               >
@@ -64,6 +66,7 @@
                 name="birthDate"
                 label="Birthdate"
                 [(ngModel)]="employee.data.birthDate"
+                [mainFormControl]="employeeForm"
                 required
                 invalidText="Please enter a valid date."
               >
@@ -72,9 +75,19 @@
                 name="email"
                 label="Email"
                 [(ngModel)]="employee.data.email"
+                [mainFormControl]="employeeForm"
                 required minlength="3" maxlength="100"
                 invalidText="Please enter a valid Email."
               ></ngx-bootstrap-text-input-row>
+
+              <ngx-bootstrap-radios-row
+                label="Gender" name="genders"
+                [items]="radioItems"
+                [(ngModel)]="employee.data.gender"
+                [mainFormControl]="employeeForm"
+                required
+              ></ngx-bootstrap-radios-row>
+              <button class="btn btn-primary" type="submit" >Submit</button>
             </form>
           </div>
         </div>

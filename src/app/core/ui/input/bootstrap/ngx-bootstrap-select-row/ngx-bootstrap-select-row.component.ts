@@ -8,7 +8,7 @@ import {
   Output,
   Self
 } from '@angular/core';
-import {ControlValueAccessor, NgControl} from "@angular/forms";
+import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'ngx-bootstrap-select-row',
@@ -16,6 +16,7 @@ import {ControlValueAccessor, NgControl} from "@angular/forms";
 })
 export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
 
+  @Input() mainFormControl: NgForm;
   @Input() name;
   @Input() label;
   @Input() invalidText;
@@ -28,9 +29,6 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
   @Output() focus = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();
   @Output() input = new EventEmitter<any>();
-
-  _dirty = false;
-  _touched = false;
 
   constructor(@Self() @Optional() public control: NgControl) {
     if ( this.control) { this.control.valueAccessor = this; }
@@ -48,10 +46,9 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
   // sets the value used by the ngModel of the element
   set value(value) {
     // this value is updated by programmatic changes
-    if (value !== undefined && this._value !== value) {
+    if (this._value !== value) {
       this._value = value;
       this.onChange(value);
-      this.onTouch(value);
     }
   }
 
@@ -76,34 +73,15 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  public get valid(): boolean {
+  public get externalControlValid(): boolean {
     return this.control ? this.control.valid : true;
   }
 
-  public get invalid(): boolean {
+  public get externalControlInvalid(): boolean {
     return this.control ? this.control.invalid : false;
   }
 
-  public get showError(): boolean {
-    if (!this.control) {
-      return false;
-    }
-
-    const { dirty, touched } = this.control;
-
-    return this.invalid ? (dirty || touched) : false;
-  }
-
-  public get dirty(): boolean {
-    return this._dirty;
-  }
-
-  get touched(): boolean {
-    return this._touched
-  }
-
   onFocus(event: Event) {
-    this._touched = true;
     this.focus.emit(event);
   }
 
@@ -112,7 +90,11 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
   }
 
   onInput(event: Event) {
-    this._dirty = true;
     this.input.emit(event);
   }
+
+  get submitted(){
+    return this.mainFormControl && this.mainFormControl.submitted;
+  }
+
 }

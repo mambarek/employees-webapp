@@ -1,5 +1,5 @@
 import {Component, Input, Optional, Self, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NgControl} from "@angular/forms";
+import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'ngx-bootstrap-date-row',
@@ -13,6 +13,7 @@ export class NgxBootstrapDateRowComponent implements ControlValueAccessor {
   @Input() name;
   @Input() label;
   @Input() invalidText;
+  @Input() mainFormControl: NgForm;
 
   _value = '';
 
@@ -59,11 +60,15 @@ export class NgxBootstrapDateRowComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  public get valid(): boolean {
+  public get externalControlValid(): boolean {
     return this.control ? this.control.valid : true;
   }
 
-  public get invalid(): boolean {
+  public get externalControlInvalid(): boolean {
     return this.control ? this.control.invalid : false;
+  }
+
+  get submitted(){
+    return this.mainFormControl && this.mainFormControl.submitted;
   }
 }

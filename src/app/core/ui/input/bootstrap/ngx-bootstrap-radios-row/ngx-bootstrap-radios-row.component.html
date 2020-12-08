@@ -1,1 +1,17 @@
-<p>ngx-bootstrap-radios-row-component works!</p>
+<div class="form-group">
+  <label>{{label}}</label>
+  <div class="custom-control custom-radio" *ngFor="let item of items" id="{{name}}"
+       [class.is-invalid]="(control.dirty || submitted) && (control.invalid || externalControlInvalid)"
+       [class.is-valid]="control.dirty && control.valid && externalControlValid"
+  >
+    <input type="radio" id="{{item.value}}" name="{{name}}"
+           class="custom-control-input" value="{{item.value}}"
+           [(ngModel)]="value" #control="ngModel"
+    />
+    <label class="custom-control-label" for="{{item.value}}">{{item.label}}</label>
+  </div>
+  <div class="invalid-feedback">
+    Please select a Gender.
+  </div>
+</div>
+

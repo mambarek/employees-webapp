@@ -21,6 +21,7 @@ const routes: Routes = [
   {
     path: 'employees', children: [
       { path: '', component: EmployeesListComponent },
+      { path: 'new', component: EditEmployeeComponent },
       { path: 'details/:id', component: EditEmployeeComponent }
     ]
   },

@@ -13,27 +13,45 @@ export class CarListComponent implements OnInit {
 
   itemsCount = 0;
   searchText = '';
-  cars: Car[] = [];
   carTableItems: ICarTableItem[] = [];
 
   constructor(private carSearchService: CarSearchService) { }
 
   ngOnInit(): void {
     this.searchCars();
+    console.log("--> ngOnInit call. carTableItems length:", this.carTableItems.length);
+    console.log("--> ngOnInit call. carTableItems:", this.carTableItems);
   }
 
   searchCars(): void {
-    const brandRule: IRule = {field: 'brand', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
-    const modelRule: IRule = {field: 'model', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
-    // color is translated so this search will work only if you give the color id may use a dropdownlist for colors
-    const colorRule: IRule = {field: 'color', data: this.searchText, op: IRule.OpEnum.CONTAINS, type: IRule.TypeEnum.STRING};
-    const group: IGroup = {rules: [brandRule, modelRule, colorRule]};
-    group.groupOp = GroupOpEnum.OR;
+    let group: IGroup = {rules: []};
+    if(this.searchText) {
+      const brandRule: IRule = {
+        field: 'brand',
+        data: this.searchText,
+        op: IRule.OpEnum.CONTAINS,
+        type: IRule.TypeEnum.STRING
+      };
+      const modelRule: IRule = {
+        field: 'model',
+        data: this.searchText,
+        op: IRule.OpEnum.CONTAINS,
+        type: IRule.TypeEnum.STRING
+      };
+      // color is translated so this search will work only if you give the color id may use a dropdownlist for colors
+      const colorRule: IRule = {
+        field: 'color',
+        data: this.searchText,
+        op: IRule.OpEnum.CONTAINS,
+        type: IRule.TypeEnum.STRING
+      };
+      const group: IGroup = {rules: [brandRule, modelRule, colorRule]};
+      group.groupOp = GroupOpEnum.OR;
+    }
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model', orderDirection: 'ASC'};
     const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model'};
 
     this.carSearchService.search(searchTemplate).subscribe(response => {
-      //this.carTableItems = response.rows;
       this.setGridItems(response.rows);
       this.itemsCount = response.records;
     }, error => console.error(error))
@@ -51,6 +69,9 @@ export class CarListComponent implements OnInit {
     })
 
     this.carTableItems = resultList;
+
+    console.log("--> setGridItems call. carTableItems length:", this.carTableItems.length);
+    console.log("--> setGridItems call. carTableItems:", this.carTableItems);
   }
 
   // Translation should be offered from the called microservice

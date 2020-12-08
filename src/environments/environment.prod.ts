@@ -4,9 +4,10 @@
 
 // The env values are defined in /assets/env.template.js
 export const environment = {
-  production: false,
+  production: true,
   employeesApiUrl: window['env']['employeesApiUrl'] || 'http://localhost:8010',
-  projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:8020'
+  projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:8020',
+  carfleetApiUrl: window['env']['carfleetApiUrl'] || 'http://localhost:8030'
 };
 
 /*

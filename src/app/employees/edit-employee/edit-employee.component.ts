@@ -1,7 +1,8 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Employee, EmployeesControllerService} from "@angular-it2go/employees-api";
+import {Employee as IEmployee, PersonData as IPersonData, EmployeesControllerService} from "@angular-it2go/employees-api";
 import {NgForm} from "@angular/forms";
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit-employee',
@@ -12,7 +13,8 @@ export class EditEmployeeComponent implements OnInit {
 
   @ViewChild('employeeForm', {static: false}) employeeForm: NgForm;
   @ViewChild('saveButton', {static: false}) saveButton: ElementRef;
-  employee: Employee;
+  employee: IEmployee;
+  radioItems = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
 
   constructor(private route: ActivatedRoute, private router: Router, private employeesService: EmployeesControllerService) {
 
@@ -26,6 +28,7 @@ export class EditEmployeeComponent implements OnInit {
     const publicId: string = this.route.snapshot.params.id;
 
     if (!publicId) {
+      this.employee = EditEmployeeComponent.createNewEmployee();
       return;
     } // it mean we create a new to do
 
@@ -38,22 +41,38 @@ export class EditEmployeeComponent implements OnInit {
     )
   }
 
-  submitForm() {
-    if (this.employeeForm.invalid) return;
-    this.employeesService.updateEmploy(this.employee.publicId, this.employee).subscribe(
-      response => {
-        console.log('Saved employee SUCCESS');
-        this.employee = response;
-      }, error => {
-        console.error(error)
-      })
-  }
-
   deleteEmployee() {
 
   }
 
   saveEmployee() {
+    if (this.employeeForm.invalid) return;
+    if(this.employee.publicId) {
+      this.employeesService.updateEmploy(this.employee.publicId, this.employee).subscribe(
+        response => {
+          console.log('Update employee SUCCESS');
+          this.employee = response;
+        }, error => {
+          console.error(error)
+        })
+    } else {
+      this.employee.publicId = uuidv4();
+      this.employee.createdBy = uuidv4();
+      this.employee.createdAt = new Date().getTime().toString();
+      this.employeesService.saveNewEmployee(this.employee).subscribe(
+        response => {
+          console.log('Create new employee SUCCESS');
+          this.employee = response;
+        }, error => {
+          console.error(error)
+        })
+    }
+  }
 
+  private static createNewEmployee(): IEmployee {
+    const employee: IEmployee = {} as IEmployee;
+    employee.data = {} as IPersonData;
+
+    return employee;
   }
 }

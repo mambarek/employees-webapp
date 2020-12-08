@@ -13,6 +13,7 @@ import {LoggingInterceptor} from "./interceptors/logging.interceptor";
 import {IntArrayDateAdapterService} from "./services/datepicker/int-array-date-adapter.service";
 import {ConfigurableDateParserFormatterService} from "./services/datepicker/configurable-date-parser-formatter.service";
 import { NgxBootstrapDateRowComponent } from './ui/input/bootstrap/ngx-bootstrap-date-row/ngx-bootstrap-date-row.component';
+import {IsoDateAdapterService} from "./services/datepicker/iso-date-adapter.service";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { NgxBootstrapDateRowComponent } from './ui/input/bootstrap/ngx-bootstrap
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
-    {provide: NgbDateAdapter, useClass: IntArrayDateAdapterService},
+    {provide: NgbDateAdapter, useClass: IsoDateAdapterService},
     {provide: NgbDateParserFormatter, useClass: ConfigurableDateParserFormatterService}
     ]
 })

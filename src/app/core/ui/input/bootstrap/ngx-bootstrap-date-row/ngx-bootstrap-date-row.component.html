@@ -5,8 +5,8 @@
          [(ngModel)]="value"
          (click)="d.toggle()"
          #control="ngModel"
-         [class.is-invalid]="control.dirty && (control.invalid || invalid)"
-         [class.is-valid]="control.dirty && (control.valid || valid)"
+         [class.is-invalid]="(control.dirty || submitted) && (control.invalid || externalControlInvalid)"
+         [class.is-valid]="control.dirty && control.valid && externalControlValid"
   />
   <div class="invalid-feedback">
     Please enter a valid date.

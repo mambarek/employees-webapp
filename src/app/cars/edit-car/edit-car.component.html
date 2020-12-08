@@ -3,15 +3,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <h1 *ngIf="car">
-          {{car.brand}} {{car.model}} ({{car.status}})</h1>
+        <h1 *ngIf="car">{{carEditorTitle}}</h1>
       </div>
     </div>
   </div>
 </header>
 
 <!-- ACTIONS -->
-<section id="actions" class="py-4 mb-4 bg-light" *ngIf="car">
+<!--<section id="actions" class="py-4 mb-4 bg-light" *ngIf="car">-->
+<section id="actions" class="py-4 mb-4 bg-light" [style.display]="car ? 'block' : 'none'" >
   <div class="container">
     <div class="row">
       <div class="col-md-3">
@@ -20,7 +20,7 @@
         </a>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-info btn-block" (click)="submitForm($event)" #saveButton>
+        <button class="btn btn-info btn-block" form="carForm" id="saveButton" #saveButton >
           <i class="fas fa-check"></i> Save Changes
         </button>
       </div>
@@ -43,10 +43,11 @@
             <h4>Edit Car</h4>
           </div>
           <div class="card-body">
-            <form (ngSubmit)="saveCar()" #carForm="ngForm">
+            <form (ngSubmit)="saveCar()" #carForm="ngForm" #nativeForm id="carForm">
               <ngx-bootstrap-text-input-row
                 name="brand"  label="Brand"
                 [(ngModel)]="car.brand"
+                [mainFormControl]="carForm"
                 required minlength="3" maxlength="10"
                 invalidText="Please enter a valid Brand."
               ></ngx-bootstrap-text-input-row>
@@ -54,6 +55,7 @@
               <ngx-bootstrap-text-input-row
                 name="model" label="Model"
                 [(ngModel)]="car.model"
+                [mainFormControl]="carForm"
                 required minlength="3" maxlength="10"
                 invalidText="Please enter a model name."
               ></ngx-bootstrap-text-input-row>
@@ -61,6 +63,7 @@
               <ngx-bootstrap-text-area-row
                 name="car-desc" label="Description"
                 [(ngModel)]="car.description"
+                [mainFormControl]="carForm"
                 required
                 invalidText="Please enter a model description."
               ></ngx-bootstrap-text-area-row>
@@ -68,10 +71,12 @@
               <ngx-bootstrap-select-row
                 name="fuelType"
                 label="Fuel type"
-                [(ngModel)]="car.fuelType" required
+                [(ngModel)]="car.fuelType"
+                [mainFormControl]="carForm"
                 [items]="fuelTypes"
                 itemKey="id"
                 itemLabel="value" (input)="selectInput($event)"
+                required
               >
               </ngx-bootstrap-select-row>
 
@@ -79,9 +84,11 @@
                 name="manufacturingDate"
                 label="Manufacturing Date"
                 [(ngModel)]="car.manufacturingDate"
+                [mainFormControl]="carForm"
                 required
               >
               </ngx-bootstrap-date-row>
+              <button class="btn btn-primary" type="submit" [disabled]="carForm.form.invalid">Submit</button>
             </form>
           </div>
         </div>
