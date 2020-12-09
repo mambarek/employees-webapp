@@ -15,7 +15,7 @@ import {By} from "@angular/platform-browser";
  2) dirty && external_invalid = true
  3) dirty && external_valid = true
  */
-fdescribe('NgxBootstrapRadiosRowComponent', () => {
+describe('NgxBootstrapRadiosRowComponent', () => {
 
   let component: NgxBootstrapRadiosRowComponent;
   let fixture: ComponentFixture<NgxBootstrapRadiosRowComponent>;
@@ -135,4 +135,5 @@ fdescribe('NgxBootstrapRadiosRowComponent', () => {
       })
     })
   );
+
 })

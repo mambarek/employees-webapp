@@ -56,37 +56,41 @@ describe('NgxBootstrapTextInputRowComponent', () => {
     expect(label.nativeElement.textContent).toEqual('Firstname');
   })
 
-  it('No user input (dirty=false) component should NOT have "is-valid" class', async(() => {
-    component.label = 'Firstname'
-    component.value = 'Ali';
-    component.invalidText = 'Please give a valid Firstname';
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      const input = el.query(By.css('input'));
-      expect(input).toBeTruthy();
-      expect(input.nativeElement.value).toBe('Ali');
-      expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
-    })
-  }))
-
-  it('After user input (dirty=true) component should have "is-valid" class', async(() => {
-    component.label = 'Firstname'
-    component.value = 'Ali';
-    component.invalidText = 'Please give a valid Firstname';
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      const input = el.query(By.css('input'));
-      expect(input).toBeTruthy();
-
-      input.nativeElement.value = 'Omar'
-      input.nativeElement.dispatchEvent(new Event('input'))
+  it('No user input (dirty=false) component should NOT have "is-valid" class',
+    async(() => {
+      component.label = 'Firstname'
+      component.value = 'Ali';
+      component.invalidText = 'Please give a valid Firstname';
       fixture.detectChanges();
 
-      expect(input.nativeElement.classList.contains('is-valid')).toBe(true)
+      fixture.whenStable().then(() => {
+        const input = el.query(By.css('input'));
+        expect(input).toBeTruthy();
+        expect(input.nativeElement.value).toBe('Ali');
+        expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
+      })
     })
-  }))
+  )
+
+  it('After user input (dirty=true) component should have "is-valid" class',
+    async(() => {
+      component.label = 'Firstname'
+      component.value = 'Ali';
+      component.invalidText = 'Please give a valid Firstname';
+      fixture.detectChanges();
+
+      fixture.whenStable().then(() => {
+        const input = el.query(By.css('input'));
+        expect(input).toBeTruthy();
+
+        input.nativeElement.value = 'Omar'
+        input.nativeElement.dispatchEvent(new Event('input'))
+        fixture.detectChanges();
+
+        expect(input.nativeElement.classList.contains('is-valid')).toBe(true)
+      })
+    })
+  )
 
   it('(1) dirty && local_invalid component should have "is-invalid" class',
     fakeAsync(() => {

@@ -3,12 +3,11 @@ import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'ngx-bootstrap-date-row',
-  templateUrl: './ngx-bootstrap-date-row.component.html',
-  styleUrls: ['./ngx-bootstrap-date-row.component.css']
+  templateUrl: './ngx-bootstrap-date-row.component.html'
 })
 export class NgxBootstrapDateRowComponent implements ControlValueAccessor {
 
-  @ViewChild('control') uiControl: NgControl;
+  @ViewChild('inputControl') _localControl: NgControl;
 
   @Input() name;
   @Input() label;
@@ -23,6 +22,10 @@ export class NgxBootstrapDateRowComponent implements ControlValueAccessor {
     }
   }
 
+  get localControl(): NgControl {
+    return this._localControl;
+  }
+
   // the callback function to register on UI change
   onChange: any = () => {
   }
@@ -35,7 +38,6 @@ export class NgxBootstrapDateRowComponent implements ControlValueAccessor {
     if (this._value !== value) {
       this._value = value;
       this.onChange(value);
-      this.onTouch(value);
     }
   }
 
