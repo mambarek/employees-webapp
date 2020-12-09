@@ -53,7 +53,7 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
     return this._value;
   }
 
-  // This will will write the value to the view if the the value changes occur on the model programmatically
+  // This will write the value to view if the value changes
   writeValue(value: any): void {
     this.value = value;
   }

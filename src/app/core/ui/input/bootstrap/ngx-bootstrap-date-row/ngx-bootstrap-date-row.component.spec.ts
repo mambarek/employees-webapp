@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxBootstrapDateRowComponent } from './ngx-bootstrap-date-row.component';
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 describe('NgxBootstrapDateRowComponent', () => {
   let component: NgxBootstrapDateRowComponent;
@@ -10,7 +11,7 @@ describe('NgxBootstrapDateRowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CoreModule],
+      imports: [CoreModule, NgbModule],
       declarations: [ NgxBootstrapDateRowComponent ],
       providers: [{ provide: NgControl, useValue: new FormControl()}]
     })

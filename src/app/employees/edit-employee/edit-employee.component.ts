@@ -14,7 +14,7 @@ export class EditEmployeeComponent implements OnInit {
   @ViewChild('employeeForm', {static: false}) employeeForm: NgForm;
   @ViewChild('saveButton', {static: false}) saveButton: ElementRef;
   employee: IEmployee;
-  radioItems = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
+  genders = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
 
   constructor(private route: ActivatedRoute, private router: Router, private employeesService: EmployeesControllerService) {
 

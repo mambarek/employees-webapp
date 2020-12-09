@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, Optional, Self} from '@angular/core';
+import {Component, Input, OnInit, Optional, Self, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'ngx-bootstrap-radios-row',
-  templateUrl: './ngx-bootstrap-radios-row.component.html',
-  styleUrls: ['./ngx-bootstrap-radios-row.component.css']
+  templateUrl: './ngx-bootstrap-radios-row.component.html'
 })
 export class NgxBootstrapRadiosRowComponent implements ControlValueAccessor {
 
   @Input() mainFormControl: NgForm;
+  @ViewChild('radioControl') _localControl: NgControl;
   @Input() name;
   @Input() label;
   @Input() invalidText;
@@ -16,12 +16,16 @@ export class NgxBootstrapRadiosRowComponent implements ControlValueAccessor {
 
   @Input() items: {value: any, label: string}[] = [];
 
-  _value = '';
+  _value;
 
   constructor(@Self() @Optional() public control: NgControl) {
     if (this.control) {
       this.control.valueAccessor = this;
     }
+  }
+
+  get localControl(): NgControl {
+    return this._localControl;
   }
 
   // the callback function to register on UI change
