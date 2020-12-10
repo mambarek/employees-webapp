@@ -8,7 +8,7 @@ import {CARS} from "../../../../test/carfleet/cars";
 import {of} from "rxjs";
 
 
-fdescribe("CarListComponent", () => {
+describe("CarListComponent", () => {
   let component: CarListComponent;
   let fixture: ComponentFixture<CarListComponent>;
   let el: DebugElement;
