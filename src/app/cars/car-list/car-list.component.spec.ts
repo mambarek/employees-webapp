@@ -81,7 +81,7 @@ fdescribe("CarListComponent", () => {
     })
   )
 
-  fit('Input search text "BMW" should display exactly one car in the list',
+  it('Input search text "BMW" should display exactly one car in the list',
     async(() =>{
       fixture.whenStable().then(() => {
         // search text
