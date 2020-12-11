@@ -150,13 +150,12 @@ Go to project root and run:
 
 Now you can import and use the stubs in your Application 
 
-## It works but this not practical 
-It's ok now the API Library is in npm registry and it s available for all developer so 
+Now the API Library is in npm registry and it s available for all developer so 
 anyone can now use it with npm install or add it to dependencies in package.json
 
 ## Consume the API
-The Generated API containing every thing you need. the files contains Service Classes 
-so you don't have to implement them manually. You have to configure them like set the BASE_PATH for the API  
+The Generated API containing every thing you need. the files contain service classes. 
+So you don't have to implement them manually. You have to configure them like set the BASE_PATH for the API  
 
 It's generally a good practice to extend the src/environments/*.ts files by adding a corresponding base path:
 ```
@@ -187,14 +186,13 @@ import { environment } from '../environments/environment';
 })
 export class AppModule { }
 ```
-This works now for one API (Projects API) but we have to add the employees API and Carfleet too
 
 ## Caching search list when gos to details view
-Caching Components in Angluar is complex and there is no standard strategy
-So after trying some ideas from the internet it works but there are a lost of bugs 
-because of object references. The idea is to build a cache service, tha provides a cache for
+Caching Components in Angular is complex and there is no standard strategy
+So after trying some ideas from the internet it works but there are a lot of bugs 
+because of object references. The idea is to build a cache service, that provides a cache for
 components data. Routing is then programmatically. we should save the data to cache service
-before changing the route. When initialize the parent route we should read the data from cache then 
+before changing the route. After initializing the parent route we should read the data from cache then 
 clean the cache data to be reinitialized from calling routing method.   
 
 ## Environment and Application Variable
