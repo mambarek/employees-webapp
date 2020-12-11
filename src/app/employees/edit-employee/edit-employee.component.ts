@@ -6,8 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-edit-employee',
-  templateUrl: './edit-employee.component.html',
-  styleUrls: ['./edit-employee.component.css']
+  templateUrl: './edit-employee.component.html'
 })
 export class EditEmployeeComponent implements OnInit {
 

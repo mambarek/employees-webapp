@@ -6,8 +6,7 @@ import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-edit-project',
-  templateUrl: './project-details.component.html',
-  styleUrls: ['./project-details.component.css']
+  templateUrl: './project-details.component.html'
 })
 export class ProjectDetailsComponent implements OnInit {
 

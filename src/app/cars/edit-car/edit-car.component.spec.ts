@@ -13,7 +13,7 @@ describe('EditCarComponent', () => {
 
   beforeEach(async(() => {
     // create cars service spy and provide it
-    const carsServiceSpy = jasmine.createSpyObj('CarService',
+    const carsServiceSpy = jasmine.createSpyObj('CarsService',
       ['getCarByPublicId', 'updateCar', 'createCar', 'deleteCar']);
 
     TestBed.configureTestingModule({
@@ -24,4 +24,9 @@ describe('EditCarComponent', () => {
     })
     .compileComponents();
   }))
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EditCarComponent);
+    component = fixture.componentInstance;
+  })
 })
