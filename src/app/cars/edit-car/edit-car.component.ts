@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
@@ -11,12 +10,10 @@ import {Car, CarsService} from "@angular-it2go/car-fleet-api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgForm, NgModel} from "@angular/forms";
 import {Subscription} from "rxjs";
-import {delay} from "rxjs/operators";
 
 @Component({
   selector: 'app-edit-car',
-  templateUrl: './edit-car.component.html',
-  styleUrls: ['./edit-car.component.css']
+  templateUrl: './edit-car.component.html'
 })
 export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -27,23 +24,15 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
   subscriptions: Subscription [] = [];
 
   fuelTypes = [{id: 'DISEL', value: 'DIESEL'}, {id: 'PETROL', value: 'PETROL'}];
-  testText;
   carEditorTitle = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private carsService: CarsService) { }
 
   ngOnInit(): void {
-    console.log("SaveButton", this.saveButton);
   }
 
   ngAfterViewInit(): void {
     this.initModel();
-    console.log("nativeForm", this.nativeForm);
-    console.log("carForm", this.carForm);
-    console.log("SaveButton", this.saveButton);
-    //this.saveButton.nativeElement.disabled = true;
-
-
   }
 
   private initModel(): void {

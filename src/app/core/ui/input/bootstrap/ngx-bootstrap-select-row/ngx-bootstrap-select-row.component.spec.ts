@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, flushMicrotasks, TestBed} from "@angular/core/testing";
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {DebugElement} from "@angular/core";
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
@@ -62,42 +62,39 @@ describe('NgxBootstrapSelectRowComponent', () => {
     console.log("Default selection", select.nativeElement.selectedOptions[0]);
   })
 
-  it('should select default value "Male", no "is-valid" class added, dirty == false', async(() => {
-    component.value = 'MALE';
-    fixture.detectChanges();
-
-    fixture.whenStable().then(() => {
-      let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
-      expect(select.selectedIndex).toEqual(1);
-      expect(select.options[select.selectedIndex].value).toEqual("MALE");
-      expect(select.options[select.selectedIndex].label).toEqual("Male");
-
-      expect(select.selectedOptions[0].value).toEqual("MALE");
-      expect(select.classList.contains('is-valid')).toBe(false);
-    })
-  }));
-
-  it('should change the value, add "is-valid" class, dirty == true', async(() => {
-    fixture.whenStable().then(() => {
-      let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
-      console.log("print select", select);
-      select.value = select.options[2].value;
-      select.dispatchEvent(new Event('change'));
+  it('should select default value "Male", no "is-valid" class added, dirty == false',
+    async(() => {
+      component.value = 'MALE';
       fixture.detectChanges();
-      let text = select.options[select.selectedIndex].label;
-      expect(text).toBe('Female');
-      expect(select.classList.contains('is-valid')).toBe(true);
-      expect(select.classList.contains('is-invalid')).toBe(false);
-    });
-  }));
 
-  it('(1) dirty && local_invalid component should have "is-invalid" class',
-    fakeAsync(() => {
+      fixture.whenStable().then(() => { // block needs zone
+        let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
+        expect(select.selectedIndex).toEqual(1);
+        expect(select.options[select.selectedIndex].value).toEqual("MALE");
+        expect(select.options[select.selectedIndex].label).toEqual("Male");
+
+        expect(select.selectedOptions[0].value).toEqual("MALE");
+        expect(select.classList.contains('is-valid')).toBe(false);
+      })
+    })
+  );
+
+  it('should change the value, add "is-valid" class, dirty == true', () => {
+    let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
+    select.value = select.options[2].value;
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    let text = select.options[select.selectedIndex].label;
+    expect(text).toBe('Female');
+    expect(select.classList.contains('is-valid')).toBe(true);
+    expect(select.classList.contains('is-invalid')).toBe(false);
+  });
+
+  it('(1) dirty && local_invalid component should have "is-invalid" class',() => {
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       expect(select).toBeTruthy();
       select.value = select.options[2].value;
       select.dispatchEvent(new Event('change'));
-      fixture.detectChanges();
 
       // set localControl state to invalid
       spyOnProperty(component.localControl,"valid","get").and.returnValue(false);
@@ -107,11 +104,11 @@ describe('NgxBootstrapSelectRowComponent', () => {
 
       expect(select.classList.contains('is-invalid')).toBe(true)
       expect(select.classList.contains('is-valid')).toBe(false)
-    })
-  )
+    }
+  );
 
   it('(2) should ADD class "is-invalid" when dirty and external control INVALID',
-    fakeAsync(() => {
+    () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
       spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
@@ -126,11 +123,11 @@ describe('NgxBootstrapSelectRowComponent', () => {
       expect(text).toBe('Female');
       expect(select.classList.contains('is-invalid')).toBe(true);
       expect(select.classList.contains('is-valid')).toBe(false);
-    })
+    }
   );
 
   it('(3) submitted && local invalid should ADD "is-invalid" class',
-    fakeAsync(() => {
+    () => {
       // set localControl state to invalid
       spyOnProperty(component.localControl,"valid","get").and.returnValue(false);
       spyOnProperty(component.localControl,"invalid","get").and.returnValue(true);
@@ -142,11 +139,11 @@ describe('NgxBootstrapSelectRowComponent', () => {
       expect(select).toBeTruthy();
       expect(select.classList.contains('is-invalid')).toBe(true);
       expect(select.classList.contains('is-valid')).toBe(false);
-    })
+    }
   );
 
   it('should NOT add class "is-invalid" when NOT submitted and NOT dirty and external control INVALID',
-    fakeAsync(() => {
+    () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
@@ -155,11 +152,11 @@ describe('NgxBootstrapSelectRowComponent', () => {
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       expect(select.classList.contains('is-invalid')).toBe(false);
       expect(select.classList.contains('is-valid')).toBe(false);
-    })
+    }
   );
 
   it('(4) should ADD class "is-invalid" when submitted and NOT dirty and external control INVALID',
-    fakeAsync(() => {
+    () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
@@ -170,8 +167,8 @@ describe('NgxBootstrapSelectRowComponent', () => {
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       expect(select.classList.contains('is-invalid')).toBe(true);
       expect(select.classList.contains('is-valid')).toBe(false);
-    })
+    }
   );
 
-
+  /********************************* END Test *********************************************/
 })

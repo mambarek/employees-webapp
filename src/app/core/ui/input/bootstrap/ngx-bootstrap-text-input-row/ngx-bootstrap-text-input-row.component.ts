@@ -1,10 +1,5 @@
 import {Component, EventEmitter, Input, Optional, Output, Self, ViewChild} from '@angular/core';
-import {
-  AbstractControl,
-  ControlValueAccessor,
-  NgControl, NgForm,
-  ValidationErrors,
-} from "@angular/forms";
+import {ControlValueAccessor, NgControl, NgForm,} from "@angular/forms";
 
 @Component({
   selector: 'ngx-bootstrap-text-input-row',

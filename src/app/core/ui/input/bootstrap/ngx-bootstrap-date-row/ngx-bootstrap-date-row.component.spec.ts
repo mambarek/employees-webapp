@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NgxBootstrapDateRowComponent } from './ngx-bootstrap-date-row.component';
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
@@ -26,8 +25,8 @@ describe('NgxBootstrapDateRowComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule, NgbModule],
-      declarations: [ NgxBootstrapDateRowComponent ],
-      providers: [{ provide: NgControl, useValue: new FormControl()}]
+      declarations: [NgxBootstrapDateRowComponent],
+      providers: [{provide: NgControl, useValue: new FormControl()}]
     })
     .compileComponents();
   }));
@@ -59,77 +58,69 @@ describe('NgxBootstrapDateRowComponent', () => {
   )
 
   it('dirty && localControl valid && externalControl valid, should ADD class "is-valid"',
-    async(() => {
-      fixture.whenStable().then(() => {
-        const input = fixture.debugElement.query(By.css('input'));
-        expect(input).toBeTruthy();
-        input.nativeElement.value = '2019-02-25';
-        input.nativeElement.dispatchEvent(new Event('input'))
-        fixture.detectChanges();
-        expect(input.nativeElement.value).toBe('2019-02-25');
-        expect(input.nativeElement.classList.contains('is-valid')).toBe(true)
-      })
-    })
-  )
+    () => {
+      const input = fixture.debugElement.query(By.css('input'));
+      expect(input).toBeTruthy();
+      input.nativeElement.value = '2019-02-25';
+      input.nativeElement.dispatchEvent(new Event('input'))
+      fixture.detectChanges();
+      expect(input.nativeElement.value).toBe('2019-02-25');
+      expect(input.nativeElement.classList.contains('is-valid')).toBe(true)
+  });
 
   it('dirty && localControl INVALID && externalControl valid, should ADD class "is-invalid"',
-    async(() => {
-      fixture.whenStable().then(() => {
-        const input = fixture.debugElement.query(By.css('input'));
-        expect(input).toBeTruthy();
-        input.nativeElement.value = 'xxx';
-        input.nativeElement.dispatchEvent(new Event('input'))
-        fixture.detectChanges();
-        expect(input.nativeElement.value).toBe('xxx');
-        expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
-        expect(input.nativeElement.classList.contains('is-invalid')).toBe(true)
-      })
-    })
-  )
+    () => {
+      const input = fixture.debugElement.query(By.css('input'));
+      expect(input).toBeTruthy();
+      input.nativeElement.value = 'Test';
+      input.nativeElement.dispatchEvent(new Event('input'))
+      fixture.detectChanges();
+      expect(input.nativeElement.value).toBe('Test');
+      expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
+      expect(input.nativeElement.classList.contains('is-invalid')).toBe(true)
+  })
 
   it('dirty && localControl valid && externalControl INVALID, should ADD class "is-invalid"',
-    async(() => {
+    () => {
       let ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
       component.control = ngControl;
 
-      fixture.whenStable().then(() => {
-        const input = fixture.debugElement.query(By.css('input'));
-        expect(input).toBeTruthy();
-        input.nativeElement.value = '2019-02-25';
-        input.nativeElement.dispatchEvent(new Event('input'))
-        fixture.detectChanges();
-        expect(input.nativeElement.value).toBe('2019-02-25');
-        expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
-        expect(input.nativeElement.classList.contains('is-invalid')).toBe(true)
-      })
-    })
-  )
-
-  it('should show the Datepicker and select "2020-01-01" as date, "is-valid" is added',
-    async(() => {
-      fixture.whenStable().then(() => {
-        const dpInput = fixture.debugElement.query(By.directive(NgbInputDatepicker)).injector.get(NgbInputDatepicker);
-        dpInput.startDate = {year: 2020, month:1, day: 1};
-        const input = fixture.debugElement.query(By.css('input'));
-        input.nativeElement.click();
-
-        // you can open picker manually not with click e.g above
-        //dpInput.open();
-        //fixture.detectChanges();
-
-        // click on a date
-        fixture.nativeElement.querySelectorAll('.ngb-dp-day')[2].click();  // 1 JAN 2020
-        fixture.detectChanges();
-
-        expect(input.nativeElement.value).toEqual('2020-01-01');
-        expect(input.nativeElement.classList.contains('is-valid')).toBe(true);
-        expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
-      })
-    })
-  )
+      const input = fixture.debugElement.query(By.css('input'));
+      expect(input).toBeTruthy();
+      input.nativeElement.value = '2019-02-25';
+      input.nativeElement.dispatchEvent(new Event('input'))
+      fixture.detectChanges();
+      expect(input.nativeElement.value).toBe('2019-02-25');
+      expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
+      expect(input.nativeElement.classList.contains('is-invalid')).toBe(true)
+    }
+  );
 
 
+  it('should show the Datepicker and select "2020-01-01" as date, "is-valid" is added',() => {
+      // set well defined start month and year
+      const dpInput = fixture.debugElement.query(By.directive(NgbInputDatepicker)).injector.get(NgbInputDatepicker);
+      dpInput.startDate = {year: 2020, month:1, day: 1};
 
+      // click on the input to open Datepicker
+      const input = fixture.debugElement.query(By.css('input'));
+      input.nativeElement.click();
+
+      // you can open picker manually not with click e.g above
+      //dpInput.open();
+      //fixture.detectChanges();
+
+      // select a date clicking on a date
+      fixture.nativeElement.querySelectorAll('.ngb-dp-day')[2].click();  // 1 JAN 2020
+      fixture.detectChanges();
+
+      expect(input.nativeElement.value).toEqual('2020-01-01');
+      expect(input.nativeElement.classList.contains('is-valid')).toBe(true);
+      expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
+  });
+
+
+/*********************** END Tests **********************************************************/
 });

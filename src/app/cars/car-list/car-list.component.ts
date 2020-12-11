@@ -18,8 +18,6 @@ export class CarListComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchCars();
-    console.log("--> ngOnInit call. carTableItems length:", this.carTableItems.length);
-    console.log("--> ngOnInit call. carTableItems:", this.carTableItems);
   }
 
   searchCars(): void {

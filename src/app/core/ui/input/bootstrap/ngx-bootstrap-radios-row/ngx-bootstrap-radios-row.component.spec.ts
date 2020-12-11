@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {async, ComponentFixture, TestBed} from "@angular/core/testing";
 import {FormControl, NgControl} from "@angular/forms";
 import {NgxBootstrapRadiosRowComponent} from "./ngx-bootstrap-radios-row.component";
 import {CoreModule} from "../../../../core.module";
@@ -52,10 +52,10 @@ describe('NgxBootstrapRadiosRowComponent', () => {
   })
 
   it('should select default value "Male", no "is-valid" class added, dirty == false',
-    async(() => { // with fakeAsync not working
+    async(() => {
       fixture.autoDetectChanges(true);
       component.value = 'MALE';
-      fixture.whenStable().then(() => {
+      fixture.whenStable().then(() => { // block needs zone
         expect(component.localControl.value).toEqual('MALE');
 
         let radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
@@ -66,74 +66,60 @@ describe('NgxBootstrapRadiosRowComponent', () => {
     })
   );
 
-  it('(1) submitted && external_invalid = true should ADD "is-invalid" class',
-    async(() => { // with fakeAsync not working
+  it('(1) submitted && external_invalid = true should ADD "is-invalid" class',() => { // with fakeAsync not working
       let ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
       component.control = ngControl;
 
-      fixture.whenStable().then(() => {
+      let radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
+      expect(radios.length).toEqual(2);
+      spyOnProperty(component,"submitted","get").and.returnValue(true);
+      // update component
+      fixture.detectChanges();
+      const radio = fixture.debugElement.query(By.css('.custom-radio'));
+      expect(radio).toBeTruthy();
+      expect(radio.nativeElement.classList.contains('is-invalid')).toBe(true, "should have is-invalid class");
+      expect(radio.nativeElement.classList.contains('is-valid')).toBe(false, "should not have is-valid class");
+  });
 
-        let radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
-        expect(radios.length).toEqual(2);
-        spyOnProperty(component,"submitted","get").and.returnValue(true);
-        // update component
-        fixture.detectChanges();
-        const radio = fixture.debugElement.query(By.css('.custom-radio'));
-        expect(radio).toBeTruthy();
-        expect(radio.nativeElement.classList.contains('is-invalid')).toBe(true, "should have is-invalid class");
-        expect(radio.nativeElement.classList.contains('is-valid')).toBe(false, "should not have is-valid class");
-      })
-    })
-  );
+  it('(2) dirty && external_invalid = true should ADD "is-invalid" class',() => {
+     // mock external control
+     let ngControl = TestBed.inject(NgControl);
+     spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
+     spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
+     component.control = ngControl;
 
-  it('(2) dirty && external_invalid = true should ADD "is-invalid" class',
-    async(() => { // with fakeAsync not working
-      // mock external control
-      let ngControl = TestBed.inject(NgControl);
-      spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
-      spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-      component.control = ngControl;
+     // dirty: make click om the label to activate a radio (css ::before label ::after)
+     const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));
+     expect(labels).toBeTruthy();
+     labels[0].nativeElement.click();
+     labels[0].nativeElement.dispatchEvent(new Event('click'));
 
-      fixture.whenStable().then(() => {
-        // dirty: make click om the label to activate a radio (css ::before label ::after)
-        const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));
-        expect(labels).toBeTruthy();
-        labels[0].nativeElement.click();
-        labels[0].nativeElement.dispatchEvent(new Event('click'));
+     fixture.detectChanges();
+     const radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
+     expect(radios[0].nativeElement.classList.contains('is-invalid')).toBe(true, "0 should have is-invalid class");
+     expect(radios[0].nativeElement.classList.contains('is-valid')).toBe(false, "0 should not have is-valid class");
+   });
 
-        fixture.detectChanges();
-        console.log(component.localControl);
-        const radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
-        expect(radios[0].nativeElement.classList.contains('is-invalid')).toBe(true, "0 should have is-invalid class");
-        expect(radios[0].nativeElement.classList.contains('is-valid')).toBe(false, "0 should not have is-valid class");
-      })
-    })
-  );
-
-  it('(3) dirty && external_valid = true should ADD "is-valid" class',
-    async(() => { // with fakeAsync not working
+  it('(3) dirty && external_valid = true should ADD "is-valid" class',() => {
       // mock external control
       let ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(false);
       spyOnProperty(ngControl,"valid","get").and.returnValue(true);
       component.control = ngControl;
 
-      fixture.whenStable().then(() => {
-        // dirty: make click om the label to activate a radio (css ::before label ::after)
-        const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));
-        expect(labels).toBeTruthy();
-        labels[0].nativeElement.click();
-        labels[0].nativeElement.dispatchEvent(new Event('click'));
+      // dirty: make click on the label to activate a radio (css ::before label ::after)
+      const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));
+      expect(labels).toBeTruthy();
+      labels[0].nativeElement.click();
+      labels[0].nativeElement.dispatchEvent(new Event('click'));
 
-        fixture.detectChanges();
-        console.log(component.localControl);
-        const radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
-        expect(radios[0].nativeElement.classList.contains('is-invalid')).toBe(false, "0 should not have is-invalid class");
-        expect(radios[0].nativeElement.classList.contains('is-valid')).toBe(true, "0 should have is-valid class");
-      })
-    })
-  );
+      fixture.detectChanges();
+      const radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
+      expect(radios[0].nativeElement.classList.contains('is-invalid')).toBe(false, "0 should not have is-invalid class");
+      expect(radios[0].nativeElement.classList.contains('is-valid')).toBe(true, "0 should have is-valid class");
+    });
 
+  /******************************* END Tests ***************************************************/
 })
