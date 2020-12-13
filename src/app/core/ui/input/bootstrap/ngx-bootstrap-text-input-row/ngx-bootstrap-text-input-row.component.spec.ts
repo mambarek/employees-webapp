@@ -194,7 +194,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
   selector: 'app-test',
   template: `
             <ngx-bootstrap-text-input-row
-              label="First name" name="firstName"
+              label="{{label}}" name="firstName"
               [(ngModel)]="text"
               required minlength="3" #compControl="ngModel"
              >
@@ -203,6 +203,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
 })
 export class TestComponent {
   text = "test";
+  label = "First name";
   @ViewChild('compControl') compControl: FormControl;
 
   onSubmit(){
@@ -233,7 +234,7 @@ describe('Test in Component', () => {
 
     tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
+    const input = fixture1.debugElement.query(By.css('input'));
     expect(input.nativeElement.value).toEqual(component.text);
 
     expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
@@ -247,7 +248,7 @@ describe('Test in Component', () => {
 
     tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
+    const input = fixture1.debugElement.query(By.css('input'));
     expect(input.nativeElement.value).toEqual(component.text);
 
     input.nativeElement.value = "BB";
@@ -258,8 +259,7 @@ describe('Test in Component', () => {
     expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
 
     const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
-    console.log(feedBack);
-    expect(feedBack.nativeElement.innerText).toEqual('First name must be at least 3 characters long.');
+    expect(feedBack.nativeElement.innerText).toEqual(component.label + ' must be at least 3 characters long.');
   }))
 
   // without fakeAsync tick we become no value in input object
@@ -269,7 +269,7 @@ describe('Test in Component', () => {
 
     tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
+    const input = fixture1.debugElement.query(By.css('input'));
     expect(input.nativeElement.value).toEqual(component.text);
 
     input.nativeElement.value = "";
@@ -280,8 +280,7 @@ describe('Test in Component', () => {
     expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
 
     const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
-    console.log(feedBack);
-    expect(feedBack.nativeElement.innerText).toEqual('First name is required.');
+    expect(feedBack.nativeElement.innerText).toEqual(component.label + ' is required.');
   }))
 
 })

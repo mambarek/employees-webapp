@@ -264,7 +264,6 @@ describe('NgxBootstrapTextAreaRowComponent test in Component', () => {
       expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
 
       const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
-      console.log(feedBack);
       expect(feedBack.nativeElement.innerText)
       .toEqual(component.label + ' must be at least 3 characters long.');
   }))
@@ -287,7 +286,6 @@ describe('NgxBootstrapTextAreaRowComponent test in Component', () => {
     expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
 
     const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
-    console.log(feedBack);
     expect(feedBack.nativeElement.innerText).toEqual(component.label + ' is required.');
   }))
 
