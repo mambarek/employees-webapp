@@ -23,21 +23,23 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
   car: Car;
   subscriptions: Subscription [] = [];
 
-  fuelTypes = [{id: 'DISEL', value: 'DIESEL'}, {id: 'PETROL', value: 'PETROL'}];
+  fuelTypes = [{id: 'DISEL', value: 'Diesel'}, {id: 'PETROL', value: 'Petrol'}];
   carEditorTitle = "";
 
   constructor(private route: ActivatedRoute, private router: Router, private carsService: CarsService) { }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
     this.initModel();
   }
 
-  private initModel(): void {
-    const publicId: string = this.route.snapshot.params.id;
+  ngAfterViewInit(): void {
 
+  }
+
+  private initModel(): void {
+    //const publicId: string = this.route.snapshot.params.id;
+    const publicId: string = this.route.snapshot.paramMap.get('id');
+    console.log("-- Car publicId: " + publicId);
     if (!publicId) {
       return;
     } // it mean we create a new to do
@@ -57,7 +59,7 @@ export class EditCarComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  saveCar(): void { console.log("SaveButton", this.saveButton);
+  saveCar(): void {
     if(this.carForm.invalid) return;
     console.log('saveCar call!', this.car);
     if (this.car.publicId) {

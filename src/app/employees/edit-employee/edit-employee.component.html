@@ -45,46 +45,34 @@
           <div class="card-body">
             <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm" id="employeeForm">
               <ngx-bootstrap-text-input-row
-                name="firstName"
-                label="First Name"
+                name="firstName" label="First name"
                 [(ngModel)]="employee.data.firstName"
-                [mainFormControl]="employeeForm"
-                required minlength="3" maxlength="50"
-                invalidText="Please enter a valid Firstname."
+                required minlength="3" maxlength="5"
+                [messagesMap]="myMessageMap"
               >
               </ngx-bootstrap-text-input-row>
               <ngx-bootstrap-text-input-row
-                name="lastName"
-                label="Last Name"
+                name="lastName" label="Last name"
                 [(ngModel)]="employee.data.lastName"
-                [mainFormControl]="employeeForm"
                 required minlength="3" maxlength="50"
-                invalidText="Please enter a valid Lastname."
               >
               </ngx-bootstrap-text-input-row>
               <ngx-bootstrap-date-row
-                name="birthDate"
-                label="Birthdate"
+                name="birthDate" label="Birthdate"
                 [(ngModel)]="employee.data.birthDate"
-                [mainFormControl]="employeeForm"
                 required
-                invalidText="Please enter a valid date."
               >
               </ngx-bootstrap-date-row>
               <ngx-bootstrap-text-input-row
-                name="email"
-                label="Email"
+                name="email" label="Email"
                 [(ngModel)]="employee.data.email"
-                [mainFormControl]="employeeForm"
                 required minlength="3" maxlength="100"
-                invalidText="Please enter a valid Email."
               ></ngx-bootstrap-text-input-row>
 
               <ngx-bootstrap-radios-row
                 label="Gender" name="genders"
                 [items]="genders"
                 [(ngModel)]="employee.data.gender"
-                [mainFormControl]="employeeForm"
                 required
               ></ngx-bootstrap-radios-row>
               <button class="btn btn-primary" type="submit" >Submit</button>

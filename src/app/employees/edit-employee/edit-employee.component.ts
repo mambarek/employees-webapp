@@ -15,6 +15,8 @@ export class EditEmployeeComponent implements OnInit {
   employee: IEmployee;
   genders = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
 
+  myMessageMap = {required: "Bitte geben Sie einen Wert!", minlength: "Der Wert muss mindestens"};
+
   constructor(private route: ActivatedRoute, private router: Router, private employeesService: EmployeesControllerService) {
 
   }

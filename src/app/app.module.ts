@@ -24,7 +24,6 @@ import {CoreModule} from "./core/core.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { CarReservationsComponent } from './car-reservations/car-reservations/car-reservations.component';
 
 @NgModule({
   declarations: [
@@ -42,8 +41,7 @@ import { CarReservationsComponent } from './car-reservations/car-reservations/ca
     ErrorComponent,
     ModalComponent,
     LoginComponent,
-    RegisterComponent,
-    CarReservationsComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

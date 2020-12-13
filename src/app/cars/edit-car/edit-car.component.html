@@ -47,44 +47,31 @@
               <ngx-bootstrap-text-input-row
                 name="brand"  label="Brand"
                 [(ngModel)]="car.brand"
-                [mainFormControl]="carForm"
                 required minlength="3" maxlength="10"
-                invalidText="Please enter a valid Brand."
               ></ngx-bootstrap-text-input-row>
-
               <ngx-bootstrap-text-input-row
                 name="model" label="Model"
                 [(ngModel)]="car.model"
-                [mainFormControl]="carForm"
-                required minlength="3" maxlength="10"
-                invalidText="Please enter a model name."
+                required maxlength="10"
               ></ngx-bootstrap-text-input-row>
-
               <ngx-bootstrap-text-area-row
                 name="car-desc" label="Description"
                 [(ngModel)]="car.description"
-                [mainFormControl]="carForm"
                 required
-                invalidText="Please enter a model description."
               ></ngx-bootstrap-text-area-row>
-
               <ngx-bootstrap-select-row
-                name="fuelType"
-                label="Fuel type"
+                name="fuelType" label="Fuel type"
                 [(ngModel)]="car.fuelType"
-                [mainFormControl]="carForm"
                 [items]="fuelTypes"
                 itemKey="id"
                 itemLabel="value" (input)="selectInput($event)"
                 required
               >
               </ngx-bootstrap-select-row>
-
               <ngx-bootstrap-date-row
                 name="manufacturingDate"
                 label="Manufacturing Date"
                 [(ngModel)]="car.manufacturingDate"
-                [mainFormControl]="carForm"
                 required
               >
               </ngx-bootstrap-date-row>

@@ -4,7 +4,7 @@ import {AppModule} from "../../app.module";
 import {ApiModule as CarApiModule,  CarSearchService} from '@angular-it2go/car-fleet-api';
 import {DebugElement} from "@angular/core";
 import {By} from "@angular/platform-browser";
-import {CARS} from "../../../../test/carfleet/cars";
+import {CarTableItems} from "../../../../test/carfleet/CarTableItems";
 import {of} from "rxjs";
 
 
@@ -30,7 +30,7 @@ describe("CarListComponent", () => {
   beforeEach(() => {
     // mock the search service method search
     carSearchService = TestBed.inject(CarSearchService);
-    carSearchService.search.and.returnValue(of({rows: CARS, records: 4}));
+    carSearchService.search.and.returnValue(of({rows: CarTableItems, records: 4}));
 
     fixture = TestBed.createComponent(CarListComponent);
     component = fixture.componentInstance;
@@ -63,7 +63,7 @@ describe("CarListComponent", () => {
       const firstRow = tbody.query(By.css('tr:first-child'));
       const allTds = firstRow.queryAll(By.css('td'));
       const brandTd = allTds[1];
-      const firstCar = CARS[0];
+      const firstCar = CarTableItems[0];
 
       //const td1 = el.query(By.css('tbody > :nth-child(1) > :nth-child(2)'))
       expect(brandTd.nativeElement.textContent).toEqual(firstCar.brand)
@@ -82,7 +82,7 @@ describe("CarListComponent", () => {
       fixture.detectChanges();
 
       // mock the search, return only BMW car
-      carSearchService.search.and.returnValue(of({rows: [CARS[0]], records: 1}));
+      carSearchService.search.and.returnValue(of({rows: [CarTableItems[0]], records: 1}));
 
       fixture.whenStable().then(() => {
         // click search
