@@ -1,5 +1,5 @@
 import {async, ComponentFixture, TestBed} from "@angular/core/testing";
-import {FormControl, NgControl} from "@angular/forms";
+import {FormControl, NgControl, NgModel} from "@angular/forms";
 import {NgxBootstrapRadiosRowComponent} from "./ngx-bootstrap-radios-row.component";
 import {CoreModule} from "../../../../core.module";
 import {By} from "@angular/platform-browser";
@@ -27,7 +27,7 @@ describe('NgxBootstrapRadiosRowComponent', () => {
       imports: [CoreModule], // we need FormsModule and NgModule so import all at once
       declarations: [ NgxBootstrapRadiosRowComponent ],
       providers: [
-        { provide: NgControl, useValue: new FormControl()},
+        { provide: NgModel, useValue: new FormControl()},
       ]
     })
     .compileComponents();
@@ -67,10 +67,10 @@ describe('NgxBootstrapRadiosRowComponent', () => {
   );
 
   it('(1) submitted && external_invalid = true should ADD "is-invalid" class',() => { // with fakeAsync not working
-      let ngControl = TestBed.inject(NgControl);
-      spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
-      spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-      component.control = ngControl;
+      let ngModel = TestBed.inject(NgModel);
+      spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
+      spyOnProperty(ngModel,"valid","get").and.returnValue(false);
+      component.parentNgModel = ngModel;
 
       let radios = fixture.debugElement.queryAll(By.css('.custom-radio'));
       expect(radios.length).toEqual(2);
@@ -85,10 +85,10 @@ describe('NgxBootstrapRadiosRowComponent', () => {
 
   it('(2) dirty && external_invalid = true should ADD "is-invalid" class',() => {
      // mock external control
-     let ngControl = TestBed.inject(NgControl);
-     spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
-     spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
-     component.control = ngControl;
+     let ngModel = TestBed.inject(NgModel);
+     spyOnProperty(ngModel, "invalid", "get").and.returnValue(true);
+     spyOnProperty(ngModel, "valid", "get").and.returnValue(false);
+     component.parentNgModel = ngModel;
 
      // dirty: make click om the label to activate a radio (css ::before label ::after)
      const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));
@@ -104,10 +104,10 @@ describe('NgxBootstrapRadiosRowComponent', () => {
 
   it('(3) dirty && external_valid = true should ADD "is-valid" class',() => {
       // mock external control
-      let ngControl = TestBed.inject(NgControl);
-      spyOnProperty(ngControl,"invalid","get").and.returnValue(false);
-      spyOnProperty(ngControl,"valid","get").and.returnValue(true);
-      component.control = ngControl;
+      let ngModel = TestBed.inject(NgModel);
+      spyOnProperty(ngModel,"invalid","get").and.returnValue(false);
+      spyOnProperty(ngModel,"valid","get").and.returnValue(true);
+      component.parentNgModel = ngModel;
 
       // dirty: make click on the label to activate a radio (css ::before label ::after)
       const labels = fixture.debugElement.queryAll(By.css('.custom-control-label'));

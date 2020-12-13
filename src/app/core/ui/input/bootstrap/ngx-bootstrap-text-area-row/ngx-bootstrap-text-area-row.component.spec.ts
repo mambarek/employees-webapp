@@ -1,9 +1,9 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {NgxBootstrapTextInputRowComponent} from "./ngx-bootstrap-text-input-row.component";
 import {Component, DebugElement, ViewChild} from "@angular/core";
 import {By} from "@angular/platform-browser";
 import {FormControl, FormsModule, NgControl, NgModel} from "@angular/forms";
 import {CoreModule} from "../../../../core.module";
+import {NgxBootstrapTextAreaRowComponent} from "./ngx-bootstrap-text-area-row.component";
 
 /**
  * Validation cases
@@ -18,15 +18,15 @@ import {CoreModule} from "../../../../core.module";
  3) submitted && local_invalid = true
  4) submitted && external_invalid = true
  */
-describe('NgxBootstrapTextInputRowComponent', () => {
-  let component: NgxBootstrapTextInputRowComponent;
-  let fixture: ComponentFixture<NgxBootstrapTextInputRowComponent>;
+describe('NgxBootstrapTextAreaRowComponent', () => {
+  let component: NgxBootstrapTextAreaRowComponent;
+  let fixture: ComponentFixture<NgxBootstrapTextAreaRowComponent>;
   let el: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule], // we need FormsModule and NgModule so import all at once
-      declarations: [ NgxBootstrapTextInputRowComponent ],
+      declarations: [ NgxBootstrapTextAreaRowComponent ],
       providers: [
         { provide: NgModel, useValue: new FormControl()},
       ]
@@ -35,36 +35,36 @@ describe('NgxBootstrapTextInputRowComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxBootstrapTextInputRowComponent);
+    fixture = TestBed.createComponent(NgxBootstrapTextAreaRowComponent);
     component = fixture.componentInstance;
     el = fixture.debugElement;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 
   it('Component should have a label', () => {
-    component.label = 'Firstname'
-    component.value = 'Ali';
+    component.label = 'Description'
+    component.value = 'This is test description';
     fixture.detectChanges();
 
     const label = el.query(By.css('label'));
-    expect(label.nativeElement.textContent).toEqual('Firstname');
+    expect(label.nativeElement.textContent).toEqual('Description');
   })
 
   it('No user input (dirty=false) component should NOT have "is-valid" class',
     async(() => {
-      component.label = 'Firstname'
-      component.value = 'Ali';
+      component.label = 'Description'
+      component.value = 'This is test description';
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        const input = el.query(By.css('input'));
+        const input = el.query(By.css('textarea'));
         expect(input).toBeTruthy();
         // this line needs zone so put it in async whenStable
-        expect(input.nativeElement.value).toBe('Ali');
+        expect(input.nativeElement.value).toBe('This is test description');
         expect(input.nativeElement.classList.contains('is-valid')).toBe(false)
       })
     })
@@ -72,12 +72,12 @@ describe('NgxBootstrapTextInputRowComponent', () => {
 
   it('After user input (dirty=true) component should have "is-valid" class',
     async(() => {
-      component.label = 'Firstname'
-      component.value = 'Ali';
+      component.label = 'Description'
+      component.value = 'This is test description';
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        const input = el.query(By.css('input'));
+        const input = el.query(By.css('textarea'));
         expect(input).toBeTruthy();
 
         input.nativeElement.value = 'Omar'
@@ -91,13 +91,13 @@ describe('NgxBootstrapTextInputRowComponent', () => {
 
   it('(1) dirty && local_invalid component should have "is-invalid" class',
     () => {
-      component.label = 'Firstname'
-      component.value = 'Ali';
+      component.label = 'Description'
+      component.value = 'This is test description';
 
-      const input = el.query(By.css('input'));
+      const input = el.query(By.css('textarea'));
       expect(input).toBeTruthy();
 
-      input.nativeElement.value = 'Omar'
+      input.nativeElement.value = 'This is a new test description'
       input.nativeElement.dispatchEvent(new Event('input'))
 
       // set localControl state to invalid
@@ -117,11 +117,11 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
       component.parentNgModel = ngModel;
-      component.label = 'Firstname'
-      component.value = 'Ali';
+      component.label = 'Description'
+      component.value = 'This is test description';
 
       fixture.whenStable().then(() => {
-        const input = el.query(By.css('input'));
+        const input = el.query(By.css('textarea'));
         expect(input).toBeTruthy();
 
         input.nativeElement.value = 'Omar';
@@ -136,8 +136,8 @@ describe('NgxBootstrapTextInputRowComponent', () => {
   )
 
   it('(3) submitted && local invalid should ADD "is-invalid" class',() => {
-      component.label = 'Firstname'
-      component.value = 'Ali';
+      component.label = 'Description'
+      component.value = 'This is test description';
       // set localControl state to invalid
       spyOnProperty(component.localControl,"valid","get").and.returnValue(false);
       spyOnProperty(component.localControl,"invalid","get").and.returnValue(true);
@@ -145,7 +145,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       spyOnProperty(component,"submitted","get").and.returnValue(true);
       // update component
       fixture.detectChanges();
-      const input = el.query(By.css('input'));
+      const input = el.query(By.css('textarea'));
       expect(input).toBeTruthy();
       expect(input.nativeElement.classList.contains('is-invalid')).toBe(true);
       expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
@@ -158,10 +158,10 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
       component.parentNgModel = ngModel;
-      component.label = 'Firstname'
+      component.label = 'Description'
 
       fixture.whenStable().then(() => {
-        const input = el.query(By.css('input'));
+        const input = el.query(By.css('textarea'));
         expect(input).toBeTruthy();
         expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
         expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
@@ -175,34 +175,39 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
       component.parentNgModel = ngModel;
-      component.label = 'Firstname'
+      component.label = 'Description'
 
       spyOnProperty(component,"submitted","get").and.returnValue(true);
       // update component
       fixture.detectChanges();
-      const input = el.query(By.css('input'));
+      const input = el.query(By.css('textarea'));
       expect(input).toBeTruthy();
-      expect(input.nativeElement.classList.contains('is-invalid')).toBe(true);
-      expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
+
+      expect(input.nativeElement.classList.contains('is-invalid'))
+      .toBe(true, "invalid should be true");
+
+      expect(input.nativeElement.classList.contains('is-valid'))
+      .toBe(false, "valid should be false");
     }
   )
-  /********************** END NgxBootstrapTextInputRowComponent test suite *****************************************************/
+  /********************** END NgxBootstrapTextAreaRowComponent test suite *****************************************************/
 
 });
 
 @Component({
   selector: 'app-test',
   template: `
-            <ngx-bootstrap-text-input-row
-              label="First name" name="firstName"
+            <ngx-bootstrap-text-area-row
+              label={{label}} name="description"
               [(ngModel)]="text"
               required minlength="3" #compControl="ngModel"
              >
-            </ngx-bootstrap-text-input-row>
+            </ngx-bootstrap-text-area-row>
             `
 })
 export class TestComponent {
-  text = "test";
+  text = "This is a test description";
+  label = "Description";
   @ViewChild('compControl') compControl: FormControl;
 
   onSubmit(){
@@ -210,7 +215,7 @@ export class TestComponent {
   }
 }
 
-describe('Test in Component', () => {
+describe('NgxBootstrapTextAreaRowComponent test in Component', () => {
   let fixture1;
   let component;
 
@@ -233,7 +238,7 @@ describe('Test in Component', () => {
 
     tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
+    const input = fixture1.debugElement.query(By.css('#description'));
     expect(input.nativeElement.value).toEqual(component.text);
 
     expect(input.nativeElement.classList.contains('is-invalid')).toBe(false);
@@ -241,25 +246,27 @@ describe('Test in Component', () => {
   }))
 
   // without fakeAsync tick we become no value in input object
-  it('minlength validator: input shorter then 3 should show error, length mus be longer then 2', fakeAsync(() => {
-    fixture1.detectChanges();
-    expect(component).toBeTruthy();
+  it('minlength validator: input shorter then 3 should show error, length must be longer then 2',
+    fakeAsync(() => {
+      fixture1.detectChanges();
+      expect(component).toBeTruthy();
 
-    tick()
+      tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
-    expect(input.nativeElement.value).toEqual(component.text);
+      const input = fixture1.debugElement.query(By.css('#description'));
+      expect(input.nativeElement.value).toEqual(component.text);
 
-    input.nativeElement.value = "BB";
-    input.nativeElement.dispatchEvent(new Event('input'));
-    fixture1.detectChanges();
+      input.nativeElement.value = "BB";
+      input.nativeElement.dispatchEvent(new Event('input'));
+      fixture1.detectChanges();
 
-    expect(input.nativeElement.classList.contains('is-invalid')).toBe(true);
-    expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
+      expect(input.nativeElement.classList.contains('is-invalid')).toBe(true);
+      expect(input.nativeElement.classList.contains('is-valid')).toBe(false);
 
-    const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
-    console.log(feedBack);
-    expect(feedBack.nativeElement.innerText).toEqual('First name must be at least 3 characters long.');
+      const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
+      console.log(feedBack);
+      expect(feedBack.nativeElement.innerText)
+      .toEqual(component.label + ' must be at least 3 characters long.');
   }))
 
   // without fakeAsync tick we become no value in input object
@@ -269,7 +276,7 @@ describe('Test in Component', () => {
 
     tick()
 
-    const input = fixture1.debugElement.query(By.css('#firstName'));
+    const input = fixture1.debugElement.query(By.css('#description'));
     expect(input.nativeElement.value).toEqual(component.text);
 
     input.nativeElement.value = "";
@@ -281,7 +288,7 @@ describe('Test in Component', () => {
 
     const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
     console.log(feedBack);
-    expect(feedBack.nativeElement.innerText).toEqual('First name is required.');
+    expect(feedBack.nativeElement.innerText).toEqual(component.label + ' is required.');
   }))
 
 })

@@ -1,14 +1,6 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Optional,
-  Output,
-  Self, ViewChild
-} from '@angular/core';
-import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
+import {Component, EventEmitter, Input, Optional, Output, Self, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NgControl, NgForm, NgModel} from "@angular/forms";
+import {hasRequired} from "../../../util";
 
 @Component({
   selector: 'ngx-bootstrap-select-row',
@@ -17,7 +9,6 @@ import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
 
   @ViewChild('selectControl') _localControl: NgControl;
-  @Input() mainFormControl: NgForm;
   @Input() name;
   @Input() label;
   @Input() invalidText;
@@ -31,8 +22,8 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
   @Output() blur = new EventEmitter<any>();
   @Output() input = new EventEmitter<any>();
 
-  constructor(@Self() @Optional() public control: NgControl) {
-    if ( this.control) { this.control.valueAccessor = this; }
+  constructor(@Self() @Optional() public parentNgModel: NgModel) {
+    if ( this.parentNgModel) { this.parentNgModel.valueAccessor = this; }
   }
 
   get localControl(): NgControl {
@@ -78,12 +69,12 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  public get externalControlValid(): boolean {
-    return this.control ? this.control.valid : true;
+  public get parentNgModelValid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.valid : true;
   }
 
-  public get externalControlInvalid(): boolean {
-    return this.control ? this.control.invalid : false;
+  public get parentNgModelInvalid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.invalid : false;
   }
 
   onFocus(event: Event) {
@@ -99,7 +90,18 @@ export class NgxBootstrapSelectRowComponent implements ControlValueAccessor {
   }
 
   get submitted(){
-    return this.mainFormControl && this.mainFormControl.submitted;
+    if(!this.parentNgModel || !this.parentNgModel.formDirective) return false;
+    return this.parentNgModel.formDirective.submitted;
   }
 
+  /**
+   * if this component is embedded in a parent component
+   * parent can set a required validator. we can use this add "*" to label
+   * or highlight it with som css style
+   */
+  isRequired(): boolean{
+    if(!this.parentNgModel || !this.parentNgModel.control) return false;
+
+    return hasRequired(this.parentNgModel.control);
+  }
 }

@@ -112,7 +112,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl, "invalid", "get").and.returnValue(true);
       spyOnProperty(ngControl, "valid", "get").and.returnValue(false);
-      component.control = ngControl;
+      component.parentNgModel = ngControl;
       fixture.detectChanges();
 
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
@@ -147,7 +147,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-      component.control = ngControl;
+      component.parentNgModel = ngControl;
 
       let select: HTMLSelectElement = el.query(By.css('select')).nativeElement;
       expect(select.classList.contains('is-invalid')).toBe(false);
@@ -160,7 +160,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
       ngControl = TestBed.inject(NgControl);
       spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
       spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-      component.control = ngControl;
+      component.parentNgModel = ngControl;
 
       spyOnProperty(component,"submitted","get").and.returnValue(true);
       fixture.detectChanges();

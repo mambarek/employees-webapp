@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgxBootstrapDateRowComponent } from './ngx-bootstrap-date-row.component';
 import {CoreModule} from "../../../../core.module";
-import {FormControl, NgControl} from "@angular/forms";
+import {FormControl, NgControl, NgModel} from "@angular/forms";
 import {NgbInputDatepicker, NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {By} from "@angular/platform-browser";
 
@@ -26,7 +26,7 @@ describe('NgxBootstrapDateRowComponent', () => {
     TestBed.configureTestingModule({
       imports: [CoreModule, NgbModule],
       declarations: [NgxBootstrapDateRowComponent],
-      providers: [{provide: NgControl, useValue: new FormControl()}]
+      providers: [{provide: NgModel, useValue: new FormControl()}]
     })
     .compileComponents();
   }));
@@ -82,10 +82,10 @@ describe('NgxBootstrapDateRowComponent', () => {
 
   it('dirty && localControl valid && externalControl INVALID, should ADD class "is-invalid"',
     () => {
-      let ngControl = TestBed.inject(NgControl);
-      spyOnProperty(ngControl,"invalid","get").and.returnValue(true);
-      spyOnProperty(ngControl,"valid","get").and.returnValue(false);
-      component.control = ngControl;
+      let ngModel = TestBed.inject(NgModel);
+      spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
+      spyOnProperty(ngModel,"valid","get").and.returnValue(false);
+      component.parentNgModel = ngModel;
 
       const input = fixture.debugElement.query(By.css('input'));
       expect(input).toBeTruthy();

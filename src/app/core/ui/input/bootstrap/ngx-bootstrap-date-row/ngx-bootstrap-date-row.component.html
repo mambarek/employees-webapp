@@ -1,12 +1,12 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}</label>
+  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
   <input id="{{name}}" type="text" class="form-control" placeholder="yyyy-mm-dd" name="{{name}}"
          ngbDatepicker #d="ngbDatepicker"  (click)="d.toggle()"
          [(ngModel)]="value" #inputControl="ngModel"
-         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || externalControlInvalid)"
-         [class.is-valid]="inputControl.dirty && inputControl.valid && externalControlValid"
+         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || parentNgModelInvalid)"
+         [class.is-valid]="inputControl.dirty && inputControl.valid && parentNgModelValid"
   />
   <div class="invalid-feedback">
-    Please enter a valid date.
+    {{errorMessage}}
   </div>
 </div>

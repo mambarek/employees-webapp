@@ -1,5 +1,6 @@
-import {Component, Input, Optional, Output, Self, EventEmitter} from '@angular/core';
-import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
+import {Component, Input, Optional, Output, Self, EventEmitter, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NgControl, NgForm, NgModel} from "@angular/forms";
+import {hasRequired} from "../../../util";
 
 @Component({
   selector: 'ngx-bootstrap-text-area-row',
@@ -7,18 +8,35 @@ import {ControlValueAccessor, NgControl, NgForm} from "@angular/forms";
 })
 export class NgxBootstrapTextAreaRowComponent implements ControlValueAccessor {
 
-  @Input() mainFormControl: NgForm;
+  @ViewChild('inputControl') _localNgModel: NgModel;
   @Input() name;
   @Input() label;
-  @Input() invalidText;
   @Input() isReadonly = false;
 
   @Output() focus = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();
   @Output() input = new EventEmitter<any>();
 
-  constructor(@Self() @Optional() public control: NgControl) {
-    if ( this.control) { this.control.valueAccessor = this; }
+  /**
+   * in messageMap you can override error messages
+   * the map has following structure {validatorName: errorMessage}
+   * a.e {minlength: "My custom minlength message for minlength 5"}
+   * So you can put you custom messages for your custom validators
+   *
+   * instead of map we can use a service that can be injected
+   */
+  @Input()
+  messagesMap: any = {};
+
+  _value;
+  _errorMessage = 'Please enter a valid value';
+
+  constructor(@Self() @Optional() public parentNgModel: NgModel) {
+    if ( this.parentNgModel) { this.parentNgModel.valueAccessor = this; }
+  }
+
+  get localControl(): NgModel {
+    return this._localNgModel;
   }
 
   // the callback function to register on UI change
@@ -27,8 +45,6 @@ export class NgxBootstrapTextAreaRowComponent implements ControlValueAccessor {
   // the callback function to register on element touch
   onTouch: any = () => {
   }
-
-  _value = '';
 
   // sets the value used by the ngModel of the element
   set value(value) {
@@ -60,12 +76,12 @@ export class NgxBootstrapTextAreaRowComponent implements ControlValueAccessor {
     this.onTouch = fn;
   }
 
-  public get externalControlInvalid(): boolean {
-    return this.control ? this.control.valid : true;
+  public get parentNgModelValid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.valid : true;
   }
 
-  public get externalControlValid(): boolean {
-    return this.control ? this.control.invalid : false;
+  public get parentNgModelInvalid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.invalid : false;
   }
 
   onFocus(event: Event) {
@@ -81,6 +97,83 @@ export class NgxBootstrapTextAreaRowComponent implements ControlValueAccessor {
   }
 
   get submitted(){
-    return this.mainFormControl && this.mainFormControl.submitted;
+    if(!this.parentNgModel || !this.parentNgModel.formDirective) return false;
+
+    return this.parentNgModel.formDirective.submitted;
+  }
+
+  /**
+   * if this component is embedded in a parent component
+   * parent can set a required validator. we can use this add "*" to label
+   * or highlight it with som css style
+   */
+  isRequired(): boolean{
+    if(!this.parentNgModel || !this.parentNgModel.control) return false;
+
+    return hasRequired(this.parentNgModel.control);
+  }
+
+  /**
+   * default error message
+   * @param errorText
+   */
+  set errorMessage(errorText){
+    this._errorMessage = errorText
+  }
+
+  /**
+   * if this component is embedded in a parent component
+   * parent can set a list of validators. optionally the parent
+   * can use its own custom error messages putting a messageMap
+   * This messages would be displayed in the feed-back div
+   */
+  get errorMessage(): string {
+
+    if(!this.parentNgModel || !this.parentNgModel.control ||
+      !this.parentNgModel.control.errors) {
+      const message = this.messagesMap.defaultError;
+
+      return message ? message : this._errorMessage;
+    }
+
+    const validatorName = Object.keys(this.parentNgModel.control.errors)[0];
+
+    if(this.parentNgModel.control.errors.minlength){
+
+      if(this.messagesMap.minlength){
+        return this.messagesMap.minlength;
+      }
+
+      return this.label.concat(' must be at least ')
+      .concat(this.parentNgModel.control.errors.minlength.requiredLength)
+      .concat(' characters long.')
+    }
+
+    if(this.parentNgModel.control.errors.maxlength) {
+
+      if(this.messagesMap.maxlength){
+        return this.messagesMap.maxlength;
+      }
+
+      return this.label.concat(' must be a maximum of ')
+      .concat(this.parentNgModel.control.errors.maxlength.requiredLength)
+      .concat(' characters.')
+    }
+
+    // at least check for required. It can not came in the previous two cases
+    if(this.parentNgModel.control.errors.required){
+      if(this.messagesMap.required){
+        return this.messagesMap.required;
+      }
+
+      return this.label.concat(' is required.')
+    }
+
+    // errors from custom and other validators
+    if(validatorName && this.messagesMap.validatorName) {
+      return this.messagesMap.validatorName;
+    }
+
+    return this._errorMessage;
   }
 }

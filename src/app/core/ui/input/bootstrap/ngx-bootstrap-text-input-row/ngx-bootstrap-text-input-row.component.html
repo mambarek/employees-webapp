@@ -1,14 +1,16 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}</label>
+  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
   <input id="{{name}}" type="{{type}}" class="form-control" name="{{name}}"
-         [(ngModel)]="value"
-         #inputControl="ngModel"
-         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || externalControlInvalid)"
-         [class.is-valid]="inputControl.dirty && inputControl.valid && externalControlValid"
+
+         [(ngModel)]="value"  #inputControl="ngModel"
+
+         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || parentNgModelInvalid)"
+         [class.is-valid]="inputControl.dirty && inputControl.valid && parentNgModelValid"
+
          (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
   />
   <div class="invalid-feedback">
-    {{invalidText}}
+    {{errorMessage}}
   </div>
 </div>
 

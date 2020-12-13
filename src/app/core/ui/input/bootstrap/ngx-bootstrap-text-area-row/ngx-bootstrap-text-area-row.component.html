@@ -1,13 +1,15 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}</label>
-  <textarea id="{{name}}" type="text" class="form-control" [(ngModel)]="value" name="{{name}}"
+  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
+  <textarea id="{{name}}" type="text" class="form-control"  name="{{name}}"
+
+            [(ngModel)]="value" #inputControl="ngModel"
+            [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || parentNgModelInvalid)"
+            [class.is-valid]="inputControl.dirty && inputControl.valid && parentNgModelValid"
+
             (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
-            #localControl="ngModel"
-            [class.is-invalid]="(localControl.dirty || submitted) && (localControl.invalid || externalControlInvalid)"
-            [class.is-valid]="localControl.dirty && localControl.valid && externalControlValid"
   ></textarea>
   <div class="invalid-feedback">
-    {{invalidText}}
+    {{errorMessage}}
   </div>
 </div>
 

@@ -1,11 +1,11 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}</label>
+  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
 
   <select id="{{name}}" type="text" class="form-control" name="{{name}}"
           [(ngModel)]="value"
           #selectControl="ngModel"
-          [class.is-invalid]="(selectControl.dirty || submitted) && (selectControl.invalid || externalControlInvalid)"
-          [class.is-valid]="selectControl.dirty && selectControl.valid && externalControlValid"
+          [class.is-invalid]="(selectControl.dirty || submitted) && (selectControl.invalid || parentNgModelInvalid)"
+          [class.is-valid]="selectControl.dirty && selectControl.valid && parentNgModelValid"
           (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
   >
     <option *ngFor="let item of items" [value]="item[itemKey]">{{item[itemLabel]}}</option>
