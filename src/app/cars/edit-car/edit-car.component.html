@@ -20,14 +20,18 @@
         </a>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-info btn-block" form="carForm" id="saveButton" #saveButton >
+        <button class="btn btn-info btn-block" form="carForm" id="saveButton" #saveButton (click)="saveCar()">
           <i class="fas fa-check"></i> Save Changes
         </button>
       </div>
       <div class="col-md-3">
-        <a routerLink="/cars" class="btn btn-danger btn-block text-white" (click)="deleteCar()">
+        <button class="btn btn-danger btn-block" form="carForm" id="deleteButton" #deleteButton
+                (click)="deleteCar()" *ngIf="car && car.publicId">
+          <i class="fas fa-check"></i> Delete Changes
+        </button>
+<!--        <a routerLink="/cars" class="btn btn-danger btn-block text-white" (click)="deleteCar()">
           <i class="fas fa-trash"></i> Delete Car
-        </a>
+        </a>-->
       </div>
     </div>
   </div>
@@ -54,11 +58,24 @@
                 [(ngModel)]="car.model"
                 required maxlength="10"
               ></ngx-bootstrap-text-input-row>
+              <ngx-bootstrap-text-input-row
+                name="color" label="Color"
+                [(ngModel)]="car.color"
+                required maxlength="10"
+              ></ngx-bootstrap-text-input-row>
               <ngx-bootstrap-text-area-row
                 name="car-desc" label="Description"
                 [(ngModel)]="car.description"
                 required
               ></ngx-bootstrap-text-area-row>
+              <ngx-bootstrap-select-row
+                name="engineType" label="Engine type"
+                [(ngModel)]="car.engineType"
+                [items]="engineTypes"
+                itemKey="id"
+                itemLabel="value" (input)="selectInput($event)"
+                required
+              ></ngx-bootstrap-select-row>
               <ngx-bootstrap-select-row
                 name="fuelType" label="Fuel type"
                 [(ngModel)]="car.fuelType"
@@ -66,15 +83,13 @@
                 itemKey="id"
                 itemLabel="value" (input)="selectInput($event)"
                 required
-              >
-              </ngx-bootstrap-select-row>
+              ></ngx-bootstrap-select-row>
               <ngx-bootstrap-date-row
                 name="manufacturingDate"
                 label="Manufacturing Date"
                 [(ngModel)]="car.manufacturingDate"
                 required
-              >
-              </ngx-bootstrap-date-row>
+              ></ngx-bootstrap-date-row>
               <button class="btn btn-primary" type="submit" [disabled]="carForm.form.invalid">Submit</button>
             </form>
           </div>

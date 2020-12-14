@@ -1,0 +1,10 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1040;
+  transition: all .9s ease;
+  background: rgb(0, 0, 0, 0.5);
+}

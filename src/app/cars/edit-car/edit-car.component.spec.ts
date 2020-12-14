@@ -19,6 +19,7 @@ describe('EditCarComponent', () => {
     const carsServiceSpy = jasmine.createSpyObj('CarsService',
       ['getCarByPublicId', 'updateCar', 'createCar', 'deleteCar']);
     const activatedRoute = {
+      params: of({publicId: "25965ca1-7042-40bf-8d71-5c6c926e4337"}),
       snapshot: {
         paramMap: {
           get: () => "25965ca1-7042-40bf-8d71-5c6c926e4337", // represents the car publicId

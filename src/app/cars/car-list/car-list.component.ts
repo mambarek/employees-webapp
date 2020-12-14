@@ -3,6 +3,7 @@ import {CarSearchService, Group} from "@angular-it2go/car-fleet-api";
 import {Car, Group as IGroup, Rule as IRule} from "@angular-it2go/car-fleet-api";
 import {SearchTemplate as ISearchTemplate, CarTableItem as ICarTableItem} from "@angular-it2go/car-fleet-api";
 import GroupOpEnum = Group.GroupOpEnum;
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-car-list',
@@ -14,7 +15,7 @@ export class CarListComponent implements OnInit {
   searchText = '';
   carTableItems: ICarTableItem[] = [];
 
-  constructor(private carSearchService: CarSearchService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private carSearchService: CarSearchService) { }
 
   ngOnInit(): void {
     this.searchCars();
@@ -42,12 +43,11 @@ export class CarListComponent implements OnInit {
         op: IRule.OpEnum.CONTAINS,
         type: IRule.TypeEnum.STRING
       };
-      const group: IGroup = {rules: [brandRule, modelRule, colorRule]};
+      group.rules = [brandRule, modelRule, colorRule];
       group.groupOp = GroupOpEnum.OR;
     }
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model', orderDirection: 'ASC'};
     const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model'};
-
     this.carSearchService.search(searchTemplate).subscribe(response => {
       this.setGridItems(response.rows);
       this.itemsCount = response.records;
@@ -66,9 +66,6 @@ export class CarListComponent implements OnInit {
     })
 
     this.carTableItems = resultList;
-
-    console.log("--> setGridItems call. carTableItems length:", this.carTableItems.length);
-    console.log("--> setGridItems call. carTableItems:", this.carTableItems);
   }
 
   // Translation should be offered from the called microservice
@@ -83,8 +80,13 @@ export class CarListComponent implements OnInit {
         'White': 'Weiß',
         'Black': 'Schwarz',
         'Silver': 'Silber',
+        'Blue': 'Blau',
         'Red': 'Rot'
     }
                       }
                 }
+
+  addNewCar() {
+    this.router.navigate(["new"], {relativeTo: this.route});
+  }
 }

@@ -24,6 +24,7 @@ import {CoreModule} from "./core/core.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import {SharedModule} from "./shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { RegisterComponent } from './auth/register/register.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    SharedModule,
     ProjectsApiModule,
     NgbModule,
     CarApiModule,

@@ -19,12 +19,15 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initModel();
+    this.route.params.subscribe(params => {
+      const publicId = params['publicId'];
+      this.initView(publicId);
+    });
     this.projectStatusList = this.getStatusList();
   }
 
-  private initModel(): void {
-    const publicId: string = this.route.snapshot.params.id;
+  private initView(publicId: string): void {
+    //const publicId: string = this.route.snapshot.params.id;
     // while the getById is async so set a dummy to-do on loading page, otherwise an NP exception is thrown
     this.project = {publicId: ''};
 

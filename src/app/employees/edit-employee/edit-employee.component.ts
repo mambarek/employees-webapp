@@ -22,11 +22,13 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.initView();
+    this.route.params.subscribe(params => {
+      const publicId = params['publicId'];
+      this.initView(publicId);
+    });
   }
 
-  initView() {
-    const publicId: string = this.route.snapshot.params.id;
+  initView(publicId: string) {
 
     if (!publicId) {
       this.employee = EditEmployeeComponent.createNewEmployee();

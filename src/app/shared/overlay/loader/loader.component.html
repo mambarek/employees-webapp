@@ -1,0 +1,15 @@
+<!-- Modal -->
+<ng-container *ngIf="visible">
+  <div class="backdrop" id="loaderModal" tabindex="-1" role="dialog" aria-hidden="true" #backdrop >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="d-flex align-items-center">
+            <strong>{{message}}</strong>
+            <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

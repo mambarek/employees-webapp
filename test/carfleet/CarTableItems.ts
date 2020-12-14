@@ -1,24 +1,20 @@
-import {Car} from "@angular-it2go/car-fleet-api";
+import {CarTableItem as ICarTableItem} from "@angular-it2go/car-fleet-api/model/carTableItem";
 
-export const CARS: Car[] = [
+export const CarTableItems: ICarTableItem[] = [
   {
-    "publicId": "25965ca1-7042-40bf-8d71-5c6c926e4337",
+    "publicId": "16b721c1-b638-42c8-82cf-5b107c6d7049",
     "brand": "BMW",
     "model": "X5",
-    "engineType": "FUEL",
-    "fuelType": "DISEL",
     "description": "A powerful vehicle",
-    "manufacturingDate": "2019-03-22",
+    "manufacturingDate": "2019-03-01",
     "color": "Silver",
     "mileage": 20000,
     "status": "READY"
   },
   {
-    "publicId": "1d820afd-9db9-449a-b831-29792adbb7fb",
+    "publicId": "ed70b1fc-cbff-43ab-9480-c3e3f0efe834",
     "brand": "Mercedes",
     "model": "GLE Coupe",
-    "engineType": "FUEL",
-    "fuelType": "DISEL",
     "description": "A very nice vehicle",
     "manufacturingDate": "2020-04-15",
     "color": "Black",
@@ -26,11 +22,9 @@ export const CARS: Car[] = [
     "status": "UNDER_REPAIR"
   },
   {
-    "publicId": "53a92c6b-6870-4a2c-bfe1-9f57044753bd",
+    "publicId": "64d27b73-93ca-438f-ac56-0e9a968e02e1",
     "brand": "Tesla",
     "model": "Model X",
-    "engineType": "ELECTRIC",
-    "fuelType": null,
     "description": "A very nice vehicle",
     "manufacturingDate": "2019-06-25",
     "color": "White",
@@ -38,15 +32,13 @@ export const CARS: Car[] = [
     "status": "READY"
   },
   {
-    "publicId": "de180131-1d26-404d-ac65-90b03049da0a",
+    "publicId": "010d12d0-fc2b-4a22-876f-e44b4e71535c",
     "brand": "Toyota",
     "model": "Yaris",
-    "engineType": "HYBRID",
-    "fuelType": "PETROL",
     "description": "The best Off-road vehicle",
     "manufacturingDate": "2020-04-15",
     "color": "Red",
     "mileage": 180000,
     "status": "BROKEN"
   }
-];
+]

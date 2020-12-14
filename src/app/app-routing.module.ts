@@ -11,24 +11,27 @@ import {LoginComponent} from "./auth/login/login.component";
 import {EditEmployeeComponent} from "./employees/edit-employee/edit-employee.component";
 
 const routes: Routes = [
-  { path: '', component: DashboardComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
   {
     path: 'projects', children: [
       { path: '', component: ProjectListComponent },
-      { path: 'details/:id', component: ProjectDetailsComponent }
+      { path: 'new', component: ProjectDetailsComponent },
+      { path: 'details/:publicId', component: ProjectDetailsComponent }
     ]
   },
   {
     path: 'employees', children: [
       { path: '', component: EmployeesListComponent },
       { path: 'new', component: EditEmployeeComponent },
-      { path: 'details/:id', component: EditEmployeeComponent }
+      { path: 'details/:publicId', component: EditEmployeeComponent }
     ]
   },
   {
     path: 'cars', children: [
       { path: '', component: CarListComponent },
-      { path: 'details/:id', component: EditCarComponent }
+      { path: 'new', component: EditCarComponent },
+      { path: 'details/:publicId', component: EditCarComponent }
     ]
   },
   { path: 'login', component: LoginComponent },

@@ -66,6 +66,10 @@ export class ProjectListComponent implements OnInit {
       this.projectTableItems = response.rows;
     }, error => console.error(error));
   }
+
+  addNewProject() {
+
+  }
 }
 
 
