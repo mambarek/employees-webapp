@@ -78,8 +78,14 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
   saveCar(): void {
     if(this.carForm.invalid) return;
 
+    const confirmConfig = {
+      title: "Save data",
+      message: "Do you want to save changes?",
+      btnClass: "btn-info"
+    }
+
     this.subscriptions.push(
-      this.overlayService.showConfirmation("Wollen Sie die Änderungen speichern").subscribe(
+      this.overlayService.showConfirmation(confirmConfig).subscribe(
         decision =>  {
         this.overlayService.showLoader({message: "Daten werden gespeichert ...", minTime: 5});
         this.executeSave();
@@ -87,6 +93,10 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   }
 
+  /**
+   * Its important to push all subscriptions in to subscriptions array
+   * @private
+   */
   private executeSave(){
     console.log('saveCar call!', this.car);
     if (this.car.publicId) {
@@ -98,7 +108,15 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
               this.router.navigate(["/cars"]);
             }));
         },
-        error => console.error(error)
+        error => {
+          console.error(error);
+          this.subscriptions.push(
+            this.overlayService.hideLoader().subscribe(closed => {
+              this.subscriptions.push(
+                this.overlayService.showErrorMessage({}).subscribe(closed => {})
+              )
+          }));
+        }
       );
     } else {
       this.car.publicId = uuidv4();
@@ -107,6 +125,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
         console.log("Car successfully created", response);
         this.router.navigate(["/cars"]);
       }, error => {
+        this.overlayService.hideLoader();
         console.log("An error occurred while creating car!", error);
       });
     }

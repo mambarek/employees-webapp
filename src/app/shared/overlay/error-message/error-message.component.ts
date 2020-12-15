@@ -1,44 +1,41 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject, Subscription} from "rxjs";
 import {OverlayService} from "../overlay.service";
-import {Observable, of, Subject, Subscription} from "rxjs";
 
-/**
- * Confirmation Dialog for user decision yes/no
- */
 @Component({
-  selector: 'app-confirmation',
-  templateUrl: './confirmation.component.html',
-  styleUrls: ['./confirmation.component.css']
+  selector: 'app-error-message',
+  templateUrl: './error-message.component.html',
+  styleUrls: ['./error-message.component.css']
 })
-export class ConfirmationComponent implements OnInit, OnDestroy {
+export class ErrorMessageComponent implements OnInit, OnDestroy {
 
   visible = false;
-  title = 'Modal title';
-  message = '';
-  btnClass = "btn-primary";
+  title = 'Error';
+  message = 'An error occurred. Please contact our service.';
+  btnClass = "btn-danger";
   subscriptions: Subscription[] = [];
-  saveDecision$: Subject<any> = new Subject<any>();
+  confirmDecision$: Subject<any> = new Subject<any>();
 
-  constructor(private overlayService: OverlayService) {
-  }
+  constructor(private overlayService: OverlayService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscriptions.push(
-      this.overlayService.showConfirmation$.subscribe(next => {
+      this.overlayService.showErrorMessage$.subscribe(next => {
 
         // the service returns this decision observable to caller view
         // this the user decision to save changes
-        this.overlayService.confirmationDecision$ = this.saveDecision$;
+        this.overlayService.confirmationDecision$ = this.confirmDecision$;
 
         this.show(next);
-    }));
+      }));
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   onClose() {
+    this.confirmDecision$.next(true);
     this.hide();
   }
 
@@ -57,10 +54,5 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
 
   private hide() {
     this.visible = false;
-  }
-
-  onSave(){
-    this.saveDecision$.next(true);
-    this.hide();
   }
 }
