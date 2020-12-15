@@ -19,6 +19,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   subscriptions: Subscription[] = [];
   confirmDecision$: Subject<any> = new Subject<any>();
   hasFocus = false;
+  lastFocusedElement;
 
   constructor(private overlayService: OverlayService) { }
 
@@ -40,6 +41,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
 
   ngAfterViewChecked(): void {
     if(!this.hasFocus && this.confirmDialog) {
+      this.lastFocusedElement = document.activeElement;
       this.hasFocus = true;
       this.closeButton.nativeElement.focus();
       trapFocus(this.confirmDialog.nativeElement);
@@ -67,5 +69,6 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   private hide() {
     this.hasFocus = false;
     this.visible = false;
+    if(this.lastFocusedElement) this.lastFocusedElement.focus();
   }
 }
