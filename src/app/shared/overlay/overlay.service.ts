@@ -47,7 +47,7 @@ export class OverlayService {
    * Confirmation returns an observable it would be fired when the user click a close button
    * @param dialogConfig
    */
-  showConfirmation(dialogConfig: {title?: string, message?: string, btnClass?: string}): Observable<boolean> {
+  showConfirmation(dialogConfig: {title?: string, message?: string, btnText?: string, btnClass?: string}): Observable<boolean> {
     this.showConfirmation$.next(dialogConfig);
     return this.confirmationDecision$;
   }

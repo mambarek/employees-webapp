@@ -1,6 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {OverlayService} from "../overlay.service";
 import {Observable, of, Subject, Subscription} from "rxjs";
+import {trapFocus} from "../../../core/ui/util";
 
 /**
  * Confirmation Dialog for user decision yes/no
@@ -10,14 +11,18 @@ import {Observable, of, Subject, Subscription} from "rxjs";
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.css']
 })
-export class ConfirmationComponent implements OnInit, OnDestroy {
+export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecked{
 
+  @ViewChild('confirmDialog') confirmDialog : ElementRef;
+  @ViewChild('closeButton') closeButton : ElementRef;
   visible = false;
   title = 'Modal title';
   message = '';
+  btnText = 'Confirm'
   btnClass = "btn-primary";
   subscriptions: Subscription[] = [];
   saveDecision$: Subject<any> = new Subject<any>();
+  hasFocus = false;
 
   constructor(private overlayService: OverlayService) {
   }
@@ -38,28 +43,37 @@ export class ConfirmationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
+  ngAfterViewChecked(): void {
+    if(!this.hasFocus && this.confirmDialog) {
+      this.hasFocus = true;
+      this.closeButton.nativeElement.focus();
+      trapFocus(this.confirmDialog.nativeElement);
+    }
+  }
+
   onClose() {
     this.hide();
   }
 
-  private show(config: {title?: string, message?: string, btnClass?: string}) {
-    if(config.message)
-      this.message = config.message;
+  private show(config: {title?: string, message?: string, btnText?: string, btnClass?: string}) {
+    console.log("## Show confirm dialog", config);
+    this.message = config.message ? config.message : '';
 
-    if(config.title)
-      this.title = config.title;
-
-    if(config.btnClass)
-      this.btnClass = config.btnClass;
+    this.title = config.title ? config.title : 'Modal title';
+    this.btnText = config.btnText ? config.btnText : 'Confirm';
+    this.btnClass = config.btnClass ? config.btnClass : 'btn-primary';
 
     this.visible = true;
+
+
   }
 
   private hide() {
+    this.hasFocus = false;
     this.visible = false;
   }
 
-  onSave(){
+  onConfirm(){
     this.saveDecision$.next(true);
     this.hide();
   }

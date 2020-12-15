@@ -1,20 +1,24 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subject, Subscription} from "rxjs";
 import {OverlayService} from "../overlay.service";
+import {trapFocus} from "../../../core/ui/util";
 
 @Component({
   selector: 'app-error-message',
   templateUrl: './error-message.component.html',
   styleUrls: ['./error-message.component.css']
 })
-export class ErrorMessageComponent implements OnInit, OnDestroy {
+export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  @ViewChild('confirmDialog') confirmDialog : ElementRef;
+  @ViewChild('closeButton') closeButton : ElementRef;
   visible = false;
   title = 'Error';
   message = 'An error occurred. Please contact our service.';
   btnClass = "btn-danger";
   subscriptions: Subscription[] = [];
   confirmDecision$: Subject<any> = new Subject<any>();
+  hasFocus = false;
 
   constructor(private overlayService: OverlayService) { }
 
@@ -32,6 +36,14 @@ export class ErrorMessageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  ngAfterViewChecked(): void {
+    if(!this.hasFocus && this.confirmDialog) {
+      this.hasFocus = true;
+      this.closeButton.nativeElement.focus();
+      trapFocus(this.confirmDialog.nativeElement);
+    }
   }
 
   onClose() {
@@ -53,6 +65,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy {
   }
 
   private hide() {
+    this.hasFocus = false;
     this.visible = false;
   }
 }

@@ -25,9 +25,9 @@
         </button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-danger btn-block" form="carForm" id="deleteButton" #deleteButton
+        <button class="btn btn-danger btn-block" id="deleteButton" #deleteButton
                 (click)="deleteCar()" *ngIf="car && car.publicId">
-          <i class="fas fa-check"></i> Delete Changes
+          <i class="fas fa-check"></i> Delete Car
         </button>
 <!--        <a routerLink="/cars" class="btn btn-danger btn-block text-white" (click)="deleteCar()">
           <i class="fas fa-trash"></i> Delete Car

@@ -97,7 +97,7 @@ To install the required dependencies and to build the typescript sources run:
 npm install
 npm run build
 ```
-When compiler error occurred while building you can set the right TypeScript compiler in package.json
+When compiler error occurred while building you can set the right TypeScript compiler in "package.json"
 ```
   "devDependencies": {  
     "@angular/common": "^10.0.9",  
@@ -115,12 +115,12 @@ When compiler error occurred while building you can set the right TypeScript com
  ```   
 
 ### update build/openapi/dist directory
-build/openapi/dist/.npmrc
+"../dist/.npmrc"
 ```
 registry=http://localhost:9181/repository/npm-group/
 _auth=YWRtaW46YWRtaW4xMjM0
 ```
-in package.json add at the bottom
+in "../dist/package.json" add at the bottom
 ```
 "publishConfig": {
      "registry": "http://localhost:9181/repository/npm-private/"
@@ -130,17 +130,14 @@ in package.json add at the bottom
 ### publishing
 First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
 > cd build/openapi
-build/openapi> npm publish dist
+../build/openapi/projects> npm publish dist
 
 
 ### consuming
 
 Navigate to the folder of your consuming project and run one of next commands.
 
-_published:_
-
-
-npm install @angular-it2go/project-management-api@1.0.0-SNAPSHOT.202008211012 --save
+npm install @angular-it2go/project-management-api --save
 
 
 ## Install the generated API
