@@ -29,7 +29,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
         // the service returns this decision observable to caller view
         // this the user decision to save changes
         // IMPORTANT reset the observable for new decision
-        this.overlayService.confirmationDecision$ = new Subject<boolean>();
+        this.overlayService.errorMessageClosed$ = new Subject<boolean>();
 
         this.show(next);
       }));
@@ -49,7 +49,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   onClose() {
-    this.overlayService.confirmationDecision$.next(true);
+    this.overlayService.errorMessageClosed$.next(true);
     this.hide();
   }
 

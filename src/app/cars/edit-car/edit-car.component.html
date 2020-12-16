@@ -11,7 +11,7 @@
 
 <!-- ACTIONS -->
 <!--<section id="actions" class="py-4 mb-4 bg-light" *ngIf="car">-->
-<section id="actions" class="py-4 mb-4 bg-light" [style.display]="car ? 'block' : 'none'" >
+<section id="actions" class="py-4 mb-4 bg-light" >
   <div class="container">
     <div class="row">
       <div class="col-md-3">
@@ -20,14 +20,14 @@
         </a>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-info btn-block" form="carForm" id="saveButton" #saveButton>
+        <button class="btn btn-info btn-block" form="carForm" id="saveCar" #saveButton>
           <i class="fas fa-check"></i> Save Changes
         </button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-danger btn-block" id="deleteButton" #deleteButton
-                (click)="deleteCar()" *ngIf="car && car.publicId">
-          <i class="fas fa-check"></i> Delete Car
+        <button class="btn btn-danger btn-block" id="deleteCar" #deleteButton
+                (click)="deleteCar()" *ngIf="car.publicId">
+          <i class="fas fa-trash"></i> Delete Car
         </button>
       </div>
     </div>

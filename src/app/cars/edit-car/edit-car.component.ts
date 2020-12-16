@@ -112,7 +112,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.overlayService.hideLoader().then(() => {
           console.log('Saved car SUCCESS', response);
           this.router.navigate(["/cars"]);
-          subscription.unsubscribe();
         });
       },
     error => {
