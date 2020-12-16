@@ -21,27 +21,37 @@ export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecke
   btnText = 'Confirm'
   btnClass = "btn-primary";
   subscriptions: Subscription[] = [];
-  saveDecision$: Subject<any> = new Subject<any>();
   hasFocus = false;
   lastFocusedElement;
 
   constructor(private overlayService: OverlayService) {
   }
 
-  ngOnInit() {
+  subscribeToService(){
     this.subscriptions.push(
       this.overlayService.showConfirmation$.subscribe(next => {
 
         // the service returns this decision observable to caller view
         // this the user decision to save changes
-        this.overlayService.confirmationDecision$ = this.saveDecision$;
+        // IMPORTANT reset the observable for new decision
+        this.overlayService.confirmationDecision$ = new Subject<boolean>();
 
         this.show(next);
-    }));
+      }));
+  }
+
+  unsubscribeFromService(){
+    console.log('unsubscribeFromService subscriptions', this.subscriptions);
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  ngOnInit() {console.log('<<<<<<<<< ConfirmationComponent ngOnInit');
+    this.subscribeToService();
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    console.log("<<<<<<<<< ConfirmationComponent ngOnDestroy() call!");
+    this.unsubscribeFromService();
   }
 
   ngAfterViewChecked(): void {
@@ -58,16 +68,12 @@ export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   private show(config: {title?: string, message?: string, btnText?: string, btnClass?: string}) {
-    console.log("## Show confirm dialog", config);
     this.message = config.message ? config.message : '';
-
     this.title = config.title ? config.title : 'Modal title';
     this.btnText = config.btnText ? config.btnText : 'Confirm';
     this.btnClass = config.btnClass ? config.btnClass : 'btn-primary';
 
     this.visible = true;
-
-
   }
 
   private hide() {
@@ -77,7 +83,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   onConfirm(){
-    this.saveDecision$.next(true);
+    this.overlayService.confirmationDecision$.next(true);
     this.hide();
   }
 }

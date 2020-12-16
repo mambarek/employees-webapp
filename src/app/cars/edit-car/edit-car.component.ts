@@ -51,30 +51,34 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   private initView(publicId: string): void {
 
-    //this.overlayService.showLoader({message: "Loading car data ...", minTime: 2});
-    this.overlayService.showLoader();
+    this.overlayService.showLoader({message: "Loading car data ...", minTime: 2});
+    //this.overlayService.showLoader();
 
     // otherwise fetch the one and edit it
-    const subscription = this.carsService.getCarByPublicId(publicId).subscribe(
+    this.carsService.getCarByPublicId(publicId).subscribe(
       response => {
         console.log('Car loaded ', response);
         this.car = response;
 
-        this.carEditorTitle = this.car.brand.concat(" ").concat(this.car.model)
-                          .concat(" ").concat(this.car.status);
+        this.carEditorTitle = this.car.brand.concat(" ").concat(this.car.model);
 
         this.overlayService.hideLoader();
       },
       error => {
-        this.overlayService.hideLoader();
         console.error(error.message, error);
+        this.overlayService.hideLoader().then(() => {
+            this.overlayService.showErrorMessage({}).then(() => {
+              this.router.navigate(["/cars"]);
+            })
+        });
       }
     );
 
-    this.subscriptions.push(subscription);
+    //this.subscriptions.push(subscription);
   }
 
   saveCar(): void {
+    console.log('-+-+ saveCar() Call -+-+-');
     if(this.carForm.invalid) return;
 
     const confirmConfig = {
@@ -84,15 +88,14 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
       btnClass: "btn-info"
     }
 
-    this.subscriptions.push(
-      this.overlayService.showConfirmation(confirmConfig).subscribe(
-        decision =>  {
-        this.overlayService.showLoader({message: "Daten werden gespeichert ...", minTime: 5});
-        if(this.car.publicId)
-          this.updateCar();
-        else
-          this.createCar();
-    }));
+    //this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    this.overlayService.showConfirmation(confirmConfig).then(() =>  {
+      this.overlayService.showLoader({message: "Daten werden gespeichert ...", minTime: 5});
+      if(this.car.publicId)
+        this.updateCar();
+      else
+        this.createCar();
+    });
 
   }
 
@@ -103,25 +106,23 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
   private updateCar(){
     console.log('updateCar call!', this.car);
 
-    this.carsService.updateCar(this.car.publicId, this.car).subscribe(
-      response => {
-        this.subscriptions.push(
-          this.overlayService.hideLoader().subscribe(closed => {
-            console.log('Saved car SUCCESS', response);
-            this.router.navigate(["/cars"]);
-          }));
+    const subscription = this.carsService.updateCar(this.car.publicId, this.car).subscribe(
+    response => {
+        console.log('++ updateCar() call');
+        this.overlayService.hideLoader().then(() => {
+          console.log('Saved car SUCCESS', response);
+          this.router.navigate(["/cars"]);
+          subscription.unsubscribe();
+        });
       },
-      error => {
-        console.error(error);
-        this.subscriptions.push(
-          this.overlayService.hideLoader().subscribe(closed => {
-            this.subscriptions.push(
-              this.overlayService.showErrorMessage({}).subscribe(closed => {})
-            )
-          })
-        );
+    error => {
+      console.error(error);
+      this.overlayService.hideLoader().then(() => {
+          this.overlayService.showErrorMessage({});
+      });
       }
     );
+    this.subscriptions.push(subscription);
   }
 
   /**
@@ -135,22 +136,17 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.car.status = Car.StatusEnum.READY;
 
     this.carsService.createCar(this.car).subscribe(
-      response => {
-        this.subscriptions.push(
-          this.overlayService.hideLoader().subscribe(closed => {
-            console.log("Car successfully created", response);
-            this.router.navigate(["/cars"]);
-          }));
+    response => {
+        this.overlayService.hideLoader().then(() => {
+          console.log("Car successfully created", response);
+          this.router.navigate(["/cars"]);
+        });
     },
-        error => {
-      console.log("An error occurred while creating car!", error);
-          this.subscriptions.push(
-            this.overlayService.hideLoader().subscribe(closed => {
-              this.subscriptions.push(
-                this.overlayService.showErrorMessage({}).subscribe(closed => {})
-              )
-            })
-          );
+    error => {
+        console.log("An error occurred while creating car!", error);
+        this.overlayService.hideLoader().then(() => {
+            this.overlayService.showErrorMessage({})
+        });
     });
   }
 
@@ -165,39 +161,30 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     if (this.car.publicId) {
-      this.subscriptions.push(
-        this.overlayService.showConfirmation(confirmConfig).subscribe(
-          decision =>  {
-            this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
-            this.subscriptions.push(
-              this.carsService.deleteCar(this.car.publicId).subscribe(
-                response => {
-                  this.subscriptions.push(
-                    this.overlayService.hideLoader().subscribe(closed => {
-                      console.log('Car delete SUCCESS');
-                      this.router.navigate(["/cars"]);
-                    })
-                  );
-                },
-                error => {
-                  console.error(error);
-                  this.subscriptions.push(
-                    this.overlayService.hideLoader().subscribe(closed => {
-                      this.subscriptions.push(
-                        this.overlayService.showErrorMessage({}).subscribe(closed => {})
-                      )
-                    })
-                  );
-                }
-            ));
-          })
-      );
+      this.overlayService.showConfirmation(confirmConfig).then(() =>  {
+          this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
+          this.carsService.deleteCar(this.car.publicId).subscribe(
+            () => {
+                this.overlayService.hideLoader().then(() => {
+                  console.log('Car delete SUCCESS');
+                  this.router.navigate(["/cars"]);
+                });
+            },
+            error => {
+              console.error(error);
+                this.overlayService.hideLoader().then(() => {
+                    this.overlayService.showErrorMessage({})
+                });
+            }
+          );
+        });
     }
   }
 
   ngOnDestroy(): void {
+    console.log(">>>>>>>>>>> EditCarComponent ngOnDestroy() call!");
     // clean all subscriptions
-    this.subscriptions.forEach(sub => sub.unsubscribe());
+    //this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   selectInput(event: Event) {

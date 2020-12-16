@@ -38,26 +38,32 @@ export class OverlayService {
   /**
    * Observable to wait for server response
    */
-  hideLoader(): Observable<boolean>{
-    this.hideLoader$.next();
-    return this.loaderClosed$;
+  hideLoader(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.hideLoader$.next();
+      this.loaderClosed$.subscribe(closed => resolve(closed), error => reject(error))
+    })
   }
 
   /**
    * Confirmation returns an observable it would be fired when the user click a close button
    * @param dialogConfig
    */
-  showConfirmation(dialogConfig: {title?: string, message?: string, btnText?: string, btnClass?: string}): Observable<boolean> {
-    this.showConfirmation$.next(dialogConfig);
-    return this.confirmationDecision$;
+  showConfirmation(dialogConfig: {title?: string, message?: string, btnText?: string, btnClass?: string}): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.showConfirmation$.next(dialogConfig);
+      this.confirmationDecision$.subscribe(confirmed => resolve(confirmed), error => reject(error))
+    })
   }
 
   /**
    * Error message dialog is displayed until the user clicks a close button the observable event is then fired.
    * @param dialogConfig
    */
-  showErrorMessage(dialogConfig: {title?: string, message?: string, btnClass?: string}): Observable<boolean>{
-    this.showErrorMessage$.next(dialogConfig);
-    return this.errorMessageClosed$;
+  showErrorMessage(dialogConfig: {title?: string, message?: string, btnClass?: string}): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.showErrorMessage$.next(dialogConfig);
+      this.errorMessageClosed$.subscribe(closed => resolve(closed), error => reject(error))
+    })
   }
 }

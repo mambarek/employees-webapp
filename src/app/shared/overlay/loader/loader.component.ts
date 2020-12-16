@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {OverlayService} from "../overlay.service";
-import {Subject, Subscription} from "rxjs";
+import {Subject, Subscription, timer} from "rxjs";
 
 @Component({
   selector: 'app-loader',
@@ -24,7 +24,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
   constructor(private overlayService: OverlayService) {
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {console.log("--> Loader ngOnInit")
     this.subscriptions.push(
       this.overlayService.showLoader$.subscribe(next => {
         this.show(next);
@@ -37,7 +37,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy(): void {console.log("--> Loader ngOnDestroy")
     this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.hideSubscription.unsubscribe();
   }
@@ -55,20 +55,18 @@ export class LoaderComponent implements OnInit, OnDestroy {
       this.message = this.defaultMessage;
 
     this.visible = true;
-    this.closeIntervalId = setTimeout(() => {
+    timer(config && config.minTime? config.minTime*1000 : this.minShowTime).subscribe(() => {
       this.canClosed = true;
       this.canClose$.next(true);
-    }, config && config.minTime? config.minTime*1000 : this.minShowTime)
+    })
   }
 
   private hide(){
-    console.log("++ hide() call!!! canClosed: " + this.canClosed);
     if(this.canClosed){
       this.visible = false;
     }
 
-    this.hideSubscription = this.canClose$.subscribe(close => {
-      clearInterval(this.closeIntervalId);
+    this.hideSubscription = this.canClose$.subscribe(() => {
       this.visible = false
       this.overlayService.loaderClosed$.next(true);
     });

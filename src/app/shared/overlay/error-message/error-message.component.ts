@@ -17,7 +17,6 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   message = 'An error occurred. Please contact our service.';
   btnClass = "btn-danger";
   subscriptions: Subscription[] = [];
-  confirmDecision$: Subject<any> = new Subject<any>();
   hasFocus = false;
   lastFocusedElement;
 
@@ -29,7 +28,8 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
 
         // the service returns this decision observable to caller view
         // this the user decision to save changes
-        this.overlayService.confirmationDecision$ = this.confirmDecision$;
+        // IMPORTANT reset the observable for new decision
+        this.overlayService.confirmationDecision$ = new Subject<boolean>();
 
         this.show(next);
       }));
@@ -49,7 +49,7 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   onClose() {
-    this.confirmDecision$.next(true);
+    this.overlayService.confirmationDecision$.next(true);
     this.hide();
   }
 
