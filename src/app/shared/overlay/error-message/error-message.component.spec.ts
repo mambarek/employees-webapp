@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ErrorMessageComponent } from './error-message.component';
 import {OverlayService} from "../overlay.service";
 import {By} from "@angular/platform-browser";
 
-fdescribe('ErrorMessageComponent', () => {
+describe('ErrorMessageComponent', () => {
   let component: ErrorMessageComponent;
   let fixture: ComponentFixture<ErrorMessageComponent>;
   let overlayService: OverlayService;
@@ -47,7 +46,7 @@ fdescribe('ErrorMessageComponent', () => {
     })
   }));
 
-  fit('Close button should displayed and has focus', async(() => {
+  it('Close button should displayed and has focus', async(() => {
     overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
     fixture.detectChanges();
 
