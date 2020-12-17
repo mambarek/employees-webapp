@@ -72,5 +72,43 @@ describe('ErrorMessageComponent', () => {
       fixture.detectChanges();*/
     })
   }));
+
+  it('Click Close button should close ErrorDialog', async(() => {
+    overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      const footer = fixture.debugElement.query(By.css('.modal-footer'));
+      expect(footer).toBeTruthy("Footer is not displayed");
+
+      setTimeout(() => {
+        const closeButton = footer.query(By.css('button'));
+        closeButton.nativeElement.click();
+        fixture.detectChanges();
+        const errorModal = fixture.debugElement.query(By.css('#errorModal'));
+        expect(errorModal).not.toBeTruthy("Dialog should disappear");
+      }, 2000)
+    })
+  }));
+
+  it('Click X button should close ErrorDialog', async(() => {
+    overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
+    fixture.detectChanges();
+
+    fixture.whenStable().then(() => {
+      const footer = fixture.debugElement.query(By.css('.modal-footer'));
+      expect(footer).toBeTruthy("Footer is not displayed");
+
+      setTimeout(() => {
+        const x_button = fixture.debugElement.query(By.css('.modal-header > button'));
+        expect(x_button).toBeTruthy("wrong button selector");
+        x_button.nativeElement.click();
+        fixture.detectChanges();
+        const errorModal = fixture.debugElement.query(By.css('#errorModal'));
+        expect(errorModal).not.toBeTruthy("Dialog should disappear");
+      }, 2000)
+    })
+  }));
+  /********************************** END Tests **********************************************/
 });
 

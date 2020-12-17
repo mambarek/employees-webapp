@@ -40,18 +40,12 @@ export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecke
       }));
   }
 
-  unsubscribeFromService(){
-    console.log('unsubscribeFromService subscriptions', this.subscriptions);
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  ngOnInit() {console.log('<<<<<<<<< ConfirmationComponent ngOnInit');
+  ngOnInit() {
     this.subscribeToService();
   }
 
   ngOnDestroy(): void {
-    console.log("<<<<<<<<< ConfirmationComponent ngOnDestroy() call!");
-    this.unsubscribeFromService();
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 
   ngAfterViewChecked(): void {

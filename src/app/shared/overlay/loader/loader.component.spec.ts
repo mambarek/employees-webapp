@@ -9,8 +9,7 @@ describe('LoaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoaderComponent ],
-      providers: [OverlayService]
+      declarations: [ LoaderComponent ]
     })
     .compileComponents();
   }));
