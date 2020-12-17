@@ -11,20 +11,18 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
   @ViewChild('backdrop') backdrop: ElementRef;
   visible = false;
-  defaultMessage = 'Loading ...';
+  private defaultMessage = 'Loading ...';
   message = 'Loading ...';
-  subscriptions: Subscription[] = [];
-  hideSubscription: Subscription;
-  startTime;
-  minShowTime = 2000;
-  canClosed = false;
+  private subscriptions: Subscription[] = [];
+  private minShowTime = 2000;
+  private canClosed = false;
+
   private canClose$: Subject<boolean> = new Subject<boolean>();
-  closeIntervalId;
 
   constructor(private overlayService: OverlayService) {
   }
 
-  ngOnInit(): void {console.log("--> Loader ngOnInit")
+  ngOnInit(): void {
     this.subscriptions.push(
       this.overlayService.showLoader$.subscribe(next => {
         this.show(next);
@@ -34,20 +32,14 @@ export class LoaderComponent implements OnInit, OnDestroy {
       this.overlayService.hideLoader$.subscribe(next => {
         this.hide();
     }));
-
   }
 
-  ngOnDestroy(): void {console.log("--> Loader ngOnDestroy")
-    this.subscriptions.forEach(subscription => subscription.unsubscribe());
-    this.hideSubscription.unsubscribe();
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => {if(subscription) subscription.unsubscribe()});
   }
 
   private show(config?: {message?: string, minTime?: number}) {
-    // first reset overlay
     this.canClosed = false;
-    if(this.hideSubscription) {
-      this.hideSubscription.unsubscribe();
-    }
 
     if(config && config.message)
       this.message = config.message;
@@ -55,7 +47,8 @@ export class LoaderComponent implements OnInit, OnDestroy {
       this.message = this.defaultMessage;
 
     this.visible = true;
-    timer(config && config.minTime? config.minTime*1000 : this.minShowTime).subscribe(() => {
+    timer(config && config.minTime? config.minTime*1000 : this.minShowTime)
+    .subscribe(() => {
       this.canClosed = true;
       this.canClose$.next(true);
     })
@@ -66,10 +59,10 @@ export class LoaderComponent implements OnInit, OnDestroy {
       this.visible = false;
     }
 
-    this.hideSubscription = this.canClose$.subscribe(() => {
+    this.subscriptions.push(this.canClose$.subscribe(() => {
       this.visible = false
       this.overlayService.loaderClosed$.next(true);
-    });
+    }));
   }
 
 }
