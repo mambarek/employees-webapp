@@ -10,7 +10,7 @@ import {trapFocus} from "../../../core/ui/util";
 })
 export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
-  @ViewChild('confirmDialog') confirmDialog : ElementRef;
+  @ViewChild('errorDialog') errorDialog : ElementRef;
   @ViewChild('closeButton') closeButton : ElementRef;
   visible = false;
   title = 'Error';
@@ -40,11 +40,11 @@ export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecke
   }
 
   ngAfterViewChecked(): void {
-    if(!this.hasFocus && this.confirmDialog) {
+    if(!this.hasFocus && this.errorDialog) {
       this.lastFocusedElement = document.activeElement;
       this.hasFocus = true;
       this.closeButton.nativeElement.focus();
-      trapFocus(this.confirmDialog.nativeElement);
+      trapFocus(this.errorDialog.nativeElement);
     }
   }
 
