@@ -78,7 +78,9 @@ export class EditEmployeeComponent implements OnInit {
 
     if (this.employee.publicId) {
       this.overlayService.showConfirmation(confirmConfig).then(() =>  {
+
         this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
+
         this.employeesService.deleteEmployee(this.employee.publicId).subscribe(
           () => {
             this.overlayService.hideLoader().then(() => {

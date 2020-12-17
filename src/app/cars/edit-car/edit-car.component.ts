@@ -24,7 +24,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
   @ViewChild('carForm', {static: false}) carForm: NgForm;
   @ViewChild('saveButton') saveButton: ElementRef;
   car: Car;
-  subscriptions: Subscription [] = [];
 
   fuelTypes = [{id: 'DIESEL', value: 'Diesel'}, {id: 'PETROL', value: 'Petrol'}];
   engineTypes = [{id: 'ELECTRIC', value: 'Electric'} , {id: 'FUEL', value: 'Fuel'} , {id: 'HYBRID', value: 'Hybrid'}];
@@ -73,8 +72,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
         });
       }
     );
-
-    //this.subscriptions.push(subscription);
   }
 
   saveCar(): void {
@@ -106,7 +103,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
   private updateCar(){
     console.log('updateCar call!', this.car);
 
-    const subscription = this.carsService.updateCar(this.car.publicId, this.car).subscribe(
+    this.carsService.updateCar(this.car.publicId, this.car).subscribe(
     response => {
         console.log('++ updateCar() call');
         this.overlayService.hideLoader().then(() => {
@@ -121,7 +118,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
       });
       }
     );
-    this.subscriptions.push(subscription);
   }
 
   /**
