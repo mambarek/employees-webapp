@@ -116,13 +116,32 @@ export class ProjectDetailsComponent implements OnInit {
 
   deleteProject(): void {
     console.log('deleteProject call!', this.project);
+
+    const confirmConfig = {
+      title: "Delete Project",
+      message: "Do you want to delete this Project?",
+      btnText: "Delete",
+      btnClass: "btn-danger"
+    }
+
     if (this.project.publicId) {
-      this.projectControllerService.deleteProject(this.project.publicId).subscribe(
-        response => {
-          console.log('Project delete SUCCESS');
-        },
-        error => console.error(error)
-      );
+      this.overlayService.showConfirmation(confirmConfig).then(() =>  {
+        this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
+        this.projectControllerService.deleteProject(this.project.publicId).subscribe(
+          () => {
+            this.overlayService.hideLoader().then(() => {
+              console.log('Project delete SUCCESS');
+              this.router.navigate(["/projects"]);
+            });
+          },
+          error => {
+            console.error(error);
+            this.overlayService.hideLoader().then(() => {
+              this.overlayService.showErrorMessage({})
+            });
+          }
+        );
+      });
     }
   }
 
