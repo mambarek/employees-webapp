@@ -52,8 +52,9 @@ export class EditEmployeeComponent implements OnInit {
     this.overlayService.showLoader({message: "Loading employee data ...", minTime: 2});
 
     this.employeesService.findEmployeeByPublicId(publicId).subscribe(response => {
-        this.employee = response;
-        this.overlayService.hideLoader();
+        this.overlayService.hideLoader().then(() => {
+          this.employee = response;
+        });
       },
       error => {
         console.error(error.message, error);
@@ -134,9 +135,6 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   createEmployee(){
-    this.employee.publicId = uuidv4();
-    this.employee.createdBy = uuidv4();
-    this.employee.createdAt = new Date().getTime().toString();
     this.employeesService.saveNewEmployee(this.employee).subscribe(
       response => {
         this.overlayService.hideLoader().then(() => {

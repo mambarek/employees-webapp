@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-6">
         <h1>
-          {{project.name}} ({{project.status}})</h1>
+          <i class="fa fa-cog"></i> {{project.name}}</h1>
       </div>
     </div>
   </div>
@@ -20,14 +20,15 @@
         </a>
       </div>
       <div class="col-md-3">
-        <a href="#" class="btn btn-success btn-block" (click)="submitForm($event)">
+        <button class="btn btn-success btn-block text-white" form="projectForm" #saveButton>
           <i class="fas fa-check"></i> Save Changes
-        </a>
+        </button>
       </div>
       <div class="col-md-3">
-        <a routerLink="/projects" class="btn btn-danger btn-block" (click)="deleteProject()">
-          <i class="fas fa-trash"></i> Delete Project
-        </a>
+        <button class="btn btn-danger btn-block" id="deleteCar" #deleteButton
+                (click)="deleteProject()" *ngIf="project.publicId">
+          <i class="fas fa-trash"></i> Delete Employee
+        </button>
       </div>
     </div>
   </div>
@@ -43,32 +44,32 @@
             <h4>Edit Project</h4>
           </div>
           <div class="card-body">
-            <form (ngSubmit)="saveProject()" #projectForm="ngForm">
-              <div class="form-group">
-                <label for="project-name">Name</label>
-                <input id="project-name" type="text" class="form-control" [(ngModel)]="project.name"
-                       name="project-name">
-              </div>
-              <div class="form-group">
-                <label for="status">Status</label>
-                <select class="form-control" id="status" [(ngModel)]="project.status" name="status">
-                  <option *ngFor="let status of projectStatusList"
-                          [ngValue]="status.key">{{status.value}}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="image">Upload Image</label>
-                <div class="custom-file">
-                  <input type="file" class="custom-file-input" id="image">
-                  <label for="image" class="custom-file-label">Choose File</label>
-                </div>
-                <small class="form-text text-muted">Max Size 3mb</small>
-              </div>
-              <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" class="form-control"
-                          [(ngModel)]="project.description"></textarea>
-              </div>
+            <form (ngSubmit)="saveProject()" #projectForm="ngForm" id="projectForm">
+              <ngx-bootstrap-text-input-row
+                name="name" label="Name"
+                [(ngModel)]="project.name"
+                required minlength="3" maxlength="50"
+              ></ngx-bootstrap-text-input-row>
+              <ngx-bootstrap-text-input-row
+                name="budget" label="Budget"
+                [(ngModel)]="project.budget"
+                required minlength="3" maxlength="50"
+              ></ngx-bootstrap-text-input-row>
+              <ngx-bootstrap-date-row
+                name="planedStartDate" label="Planed start date"
+                [(ngModel)]="project.planedStartDate"
+                required
+              ></ngx-bootstrap-date-row>
+              <ngx-bootstrap-date-row
+                name="planedFinishDate" label="Planed finish date"
+                [(ngModel)]="project.planedFinishDate"
+                required
+              ></ngx-bootstrap-date-row>
+              <ngx-bootstrap-text-area-row
+                name="description" label="Description"
+                [(ngModel)]="project.description"
+                required
+              ></ngx-bootstrap-text-area-row>
             </form>
           </div>
         </div>

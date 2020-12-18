@@ -57,11 +57,10 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.carsService.getCarByPublicId(publicId).subscribe(
       response => {
         console.log('Car loaded ', response);
-        this.car = response;
-
-        this.carEditorTitle = this.car.brand.concat(" ").concat(this.car.model);
-
-        this.overlayService.hideLoader();
+        this.overlayService.hideLoader().then(closed => {
+          this.car = response;
+          this.carEditorTitle = this.car.brand.concat(" ").concat(this.car.model);
+        });
       },
       error => {
         console.error(error.message, error);
@@ -92,7 +91,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
       else
         this.createCar();
     });
-
   }
 
   /**
@@ -125,9 +123,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
    */
   private createCar(){
     console.log('createCar call!', this.car);
-    // may be move this to backend
-    this.car.publicId = uuidv4();
-    this.car.status = Car.StatusEnum.READY;
 
     this.carsService.createCar(this.car).subscribe(
     response => {

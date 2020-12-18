@@ -3,6 +3,7 @@ import {Project as IProject, ProjectControllerService} from '@angular-it2go/proj
 import {ActivatedRoute, Router} from '@angular/router';
 import StatusEnum = IProject.StatusEnum;
 import {NgForm} from '@angular/forms';
+import {OverlayService} from "../../shared/overlay/overlay.service";
 
 @Component({
   selector: 'app-edit-project',
@@ -15,14 +16,19 @@ export class ProjectDetailsComponent implements OnInit {
   project: IProject;
   projectStatusList: ProjectStatus[] = [];
 
-  constructor(private route: ActivatedRoute, private router: Router, private projectControllerService: ProjectControllerService) {
+  constructor(private route: ActivatedRoute, private router: Router,
+              private projectControllerService: ProjectControllerService,
+              private overlayService: OverlayService) {
   }
 
   ngOnInit(): void {
+    this.project = <IProject>{};
     this.route.params.subscribe(params => {
       const publicId = params['publicId'];
-      this.initView(publicId);
+      if(publicId)
+        this.initView(publicId);
     });
+
     this.projectStatusList = this.getStatusList();
   }
 
@@ -35,36 +41,78 @@ export class ProjectDetailsComponent implements OnInit {
       return;
     } // it mean we create a new to do
 
+    this.overlayService.showLoader({message: "Loading Project Data ...", minTime: 2});
     // otherwise fetch the one and edit it
     this.projectControllerService.getProjectByPublicId(publicId).subscribe(
       response => {
         console.log('Project loaded ', response);
-        this.project = response;
+        this.overlayService.hideLoader().then(() => {
+          this.project = response;
+        })
       },
       error => {
         console.error(error.message, error);
+        this.overlayService.hideLoader().then(() => {
+          this.overlayService.showErrorMessage({}).then(() => {
+            this.router.navigate(["/projects"]);
+          })
+        });
       }
     );
   }
 
-  submitForm(event: Event): void {
-    event.preventDefault();
-    this.projectForm.ngSubmit.emit();
+  saveProject(): void {
+    if(this.projectForm.invalid) return;
+
+    const confirmConfig = {
+      title: "Save data",
+      message: "Do you want to save changes?",
+      btnText: "Save changes",
+      btnClass: "btn-success"
+    }
+
+    this.overlayService.showConfirmation(confirmConfig).then(() =>  {
+      this.overlayService.showLoader({message: "Daten werden gespeichert ...", minTime: 5});
+      if(this.project.publicId)
+        this.updateProject();
+      else
+        this.createProject();
+    });
   }
 
-  saveProject(): void {
-    console.log('saveProject call!', this.project);
-    if (this.project.publicId) {
-      this.projectControllerService.updateProject(this.project.publicId, this.project).subscribe(
-        response => {
-          console.log('Saved project SUCCESS');
-        },
-        error => console.error(error)
-      );
-    } else {
-      this.projectControllerService.saveProject(this.project);
-    }
-  }
+  updateProject(): void {
+    this.projectControllerService.updateProject(this.project.publicId, this.project).subscribe(
+      response => {
+        this.overlayService.hideLoader().then(() => {
+          console.log('Saved project SUCCESS', response);
+          this.router.navigate(["/projects"]);
+        });
+      },
+      error => {
+        console.error(error);
+        this.overlayService.hideLoader().then(() => {
+          this.overlayService.showErrorMessage({});
+        });
+      }
+    );
+  };
+
+  createProject(): void {
+    this.projectControllerService.saveProject(this.project).subscribe(
+      response => {
+        this.overlayService.hideLoader().then(() => {
+          console.log('Create project SUCCESS', response);
+          this.router.navigate(["/projects"]);
+        });
+      },
+        error => {
+          console.error(error);
+          this.overlayService.hideLoader().then(() => {
+            this.overlayService.showErrorMessage({});
+          });
+        }
+    );
+  };
 
   deleteProject(): void {
     console.log('deleteProject call!', this.project);

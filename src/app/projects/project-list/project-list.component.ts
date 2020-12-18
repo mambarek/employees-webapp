@@ -6,6 +6,9 @@ import {
   Group as IGroup,
   ProjectTableItem as IProjectTableItem
 } from '@angular-it2go/project-management-api';
+import {ActivatedRoute, Router} from "@angular/router";
+import {Group} from "@angular-it2go/car-fleet-api";
+import GroupOpEnum = Group.GroupOpEnum;
 
 @Component({
   selector: 'app-project-list',
@@ -17,7 +20,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   projectTableItems: IProjectTableItem[] = [];
 
-  constructor(private projectControllerService: ProjectControllerService) {
+  constructor(private router: Router, private route: ActivatedRoute, private projectControllerService: ProjectControllerService) {
   }
 
   ngOnInit(): void {
@@ -25,41 +28,10 @@ export class ProjectListComponent implements OnInit {
     this.searchProjects();
   }
 
-  // not in use
-  private loadAllProjects(): void {
-    // if we have search
-    if (this.projectName) {
-      this.searchProjects();
-      return;
-    }
-
-    this.projectControllerService.getAllProjects().subscribe(
-      response => {
-        this.projects = response;
-        response.forEach(project => {
-          const projectTableItem: IProjectTableItem = {
-            name: project.name,
-            budget: project.budget,
-            description: project.description,
-            finishDate: project.finishDate,
-            planedFinishDate: project.planedFinishDate,
-            planedStartDate: project.planedStartDate,
-            publicId: project.publicId,
-            startDate: project.startDate,
-            status: project.status
-          };
-          this.projectTableItems.push(projectTableItem);
-        });
-        console.log('loadAllProjects SUCCESS');
-        console.log(response);
-      },
-      error => console.error(error)
-    );
-  }
-
   searchProjects(): void {
     const rule: IRule = {field: 'name', data: this.projectName, op: 'CONTAINS', type: 'STRING'};
     const group: IGroup = {rules: [rule]};
+    group.groupOp = GroupOpEnum.OR;
     const searchTemplate: ISearchTemplate = {filters: group};
 
     this.projectControllerService.search(searchTemplate).subscribe(response => {
@@ -68,7 +40,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   addNewProject() {
-
+    this.router.navigate(["new"], {relativeTo: this.route});
   }
 }
 
