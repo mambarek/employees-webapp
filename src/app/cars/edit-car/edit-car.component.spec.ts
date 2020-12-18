@@ -28,7 +28,7 @@ describe('EditCarComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [AppModule, CarApiModule ],
+      imports: [AppModule, CarApiModule],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: CarsService, useValue: carsServiceSpy}
@@ -38,8 +38,10 @@ describe('EditCarComponent', () => {
       // mock the search, return only BMW car
       carsService = TestBed.inject(CarsService);
       carsService.getCarByPublicId.and.returnValue(of(car));
+
       fixture = TestBed.createComponent(EditCarComponent);
       component = fixture.componentInstance;
+      fixture.autoDetectChanges(true);
       fixture.detectChanges();
     });
   }))
@@ -48,23 +50,85 @@ describe('EditCarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load car', fakeAsync(() => {
+  it('should load car', async(() => {
 
-    fixture.detectChanges();
-    tick();
+    fixture.whenStable().then(() => {
+      const backLink = fixture.debugElement.query(By.css('#actions > .container > .row > .col-md-3 > a'));
+      expect(backLink).toBeTruthy("Back link should be present");
+      expect(backLink.nativeElement.href).toContain('/cars');
 
-    const brandInput = fixture.debugElement.query(By.css('#brand'))
-    expect(brandInput.nativeElement.value).toEqual(car.brand);
-  }))
+      const saveButton = fixture.debugElement.query(By.css('#saveCar'));
+      expect(saveButton).toBeTruthy("Save button should be present");
+      expect(saveButton.nativeElement.disabled).toBeFalsy("Save button should be enabled");
 
-  it('should load 2 car', async(() => {
+      const deleteButton = fixture.debugElement.query(By.css('#deleteCar'));
+      expect(deleteButton).toBeTruthy("Delete button should be present");
+      expect(deleteButton.nativeElement.disabled).toBeFalsy("Delete button should be enabled");
 
-    fixture.detectChanges();
-
-    fixture.whenRenderingDone().then(() => {
       const brandInput = fixture.debugElement.query(By.css('#brand'))
       expect(brandInput.nativeElement.value).toEqual(car.brand);
+
+      // check mandatory fields, label has '*' at the end
+      const brandLabel = fixture.debugElement.query(By.css('[name="brand"] > .form-group > label'))
+      expect(brandLabel.nativeElement.innerText).toContain('*');
     })
   }))
+
+  it('Delete brand should disable "Save Changes" button', async(() => {
+
+    fixture.whenStable().then(() => {
+      const brandInput = fixture.debugElement.query(By.css('#brand'))
+      brandInput.nativeElement.value = '';
+      brandInput.nativeElement.dispatchEvent(new Event('input'));
+
+      const saveButton = fixture.debugElement.query(By.css('#saveCar'));
+      expect(saveButton).toBeTruthy("Save button should be present");
+      console.log(saveButton);
+      expect(saveButton.nativeElement.disabled).toBeTruthy("Save button should be disabled");
+    })
+  }))
+
+
   /******************************* Test suite End ******************************************/
+})
+
+describe('EditCarComponent new Car', () =>{
+
+  let component: EditCarComponent;
+  let fixture: ComponentFixture<EditCarComponent>;
+
+  beforeEach(async(() => {
+    // create cars service spy and provide it
+    const carsServiceSpy = jasmine.createSpyObj('CarsService',
+      ['getCarByPublicId', 'updateCar', 'createCar', 'deleteCar']);
+
+    const activatedRoute = {params: of({}) };
+
+    TestBed.configureTestingModule({
+      imports: [AppModule, CarApiModule],
+      providers: [
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: CarsService, useValue: carsServiceSpy}
+      ]
+    })
+    .compileComponents().then(() => {
+      fixture = TestBed.createComponent(EditCarComponent);
+      component = fixture.componentInstance;
+      fixture.autoDetectChanges(true);
+      fixture.detectChanges();
+    });
+  }));
+
+  it('It should hide "Delete Car" button for new car', async(() => {
+
+    fixture.whenStable().then(() => {
+      const deleteButton = fixture.debugElement.query(By.css('#deleteCar'));
+      expect(deleteButton).toBeFalsy("Delete button should not be present for new Car");
+
+      const saveButton = fixture.debugElement.query(By.css('#saveCar'));
+      expect(saveButton).toBeTruthy("Save button should be present");
+      console.log(saveButton);
+      expect(saveButton.nativeElement.disabled).toBeTruthy("Save button should be disabled");
+    })
+  }))
 })

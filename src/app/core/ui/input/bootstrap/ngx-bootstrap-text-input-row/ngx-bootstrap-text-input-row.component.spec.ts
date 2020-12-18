@@ -80,11 +80,11 @@ describe('NgxBootstrapTextInputRowComponent', () => {
         const input = el.query(By.css('input'));
         expect(input).toBeTruthy();
 
-        input.nativeElement.value = 'Omar'
-        input.nativeElement.dispatchEvent(new Event('input'))
+        input.nativeElement.value = 'Omar';
+        input.nativeElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
 
-        expect(input.nativeElement.classList.contains('is-valid')).toBe(true)
+        expect(input.nativeElement.classList.contains('is-valid')).toBe(true);
       })
     })
   )

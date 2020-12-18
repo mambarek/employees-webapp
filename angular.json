@@ -88,7 +88,9 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css",
               "src/assets/css/bootstrap.min.css",
+              "src/assets/css/style.css",
               "src/styles.css"
             ],
             "scripts": ["src/assets/env.js"]

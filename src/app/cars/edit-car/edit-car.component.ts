@@ -85,7 +85,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
       btnClass: "btn-info"
     }
 
-    //this.subscriptions.forEach(subscription => subscription.unsubscribe());
     this.overlayService.showConfirmation(confirmConfig).then(() =>  {
       this.overlayService.showLoader({message: "Daten werden gespeichert ...", minTime: 5});
       if(this.car.publicId)
