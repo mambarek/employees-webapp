@@ -1,0 +1,35 @@
+<!--<form #addressForm="ngForm" #nativeForm id="carForm">-->
+  <ngx-bootstrap-text-input-row
+    name="{{prefix}}_streetOne"  label="Street one"
+    [(ngModel)]="address.streetOne"
+    required minlength="3" maxlength="50"
+  ></ngx-bootstrap-text-input-row>
+  <ngx-bootstrap-text-input-row
+    name="{{prefix}}_streetTwo"  label="Street two"
+    [(ngModel)]="address.streetTwo"
+    minlength="3" maxlength="50"
+  ></ngx-bootstrap-text-input-row>
+  <div class="form-row">
+    <div class="col-2">
+      <ngx-bootstrap-text-input-row
+        name="{{prefix}}_zipCode"  label="Zipcode"
+        [(ngModel)]="address.zipCode"
+        required minlength="2" maxlength="10"
+      ></ngx-bootstrap-text-input-row>
+    </div>
+    <div class="col-6">
+      <ngx-bootstrap-text-input-row
+        name="{{prefix}}_city"  label="City"
+        [(ngModel)]="address.city"
+        required minlength="3" maxlength="50"
+      ></ngx-bootstrap-text-input-row>
+    </div>
+    <div class="col-4">
+    <ngx-bootstrap-text-input-row
+      name="{{prefix}}_country"  label="Country"
+      [(ngModel)]="address.countryCode"
+      required minlength="2" maxlength="50"
+    ></ngx-bootstrap-text-input-row>
+    </div>
+  </div>
+<!--</form>-->

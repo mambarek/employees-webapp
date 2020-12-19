@@ -14,17 +14,17 @@
 <section id="search" class="py-4 mb-4 bg-light">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
-        <button class="btn btn-warning" (click)="addNewEmployee()" id="add-employee-button">
+      <div class="col-md-3">
+        <button class="btn btn-warning btn-block text-white" (click)="addNewEmployee()" id="add-employee-button">
           <i class="fa fa-plus"></i> New Employee
         </button>
       </div>
-      <div class="col-md-6 ml-auto">
+      <div class="col-md-6 ml-auto offset-6">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search Employees..."
                  [(ngModel)]="searchText" id="search-text">
           <div class="input-group-append">
-            <button class="btn btn-warning" (click)="searchEmployees()" id="search-button">Search</button>
+            <button class="btn btn-warning text-white" (click)="searchEmployees()" id="search-button">Search</button>
           </div>
         </div>
       </div>

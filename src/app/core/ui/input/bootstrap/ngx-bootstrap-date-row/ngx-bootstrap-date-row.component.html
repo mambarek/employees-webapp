@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
+  <label class="text-nowrap" for="{{name}}">{{label}}{{isRequired()? '*': ''}}</label>
   <input id="{{name}}" type="text" class="form-control" placeholder="yyyy-mm-dd" name="{{name}}"
          ngbDatepicker #d="ngbDatepicker"  (click)="d.toggle()"
          [(ngModel)]="value" #inputControl="ngModel"

@@ -4,7 +4,7 @@ import {Observable, Subject} from 'rxjs';
 /**
  * The OverlayService is an event emitter to Modal dialogs.
  * Modal dialogs like loader and confirmation subscribe to this events
- * to configure and display them.
+ * to configure and display them self.
  *
  * To chain a flow of actions. some methods returns an Observable to now exactly when
  * a dialog is closed. May be you wait for a user action to close a dialog or the backend server

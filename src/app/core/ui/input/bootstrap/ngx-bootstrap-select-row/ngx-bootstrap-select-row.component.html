@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label for="{{name}}">{{label}}{{isRequired()? ' *': ''}}</label>
+  <label class="text-nowrap" for="{{name}}">{{label}}{{isRequired()? '*': ''}}</label>
 
   <select id="{{name}}" type="text" class="form-control" name="{{name}}"
           [(ngModel)]="value"

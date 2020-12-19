@@ -1,26 +1,15 @@
-import {
-  AfterViewChecked,
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Car, CarsService} from "@angular-it2go/car-fleet-api";
 import {ActivatedRoute, Router} from "@angular/router";
-import {NgForm, NgModel} from "@angular/forms";
-import {Subscription} from "rxjs";
-import { v4 as uuidv4 } from 'uuid';
+import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
 
 @Component({
   selector: 'app-edit-car',
   templateUrl: './edit-car.component.html'
 })
-export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class EditCarComponent implements OnInit, AfterViewChecked {
 
-  @ViewChild('nativeForm', {static: false}) nativeForm: ElementRef;
   @ViewChild('carForm', {static: false}) carForm: NgForm;
   @ViewChild('saveButton') saveButton: ElementRef;
   car: Car;
@@ -51,9 +40,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
   private initView(publicId: string): void {
 
     this.overlayService.showLoader({message: "Loading car data ...", minTime: 2});
-    //this.overlayService.showLoader();
 
-    // otherwise fetch the one and edit it
     this.carsService.getCarByPublicId(publicId).subscribe(
       response => {
         console.log('Car loaded ', response);
@@ -93,10 +80,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
   }
 
-  /**
-   * Its important to push all subscriptions in to subscriptions array
-   * @private
-   */
   private updateCar(){
     console.log('updateCar call!', this.car);
 
@@ -117,10 +100,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
     );
   }
 
-  /**
-   * Its important to push all subscriptions in to subscriptions array
-   * @private
-   */
   private createCar(){
     console.log('createCar call!', this.car);
 
@@ -168,12 +147,6 @@ export class EditCarComponent implements OnInit, AfterViewChecked, OnDestroy {
           );
         });
     }
-  }
-
-  ngOnDestroy(): void {
-    console.log(">>>>>>>>>>> EditCarComponent ngOnDestroy() call!");
-    // clean all subscriptions
-    //this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   selectInput(event: Event) {

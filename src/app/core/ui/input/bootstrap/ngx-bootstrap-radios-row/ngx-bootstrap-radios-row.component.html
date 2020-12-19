@@ -1,5 +1,5 @@
 <div class="form-group">
-  <label>{{label}}{{isRequired()? ' *': ''}}</label>
+  <label class="text-nowrap" >{{label}}{{isRequired()? '*': ''}}</label>
   <div class="custom-control custom-radio" *ngFor="let item of items" id="{{name}}"
        [class.is-invalid]="(radioControl.dirty || submitted) && parentNgModelInvalid"
        [class.is-valid]="radioControl.dirty && parentNgModelValid"
