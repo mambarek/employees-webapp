@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 
 /**
  * The OverlayService is an event emitter to Modal dialogs.
@@ -35,13 +35,24 @@ export class OverlayService {
     this.showLoader$.next(loaderConfig);
   }
 
+  loaderClosedSubsc: Subscription;
   /**
    * Observable to wait for server response
    */
   hideLoader(): Promise<boolean>{
+    if(this.loaderClosedSubsc) this.loaderClosedSubsc.unsubscribe();
+    console.log(">> Overlay service hideLoader() !!!");
     return new Promise((resolve, reject) => {
+
+      console.log(">> subscribe to loaderClosed$");
+      // callback from loader
+      this.loaderClosedSubsc = this.loaderClosed$.subscribe(closed => {
+        console.log(">> hideLoader resolved");
+        resolve(closed)
+      }, error => reject(error));
+
+      // call next after subscription
       this.hideLoader$.next();
-      this.loaderClosed$.subscribe(closed => resolve(closed), error => reject(error))
     })
   }
 

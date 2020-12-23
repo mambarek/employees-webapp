@@ -1,0 +1,16 @@
+<div class="form-group" [formGroup]="name">
+  <label class="text-nowrap" [for]="name">{{decoratedLabel}}</label>
+  <input [id]="name" [type]="type" class="form-control"
+
+         [formControlName]="name"
+         [formControl]="formControl"
+
+         [class.is-invalid]="(formControl.dirty || submitted) && (formControl.invalid || parentNgModelInvalid)"
+         [class.is-valid]="formControl.dirty && formControl.valid && parentNgModelValid"
+
+         (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
+  />
+  <div class="invalid-feedback">
+    {{errorMessage}}
+  </div>
+</div>

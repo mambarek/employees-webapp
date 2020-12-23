@@ -128,4 +128,54 @@ describe('LoaderComponent', () => {
       );
     })
   }));
+
+
+  it('should hide loader after async finished', async(() => {
+    const overlayService = TestBed.inject(OverlayService);
+    const loaderMessage = 'My test loader ...';
+
+    overlayService.showLoader({message: loaderMessage, minTime: 0.5});
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      console.log(component);
+      console.log(fixture.debugElement.nativeElement);
+      let modal = fixture.debugElement.query(By.css('#loaderModal'));
+      expect(modal).toBeTruthy();
+      const messageEl = fixture.debugElement.query(By.css('.modal-body:first-child'));
+      expect(messageEl).toBeTruthy();
+      expect(messageEl.nativeElement.innerText).toEqual(loaderMessage);
+
+      setTimeout(() => {
+        console.log("-- timeout occurred")
+        overlayService.hideLoader().then(closed => {
+          console.log("-- loader closed")
+            fixture.detectChanges();
+            modal = fixture.debugElement.query(By.css('#loaderModal'));
+            expect(modal).toBeFalsy();
+
+
+
+
+          }
+        );
+        fixture.detectChanges();
+      }, 1000);
+
+      setTimeout(() => {
+        console.log("-- show loader again")
+        overlayService.showLoader({message: loaderMessage, minTime: 0.5});
+        fixture.detectChanges();
+      }, 2000)
+
+      setTimeout(() => {
+        console.log("-- hider loader last one")
+        overlayService.hideLoader().then(closed => {
+          fixture.detectChanges();
+        });
+      }, 4000)
+    })
+  }));
+
+
 });

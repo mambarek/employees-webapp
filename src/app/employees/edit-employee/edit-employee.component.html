@@ -15,17 +15,17 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <a routerLink="/employees" class="btn btn-light btn-block">
+        <a routerLink="/employees" class="btn btn-light btn-block text-nowrap">
           <i class="fas fa-arrow-left"></i> Back To Projects
         </a>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-warning btn-block text-white" form="employeeForm" #saveButton>
+        <button class="btn btn-warning btn-block text-white text-nowrap" (click)="saveEmployee()" #saveButton>
           <i class="fas fa-check"></i> Save Changes
         </button>
       </div>
       <div class="col-md-3">
-        <button class="btn btn-danger btn-block" id="deleteCar" #deleteButton
+        <button class="btn btn-danger btn-block text-nowrap" id="deleteCar" #deleteButton
                 (click)="deleteEmployee()" *ngIf="employee.publicId">
           <i class="fas fa-trash"></i> Delete Employee
         </button>
@@ -39,46 +39,55 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <div class="card">
-          <div class="card-header">
-            <h4>Edit Employee</h4>
-          </div>
-          <div class="card-body">
-            <form (ngSubmit)="saveEmployee()" #employeeForm="ngForm" id="employeeForm">
-              <ngx-bootstrap-text-input-row
-                name="firstName" label="First name"
-                [(ngModel)]="employee.data.firstName"
-                required minlength="3" maxlength="50"
-                [messagesMap]="myMessageMap"
-              >
-              </ngx-bootstrap-text-input-row>
-              <ngx-bootstrap-text-input-row
-                name="lastName" label="Last name"
-                [(ngModel)]="employee.data.lastName"
-                required minlength="3" maxlength="50"
-              >
-              </ngx-bootstrap-text-input-row>
-              <ngx-bootstrap-date-row
-                name="birthDate" label="Birthdate"
-                [(ngModel)]="employee.data.birthDate"
-                required
-              >
-              </ngx-bootstrap-date-row>
-              <ngx-bootstrap-text-input-row
-                name="email" label="Email"
-                [(ngModel)]="employee.data.email"
-                required minlength="3" maxlength="100"
-              ></ngx-bootstrap-text-input-row>
+          <ngb-accordion #acc="ngbAccordion" activeIds="person-data" (panelChange)="validateAccordion($event)">
+            <ngb-panel title="Personal Data" id="person-data">
+              <ng-template ngbPanelHeader>
+                <button ngbPanelToggle class="btn btn-link">Person Data</button>
+              </ng-template>
+              <ng-template ngbPanelContent>
+                <form  #personDataForm="ngForm" id="personDataForm">
+                  <ngx-bootstrap-text-input-row
+                    name="firstName" label="First name"
+                    [(ngModel)]="employee.data.firstName"
+                    required minlength="3" maxlength="50"
+                    [messagesMap]="myMessageMap"
+                  >
+                  </ngx-bootstrap-text-input-row>
+                  <ngx-bootstrap-text-input-row
+                    name="lastName" label="Last name"
+                    [(ngModel)]="employee.data.lastName"
+                    required minlength="3" maxlength="50"
+                  >
+                  </ngx-bootstrap-text-input-row>
+                  <ngx-bootstrap-date-row
+                    name="birthDate" label="Birthdate"
+                    [(ngModel)]="employee.data.birthDate"
+                    required
+                  >
+                  </ngx-bootstrap-date-row>
+                  <ngx-bootstrap-text-input-row
+                    name="email" label="Email"
+                    [(ngModel)]="employee.data.email"
+                    required minlength="3" maxlength="100"
+                  ></ngx-bootstrap-text-input-row>
 
-              <ngx-bootstrap-radios-row
-                label="Gender" name="genders"
-                [items]="genders"
-                [(ngModel)]="employee.data.gender"
-                required
-              ></ngx-bootstrap-radios-row>
-            </form>
-          </div>
-        </div>
+                  <ngx-bootstrap-radios-row
+                    label="Gender" name="gender"
+                    [items]="genders"
+                    [(ngModel)]="employee.data.gender"
+                    required
+                  ></ngx-bootstrap-radios-row>
+                </form>
+              </ng-template>
+            </ngb-panel>
+            <ngb-panel title="Address" id="address-data">
+              <ng-template ngbPanelContent>
+                <form  #addressForm="ngForm" id="addressForm">
+                <app-address prefix="empl_addr" [address]="employee.data.address" #addressComponent></app-address>
+                </form>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
       </div>
     </div>
   </div>

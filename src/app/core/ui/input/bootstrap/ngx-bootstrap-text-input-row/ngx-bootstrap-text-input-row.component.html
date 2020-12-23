@@ -1,11 +1,11 @@
 <div class="form-group">
-  <label class="text-nowrap" for="{{name}}">{{label}}{{isRequired()? '*': ''}}</label>
-  <input id="{{name}}" type="{{type}}" class="form-control" name="{{name}}"
+  <label class="text-nowrap" [for]="name">{{decoratedLabel}}</label>
+  <input [id]="name" [type]="type" class="form-control" [name]="name"
 
          [(ngModel)]="value"  #inputControl="ngModel"
 
-         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || parentNgModelInvalid)"
-         [class.is-valid]="inputControl.dirty && inputControl.valid && parentNgModelValid"
+         [class.is-invalid]="(inputControl.dirty || submitted) && (inputControl.invalid || parentControlInvalid)"
+         [class.is-valid]="inputControl.dirty && inputControl.valid && parentControlValid"
 
          (focus)="onFocus($event)" (blur)="onBlur($event)" (input)="onInput($event)"
   />

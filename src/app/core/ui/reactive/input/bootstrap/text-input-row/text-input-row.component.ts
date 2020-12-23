@@ -1,14 +1,20 @@
-import {Component, EventEmitter, Input, Optional, Output, Self, ViewChild} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, NgControl, NgForm, NgModel,} from "@angular/forms";
-import {hasRequired} from "../../../util";
+import {Component, EventEmitter, Input, OnInit, Optional, Output, Self} from '@angular/core';
+import {
+  ControlValueAccessor, FormBuilder,
+  FormControl,
+  FormControlName,
+  NgModel,
+  Validators
+} from "@angular/forms";
+import {hasRequired} from "../../../../util";
 
 @Component({
-  selector: 'ngx-bootstrap-text-input-row',
-  templateUrl: './ngx-bootstrap-text-input-row.component.html',
+  selector: 'app-text-input-row',
+  templateUrl: './text-input-row.component.html',
+  styleUrls: ['./text-input-row.component.css']
 })
-export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
+export class TextInputRowComponent implements ControlValueAccessor, OnInit {
 
-  @ViewChild('inputControl') _localNgModel: NgModel;
   @Input() name;
   @Input() label;
   @Input() type: 'text' | 'password' = 'text';
@@ -31,26 +37,23 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   _value;
   _errorMessage = 'Please enter a valid value';
 
-  /**
-   * We’re injecting the NgControl which is the super class of both formControlName and ngModel,
-   * with that, we’re not coupling our form control to any of the template or reactive module.
-   *
-   * We’re decorating our control with the @Self() decorator. That way we’re ensuring our control
-   * will not be overwritten by the injector tree.
-   * @param parentControl
-   */
-  constructor(@Self() @Optional() public parentControl: NgControl) {
-    if ( this.parentControl) {
-      this.parentControl.valueAccessor = this;
+  @Output()
+  formControl: FormControl;
+
+  constructor(@Self() @Optional() public parentNgModel: NgModel) {
+    if ( this.parentNgModel) {
+      console.log("parentNgModel: ", this.parentNgModel);
+      this.parentNgModel.valueAccessor = this;
     }
+  }
+
+  ngOnInit() {
+    this.formControl = new FormControl(this.value);
+    //if(this.parentNgModel)
   }
 
   get decoratedLabel(): string {
     return this.isRequired() ? this.label + '*' : this.label;
-  }
-
-  get localControl(): NgModel {
-    return this._localNgModel;
   }
 
   /**
@@ -70,6 +73,7 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
    * @param value
    */
   set value(value) {
+    console.log('set value', value);
     if (this._value !== value) {
       this._value = value;
       this.onChange(value);
@@ -106,12 +110,12 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
     this.onTouch = fn;
   }
 
-  public get parentControlValid(): boolean {
-    return this.parentControl ? this.parentControl.valid : true;
+  public get parentNgModelValid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.valid : true;
   }
 
-  public get parentControlInvalid(): boolean {
-    return this.parentControl ? this.parentControl.invalid : false;
+  public get parentNgModelInvalid(): boolean {
+    return this.parentNgModel ? this.parentNgModel.invalid : false;
   }
 
   onFocus(event: Event) {
@@ -127,10 +131,9 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   }
 
   get submitted(){
-    //console.log('get submitted for ' + this.label, this);
-    if(!this.parentControl || !this.parentControl['formDirective']) return false;
-
-    return this.parentControl['formDirective'].submitted;
+    // console.log('get submitted for ' + this.label, this);
+    if(!this.parentNgModel || !this.parentNgModel.formDirective) return false;
+    return this.parentNgModel.formDirective.submitted;
   }
 
   /**
@@ -139,9 +142,9 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
    * or highlight it with som css style
    */
   isRequired(): boolean{
-    if(!this.parentControl || !this.parentControl.control) return false;
+    if(!this.parentNgModel || !this.parentNgModel.control) return false;
 
-    return hasRequired(this.parentControl.control);
+    return hasRequired(this.parentNgModel.control);
   }
 
   /**
@@ -160,39 +163,39 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
    */
   get errorMessage(): string {
 
-    if(!this.parentControl || !this.parentControl.control ||
-      !this.parentControl.control.errors) {
+    if(!this.parentNgModel || !this.parentNgModel.control ||
+      !this.parentNgModel.control.errors) {
       const message = this.messagesMap.defaultError;
 
       return message ? message : this._errorMessage;
     }
 
-    const validatorName = Object.keys(this.parentControl.control.errors)[0];
+    const validatorName = Object.keys(this.parentNgModel.control.errors)[0];
 
-    if(this.parentControl.control.errors.minlength){
+    if(this.parentNgModel.control.errors.minlength){
 
       if(this.messagesMap.minlength){
         return this.messagesMap.minlength;
       }
 
       return this.label.concat(' must be at least ')
-      .concat(this.parentControl.control.errors.minlength.requiredLength)
+      .concat(this.parentNgModel.control.errors.minlength.requiredLength)
       .concat(' characters long.')
     }
 
-    if(this.parentControl.control.errors.maxlength) {
+    if(this.parentNgModel.control.errors.maxlength) {
 
       if(this.messagesMap.maxlength){
         return this.messagesMap.maxlength;
       }
 
       return this.label.concat(' must be a maximum of ')
-      .concat(this.parentControl.control.errors.maxlength.requiredLength)
+      .concat(this.parentNgModel.control.errors.maxlength.requiredLength)
       .concat(' characters.')
     }
 
     // at least check for required. It can not came in the previous two cases
-    if(this.parentControl.control.errors.required){
+    if(this.parentNgModel.control.errors.required){
       if(this.messagesMap.required){
         return this.messagesMap.required;
       }

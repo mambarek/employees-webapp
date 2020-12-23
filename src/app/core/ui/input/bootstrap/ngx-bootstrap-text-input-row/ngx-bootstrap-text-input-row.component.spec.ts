@@ -1,8 +1,15 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {NgxBootstrapTextInputRowComponent} from "./ngx-bootstrap-text-input-row.component";
-import {Component, DebugElement, ViewChild} from "@angular/core";
+import {Component, DebugElement, OnInit, ViewChild} from "@angular/core";
 import {By} from "@angular/platform-browser";
-import {FormControl, FormsModule, NgControl, NgModel} from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  NgControl,
+  NgModel,
+  ReactiveFormsModule, Validators
+} from "@angular/forms";
 import {CoreModule} from "../../../../core.module";
 
 /**
@@ -116,7 +123,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       let ngModel = TestBed.inject(NgModel);
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
-      component.parentNgModel = ngModel;
+      component.parentControl = ngModel;
       component.label = 'Firstname'
       component.value = 'Ali';
 
@@ -157,7 +164,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       let ngModel = TestBed.inject(NgModel);
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
-      component.parentNgModel = ngModel;
+      component.parentControl = ngModel;
       component.label = 'Firstname'
 
       fixture.whenStable().then(() => {
@@ -174,7 +181,7 @@ describe('NgxBootstrapTextInputRowComponent', () => {
       let ngModel = TestBed.inject(NgModel);
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
-      component.parentNgModel = ngModel;
+      component.parentControl = ngModel;
       component.label = 'Firstname'
 
       spyOnProperty(component,"submitted","get").and.returnValue(true);
@@ -282,5 +289,53 @@ describe('Test in Component', () => {
     const feedBack = fixture1.debugElement.query(By.css('.invalid-feedback'))
     expect(feedBack.nativeElement.innerText).toEqual(component.label + ' is required.');
   }))
+
+})
+
+@Component({
+  selector: 'test-reactive-component',
+  template: `
+    <form [formGroup]="form">
+      <ngx-bootstrap-text-input-row
+        [label]="label" name="firstName" formControlName="text"
+        maxlength="5"
+      ></ngx-bootstrap-text-input-row>
+    </form>
+  `
+})
+export class TestInReactiveFormComponent implements OnInit {
+  form: FormGroup;
+  text = "test";
+  label = "First name";
+
+  ngOnInit(){
+    this.form = new FormGroup({
+      text: new FormControl(this.text, [Validators.required, Validators.minLength(3)])
+    })
+  }
+}
+
+describe('Test in Reactive form', () => {
+
+  let fixture1;
+  let component;
+
+  beforeEach(async(() => {
+      TestBed.configureTestingModule( {
+        declarations: [TestInReactiveFormComponent],
+        imports: [CoreModule, FormsModule, ReactiveFormsModule],
+      }).compileComponents().then(() => {
+        fixture1 = TestBed.createComponent(TestInReactiveFormComponent);
+        component = fixture1.componentInstance;
+        fixture1.autoDetectChanges(true);
+        fixture1.detectChanges();
+      });
+    }
+  ));
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
 
 })

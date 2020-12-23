@@ -2,9 +2,17 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddressComponent } from './address.component';
 import {SharedModule} from "../../shared.module";
-import {Component} from "@angular/core";
+import {Component, OnInit, Optional, ViewChild} from "@angular/core";
 import {Address} from "@angular-it2go/employees-api";
-import {FormsModule} from "@angular/forms";
+import {
+  ControlContainer,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule, NgForm,
+  ReactiveFormsModule,
+  Validators
+} from "@angular/forms";
 import {CoreModule} from "../../../core/core.module";
 
 describe('AddressComponent', () => {
@@ -35,36 +43,46 @@ describe('AddressComponent', () => {
   selector: 'test-address',
   template: `
     <div class="container">
-      <form name="address" ngForm>
+      <form #form=ngForm>
+        <p>Form valid: {{form.valid}}</p>
+        <p>Form value: {{form.value | json}}</p>
 
         <ngx-bootstrap-text-input-row
-          name="text"  label="Text"
-          [(ngModel)]="text"
+          name="name"  label="Name"
+          [(ngModel)]="user.name"
           required minlength="2" maxlength="10"
         ></ngx-bootstrap-text-input-row>
 
-        <app-address [address]="address"></app-address>
+        <app-address [address]="user.address" #addressComponent></app-address>
+        <!--<app-address [(ngModel)]="address" name="address" prefix="t"></app-address>-->
 
       </form>
     </div>
   `
 })
 export class TestAddressComponent{
+  user = {
+    name: "John",
+    address: <Address>{streetOne:"Bahnhofstr.", zipCode:"67655", city:"Kaiserlatern", countryCode:"US", buildingNr: "105"}
+  }
   text = "Special text";
   address: Address = <Address>{streetOne:"Bahnhofstr.", zipCode:"67655", city:"Kaiserlatern", countryCode:"US"};
+
+  @ViewChild('addressComponent') addressComponent;
 
   constructor() {
   }
 }
 
-describe('TestAddressComponent', () => {
+fdescribe('TestAddressComponent', () => {
   let component: TestAddressComponent;
   let fixture: ComponentFixture<TestAddressComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestAddressComponent ],
-      imports:[SharedModule, CoreModule, FormsModule]
+      declarations: [ TestAddressComponent],
+      imports:[SharedModule, CoreModule, FormsModule],
+
     })
     .compileComponents();
   }));
@@ -79,8 +97,88 @@ describe('TestAddressComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create', async(() => {
+    fixture.whenStable().then(() => {
+      expect(component).toBeTruthy();
+      console.log(component.addressComponent.groupControl)
+    })
+
+  }));
 })
 
+@Component({
+  selector: 'test-reactive',
+  template: `
+    <div class="container">
+      <form [formGroup]="formGroup" >
+        <p>Form valid: {{formGroup.valid}}</p>
+        <p>Form value: {{formGroup.value | json}}</p>
+
+        <ngx-bootstrap-text-input-row
+          name="name" label="Name"
+          formControlName="firstName" required maxlength="5"
+        ></ngx-bootstrap-text-input-row>
+
+        <app-address [address]="user.address" formControlName="address" #addressComponent></app-address>
+
+      </form>
+    </div>
+  `
+})
+export class TestReactiveAddressComponent implements OnInit {
+  user = {
+    name: "John",
+    address: <Address>{streetOne:"Bahnhofstr.", zipCode:"67655", city:"Kaiserlatern", countryCode:"US", buildingNr: "105"}
+  }
+
+  @ViewChild('addressComponent') addressComponent;
+
+  formGroup: FormGroup;
+  constructor( private formBuilder: FormBuilder) {
+  }
+
+  ngOnInit () {
+
+    this.formGroup = this.formBuilder.group({
+      firstName: new FormControl(this.user.name),
+      address: new FormControl(this.user.address)
+    });
+  }
+}
+
+describe('TestReactiveAddressComponent', () => {
+  let component: TestReactiveAddressComponent;
+  let fixture: ComponentFixture<TestReactiveAddressComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ TestReactiveAddressComponent],
+      imports:[SharedModule, CoreModule, ReactiveFormsModule],
+      providers:[{ provide: ControlContainer, useExisting: FormGroup, deps: [[new Optional(), FormGroup]] }]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestReactiveAddressComponent);
+    component = fixture.componentInstance;
+    fixture.autoDetectChanges(true);
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should create', async(() => {
+    fixture.whenStable().then(() => {
+      expect(component).toBeTruthy();
+      //console.log(component.addressComponent.groupControl)
+    })
+
+  }));
+})
 
 @Component({
   selector: 'test-two-address',
@@ -109,14 +207,14 @@ export class TwoAddressComponent{
   }
 }
 
-fdescribe('TwoAddressComponent', () => {
+describe('TwoAddressComponent', () => {
   let component: TwoAddressComponent;
   let fixture: ComponentFixture<TwoAddressComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TwoAddressComponent, AddressComponent ],
-      imports:[SharedModule]
+      imports:[SharedModule, FormsModule]
     })
     .compileComponents();
   }));

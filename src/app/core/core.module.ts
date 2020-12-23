@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxBootstrapTextInputRowComponent} from './ui/input/bootstrap/ngx-bootstrap-text-input-row/ngx-bootstrap-text-input-row.component';
 import {NgxBootstrapTextAreaRowComponent} from './ui/input/bootstrap/ngx-bootstrap-text-area-row/ngx-bootstrap-text-area-row.component';
 import {NgxBootstrapSelectRowComponent} from './ui/input/bootstrap/ngx-bootstrap-select-row/ngx-bootstrap-select-row.component';
@@ -14,6 +14,7 @@ import {IntArrayDateAdapterService} from "./services/datepicker/int-array-date-a
 import {ConfigurableDateParserFormatterService} from "./services/datepicker/configurable-date-parser-formatter.service";
 import { NgxBootstrapDateRowComponent } from './ui/input/bootstrap/ngx-bootstrap-date-row/ngx-bootstrap-date-row.component';
 import {IsoDateAdapterService} from "./services/datepicker/iso-date-adapter.service";
+import { TextInputRowComponent } from './ui/reactive/input/bootstrap/text-input-row/text-input-row.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {IsoDateAdapterService} from "./services/datepicker/iso-date-adapter.serv
     NgxBootstrapSelectRowComponent,
     NgxBootstrapRadiosRowComponent,
     NgxBootstrapCheckBoxRowComponent,
-    NgxBootstrapDateRowComponent],
+    NgxBootstrapDateRowComponent,
+    TextInputRowComponent],
   exports: [
     NgxBootstrapTextInputRowComponent,
     NgxBootstrapTextAreaRowComponent,
@@ -34,6 +36,7 @@ import {IsoDateAdapterService} from "./services/datepicker/iso-date-adapter.serv
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
   providers: [

@@ -1,21 +1,26 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit, Optional, Self, ViewChild} from '@angular/core';
 import {Address} from "@angular-it2go/employees-api";
+import {
+  ControlContainer, FormGroup, NgForm, NgModelGroup
+} from "@angular/forms";
 
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.css']
+  styleUrls: ['./address.component.css'],
+  viewProviders: [ { provide: ControlContainer, useExisting: NgForm, deps: [[new Optional(), NgForm]] } ]
 })
-export class AddressComponent implements OnInit {
+export class AddressComponent {
 
   @Input()
-  address: Address;// = <Address>{};
+  address: Address;
   @Input()
   prefix: string;
 
-  constructor() { }
+  @ViewChild('groupControl') groupControl: NgModelGroup
 
-  ngOnInit(): void {
+  get invalid() : boolean {
+    return this.groupControl.invalid;
   }
 
 }
