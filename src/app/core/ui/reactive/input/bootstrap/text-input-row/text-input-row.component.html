@@ -1,9 +1,8 @@
-<div class="form-group" [formGroup]="name">
+<div class="form-group" [formGroup]="form">
   <label class="text-nowrap" [for]="name">{{decoratedLabel}}</label>
   <input [id]="name" [type]="type" class="form-control"
 
-         [formControlName]="name"
-         [formControl]="formControl"
+         formControlName="control"
 
          [class.is-invalid]="(formControl.dirty || submitted) && (formControl.invalid || parentNgModelInvalid)"
          [class.is-valid]="formControl.dirty && formControl.valid && parentNgModelValid"

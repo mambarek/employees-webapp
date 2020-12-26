@@ -66,7 +66,7 @@
                   >
                   </ngx-bootstrap-date-row>
                   <ngx-bootstrap-text-input-row
-                    name="email" label="Email"
+                    name="email" label="Email" type="email"
                     [(ngModel)]="employee.data.email"
                     required minlength="3" maxlength="100"
                   ></ngx-bootstrap-text-input-row>
@@ -83,7 +83,7 @@
             <ngb-panel title="Address" id="address-data">
               <ng-template ngbPanelContent>
                 <form  #addressForm="ngForm" id="addressForm">
-                <app-address prefix="empl_addr" [address]="employee.data.address" #addressComponent></app-address>
+                <app-address prefix="empl_addr" [address]="employee.data.address" ></app-address>
                 </form>
               </ng-template>
             </ngb-panel>

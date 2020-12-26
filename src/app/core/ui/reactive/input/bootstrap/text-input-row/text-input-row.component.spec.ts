@@ -2,7 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TextInputRowComponent } from './text-input-row.component';
 import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from "@angular/forms";
 import {SharedModule} from "../../../../../../shared/shared.module";
 import {CoreModule} from "../../../../../core.module";
 import {TestReactiveAddressComponent} from "../../../../../../shared/ui/address/address.component.spec";
@@ -33,25 +40,27 @@ describe('TextInputRowComponent', () => {
   selector: 'test-component',
   template: `
     <form [formGroup]="form">
-      <app-text-input-row ></app-text-input-row>
+      <app-text-input-row formControlName="firstNameControl"
+                          name="myfirstName"
+                          maxlength="5"
+                          label="FirstName"></app-text-input-row>
     </form>
+    <p>Firstname: {{form.get('firstNameControl').value | json}}</p>
   `
 })
-export class TestTextInputRowComponent implements OnInit{
+export class TestTextInputRowComponent{
   form: FormGroup;
-  name;
+  name = "John";
 
   constructor(private formBuilder: FormBuilder) {
-  }
-
-  ngOnInit(){
     this.form = this.formBuilder.group({
-      name
+      firstNameControl: new FormControl("John", [Validators.required, Validators.minLength(3)])
     });
   }
+
 }
 
-describe('TestTextInputRowComponent', () => {
+describe('TestTextInputRowComponent in Reactive form', () => {
   let component: TestTextInputRowComponent;
   let fixture: ComponentFixture<TestTextInputRowComponent>;
 
@@ -81,4 +90,52 @@ describe('TestTextInputRowComponent', () => {
     })
 
   }));
+})
+
+/************************ Test in template *********************************/
+
+@Component({
+  selector: 'test-component',
+  template: `
+      <form #form=ngForm>
+        <app-text-input-row
+          label="Firstname:"
+          [(ngModel)]="firstName" name="firstName"
+          required maxlength="7" minlength="2"
+        >
+        </app-text-input-row>
+        <p>First Name: {{firstName}}</p>
+      </form>
+  `
+})
+export class TestInTemplateComponent {
+  firstName = 'Ali';
+
+}
+
+fdescribe('TestInTemplateComponent',() => {
+
+  let component: TestInTemplateComponent;
+  let fixture: ComponentFixture<TestInTemplateComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [TextInputRowComponent, TestInTemplateComponent],
+      imports:[SharedModule, CoreModule, ReactiveFormsModule]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestInTemplateComponent);
+    component = fixture.componentInstance;
+    fixture.autoDetectChanges(true);
+    fixture.detectChanges();
+  });
+
+  fit('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+
 })

@@ -31,7 +31,8 @@ import { TextInputRowComponent } from './ui/reactive/input/bootstrap/text-input-
     NgxBootstrapSelectRowComponent,
     NgxBootstrapRadiosRowComponent,
     NgxBootstrapCheckBoxRowComponent,
-    NgxBootstrapDateRowComponent
+    NgxBootstrapDateRowComponent,
+    FormsModule
   ],
   imports: [
     CommonModule,

@@ -74,7 +74,7 @@ export class TestAddressComponent{
   }
 }
 
-fdescribe('TestAddressComponent', () => {
+describe('TestAddressComponent', () => {
   let component: TestAddressComponent;
   let fixture: ComponentFixture<TestAddressComponent>;
 
@@ -129,7 +129,7 @@ fdescribe('TestAddressComponent', () => {
 export class TestReactiveAddressComponent implements OnInit {
   user = {
     name: "John",
-    address: <Address>{streetOne:"Bahnhofstr.", zipCode:"67655", city:"Kaiserlatern", countryCode:"US", buildingNr: "105"}
+    address: <Address>{streetOne:"Bahnhofstr.", zipCode:"67655", city:"Kaiserslautern", countryCode:"US", buildingNr: "105"}
   }
 
   @ViewChild('addressComponent') addressComponent;

@@ -1,19 +1,29 @@
-import {Component, EventEmitter, Input, OnInit, Optional, Output, Self} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  Self
+} from '@angular/core';
 import {
   ControlValueAccessor, FormBuilder,
   FormControl,
-  FormControlName,
+  FormControlName, FormGroup, NgControl,
   NgModel,
   Validators
 } from "@angular/forms";
 import {hasRequired} from "../../../../util";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-text-input-row',
   templateUrl: './text-input-row.component.html',
   styleUrls: ['./text-input-row.component.css']
 })
-export class TextInputRowComponent implements ControlValueAccessor, OnInit {
+export class TextInputRowComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
   @Input() name;
   @Input() label;
@@ -34,22 +44,37 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
   @Input()
   messagesMap: any = {};
 
-  _value;
   _errorMessage = 'Please enter a valid value';
 
-  @Output()
+  form: FormGroup;
   formControl: FormControl;
+  subscriptions: Subscription[] = [];
 
-  constructor(@Self() @Optional() public parentNgModel: NgModel) {
-    if ( this.parentNgModel) {
-      console.log("parentNgModel: ", this.parentNgModel);
-      this.parentNgModel.valueAccessor = this;
+  constructor(@Self() @Optional() public parentControl: NgControl) {
+    if ( this.parentControl) {
+      this.parentControl.valueAccessor = this;
     }
+
+    this.formControl = new FormControl('');
+    this.form = new FormGroup({
+      control: this.formControl
+    })
+
+    this.subscriptions.push(
+      // any time the inner form changes update the parent of any change
+      this.form.controls.control.valueChanges.subscribe(value => {
+        this.onChange(value);
+        this.onTouch();
+      })
+    );
   }
 
   ngOnInit() {
-    this.formControl = new FormControl(this.value);
-    //if(this.parentNgModel)
+
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   get decoratedLabel(): string {
@@ -74,14 +99,17 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
    */
   set value(value) {
     console.log('set value', value);
-    if (this._value !== value) {
-      this._value = value;
+    console.log('formControl', this.formControl);
+    console.log('parentControl', this.parentControl);
+   // if (this._value !== value) {
+      this.form.get('control').setValue(value);
       this.onChange(value);
-    }
+      this.onTouch();
+    //}
   }
 
   get value(): any {
-    return this._value;
+    return this.form.get('control').value;
   }
 
   /**
@@ -111,11 +139,11 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
   }
 
   public get parentNgModelValid(): boolean {
-    return this.parentNgModel ? this.parentNgModel.valid : true;
+    return this.parentControl ? this.parentControl.valid : true;
   }
 
   public get parentNgModelInvalid(): boolean {
-    return this.parentNgModel ? this.parentNgModel.invalid : false;
+    return this.parentControl ? this.parentControl.invalid : false;
   }
 
   onFocus(event: Event) {
@@ -131,9 +159,10 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
   }
 
   get submitted(){
-    // console.log('get submitted for ' + this.label, this);
-    if(!this.parentNgModel || !this.parentNgModel.formDirective) return false;
-    return this.parentNgModel.formDirective.submitted;
+    //console.log('get submitted for ' + this.label, this);
+    if(!this.parentControl || !this.parentControl['formDirective']) return false;
+
+    return this.parentControl['formDirective'].submitted;
   }
 
   /**
@@ -142,9 +171,9 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
    * or highlight it with som css style
    */
   isRequired(): boolean{
-    if(!this.parentNgModel || !this.parentNgModel.control) return false;
+    if(!this.parentControl || !this.parentControl.control) return false;
 
-    return hasRequired(this.parentNgModel.control);
+    return hasRequired(this.parentControl.control);
   }
 
   /**
@@ -163,39 +192,39 @@ export class TextInputRowComponent implements ControlValueAccessor, OnInit {
    */
   get errorMessage(): string {
 
-    if(!this.parentNgModel || !this.parentNgModel.control ||
-      !this.parentNgModel.control.errors) {
+    if(!this.parentControl || !this.parentControl.control ||
+      !this.parentControl.control.errors) {
       const message = this.messagesMap.defaultError;
 
       return message ? message : this._errorMessage;
     }
 
-    const validatorName = Object.keys(this.parentNgModel.control.errors)[0];
+    const validatorName = Object.keys(this.parentControl.control.errors)[0];
 
-    if(this.parentNgModel.control.errors.minlength){
+    if(this.parentControl.control.errors.minlength){
 
       if(this.messagesMap.minlength){
         return this.messagesMap.minlength;
       }
 
       return this.label.concat(' must be at least ')
-      .concat(this.parentNgModel.control.errors.minlength.requiredLength)
+      .concat(this.parentControl.control.errors.minlength.requiredLength)
       .concat(' characters long.')
     }
 
-    if(this.parentNgModel.control.errors.maxlength) {
+    if(this.parentControl.control.errors.maxlength) {
 
       if(this.messagesMap.maxlength){
         return this.messagesMap.maxlength;
       }
 
       return this.label.concat(' must be a maximum of ')
-      .concat(this.parentNgModel.control.errors.maxlength.requiredLength)
+      .concat(this.parentControl.control.errors.maxlength.requiredLength)
       .concat(' characters.')
     }
 
     // at least check for required. It can not came in the previous two cases
-    if(this.parentNgModel.control.errors.required){
+    if(this.parentControl.control.errors.required){
       if(this.messagesMap.required){
         return this.messagesMap.required;
       }

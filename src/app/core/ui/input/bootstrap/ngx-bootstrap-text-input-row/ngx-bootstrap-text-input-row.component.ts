@@ -11,7 +11,7 @@ export class NgxBootstrapTextInputRowComponent implements ControlValueAccessor{
   @ViewChild('inputControl') _localNgModel: NgModel;
   @Input() name;
   @Input() label;
-  @Input() type: 'text' | 'password' = 'text';
+  @Input() type: 'text' | 'password' | 'email' = 'text';
 
   @Output() focus = new EventEmitter<any>();
   @Output() blur = new EventEmitter<any>();

@@ -1,4 +1,13 @@
-import {Component, forwardRef, Input, OnInit, Optional, Self, ViewChild} from '@angular/core';
+import {
+  Component,
+  forwardRef, Host,
+  Input,
+  OnInit,
+  Optional,
+  Self,
+  SkipSelf,
+  ViewChild
+} from '@angular/core';
 import {Address} from "@angular-it2go/employees-api";
 import {
   ControlContainer, FormGroup, NgForm, NgModelGroup

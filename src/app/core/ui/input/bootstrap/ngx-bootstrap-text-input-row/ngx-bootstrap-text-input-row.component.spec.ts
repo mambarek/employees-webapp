@@ -200,12 +200,15 @@ describe('NgxBootstrapTextInputRowComponent', () => {
 @Component({
   selector: 'app-test',
   template: `
+    <form ngForm>
+            <p>Text: {{text}}</p>
             <ngx-bootstrap-text-input-row
               label="{{label}}" name="firstName"
               [(ngModel)]="text"
               required minlength="3" #compControl="ngModel"
              >
             </ngx-bootstrap-text-input-row>
+    </form>
             `
 })
 export class TestComponent {
@@ -218,21 +221,26 @@ export class TestComponent {
   }
 }
 
-describe('Test in Component', () => {
+describe('NgxBootstrapTextInputRowComponent Test in Component', () => {
   let fixture1;
   let component;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule( {
       declarations: [TestComponent],
-      imports: [CoreModule, FormsModule]
+      imports: [CoreModule]
     }).compileComponents().then(() => {
       fixture1 = TestBed.createComponent(TestComponent);
       component = fixture1.componentInstance;
+      fixture1.autoDetectChanges(true);
       fixture1.detectChanges();
     });
     }
   ))
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
   // without fakeAsync tick we become no value in input object
   it('should display the default input, no error is displayed', fakeAsync(() => {
@@ -296,6 +304,8 @@ describe('Test in Component', () => {
   selector: 'test-reactive-component',
   template: `
     <form [formGroup]="form">
+      <p>Text: {{user.firstName}}</p>
+      <p>Form.value: {{form.value | json}}</p>
       <ngx-bootstrap-text-input-row
         [label]="label" name="firstName" formControlName="text"
         maxlength="5"
@@ -307,15 +317,16 @@ export class TestInReactiveFormComponent implements OnInit {
   form: FormGroup;
   text = "test";
   label = "First name";
+  user = { firstName: "Ali"}
 
   ngOnInit(){
     this.form = new FormGroup({
-      text: new FormControl(this.text, [Validators.required, Validators.minLength(3)])
+      text: new FormControl(this.user.firstName, [Validators.required, Validators.minLength(3)])
     })
   }
 }
 
-describe('Test in Reactive form', () => {
+describe('NgxBootstrapTextInputRowComponent Test in Reactive form', () => {
 
   let fixture1;
   let component;
@@ -323,7 +334,7 @@ describe('Test in Reactive form', () => {
   beforeEach(async(() => {
       TestBed.configureTestingModule( {
         declarations: [TestInReactiveFormComponent],
-        imports: [CoreModule, FormsModule, ReactiveFormsModule],
+        imports: [CoreModule, ReactiveFormsModule],
       }).compileComponents().then(() => {
         fixture1 = TestBed.createComponent(TestInReactiveFormComponent);
         component = fixture1.componentInstance;
@@ -335,6 +346,17 @@ describe('Test in Reactive form', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+
+    let user = {name: 'bob', email: 'bob@example.com', address: {street: '123', zip: '123'}};
+
+    let uc = {...user, address: {...user.address}};
+
+    uc.name = 'ali';
+    uc.address.street = '657';
+
+    console.log('user',user);
+    console.log('uc',uc);
+
   });
 
 
