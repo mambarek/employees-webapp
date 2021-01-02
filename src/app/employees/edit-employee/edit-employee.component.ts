@@ -3,11 +3,12 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
   Employee as IEmployee,
   PersonData as IPersonData,
-  EmployeesControllerService
+  EmployeesControllerService, ProjectsControllerService, Project
 } from "@angular-it2go/employees-api";
 import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {NgbAccordion, NgbPanelChangeEvent} from "@ng-bootstrap/ng-bootstrap";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-edit-employee',
@@ -23,25 +24,33 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
   genders = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
 
   myMessageMap = {required: "Bitte geben Sie einen Wert!", minlength: "Der Wert muss mindestens"};
+  projects$: Observable<Project[]>;
+  projects: Project[] = [];
 
   publicId: string;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private employeesService: EmployeesControllerService,
+              private projectsControllerService: ProjectsControllerService,
               private overlayService: OverlayService) {
-
+      this.projects$ = projectsControllerService.findAllProjects();
   }
 
   ngOnInit(): void {
     this.employee = this.createNewEmployee();
     this.route.params.subscribe(params => {
       this.publicId = params['publicId'];
+      this.projects$.subscribe(projects => {
+        console.log(projects);
+        this.projects = projects;
+      })
       this.initView();
     });
   }
 
   ngAfterViewInit() {
     if(!this.publicId)  this.accordion.expandAll();
+
   }
 
   // afterViewChecked is the right hook to change button state after every change

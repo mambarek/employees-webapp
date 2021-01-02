@@ -87,6 +87,23 @@
                 </form>
               </ng-template>
             </ngb-panel>
+            <ngb-panel title="Projects" id="projects-data">
+              <ng-template ngbPanelContent>
+                <table class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Name</th><th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let project of projects">
+                    <td>{{project.name}}</td>
+                    <td>{{project.description}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </ng-template>
+            </ngb-panel>
           </ngb-accordion>
       </div>
     </div>
