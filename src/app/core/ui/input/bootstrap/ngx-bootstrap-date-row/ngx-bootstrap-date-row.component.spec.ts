@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgxBootstrapDateRowComponent } from './ngx-bootstrap-date-row.component';
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl, NgModel} from "@angular/forms";
@@ -22,7 +22,7 @@ describe('NgxBootstrapDateRowComponent', () => {
   let component: NgxBootstrapDateRowComponent;
   let fixture: ComponentFixture<NgxBootstrapDateRowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule, NgbModule],
       declarations: [NgxBootstrapDateRowComponent],
@@ -42,7 +42,7 @@ describe('NgxBootstrapDateRowComponent', () => {
   });
 
   it('No user input (dirty=false) component should NOT have "is-valid" class',
-    async(() => {
+    waitForAsync(() => {
       component.label = 'Birthdate'
       component.value = '2020-07-15';
       component.invalidText = 'Please give a valid date yyyy-MM-dd';

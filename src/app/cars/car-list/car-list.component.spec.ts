@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import {CarListComponent} from "./car-list.component";
 import {AppModule} from "../../app.module";
 import {ApiModule as CarApiModule,  CarSearchService} from '@angular-it2go/car-fleet-api';
@@ -14,7 +14,7 @@ describe("CarListComponent", () => {
   let el: DebugElement;
   let carSearchService: any;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     // create search service spy and provide it
     const carSearchServiceSpy = jasmine.createSpyObj('CarSearchService', ['search']);
 
@@ -74,7 +74,7 @@ describe("CarListComponent", () => {
   )
 
   it('Input search text "BMW" should display exactly one car in the list',
-    async(() =>{
+    waitForAsync(() =>{
       // search text
       const searchInput = el.query(By.css('#search-text')).nativeElement;
       searchInput.value = "BMW";

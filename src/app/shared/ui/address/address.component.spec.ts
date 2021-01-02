@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AddressComponent } from './address.component';
 import {SharedModule} from "../../shared.module";
@@ -19,7 +19,7 @@ describe('AddressComponent', () => {
   let component: AddressComponent;
   let fixture: ComponentFixture<AddressComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AddressComponent ],
       imports:[SharedModule]
@@ -78,7 +78,7 @@ describe('TestAddressComponent', () => {
   let component: TestAddressComponent;
   let fixture: ComponentFixture<TestAddressComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TestAddressComponent],
       imports:[SharedModule, CoreModule, FormsModule],
@@ -98,7 +98,7 @@ describe('TestAddressComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', async(() => {
+  it('should create', waitForAsync(() => {
     fixture.whenStable().then(() => {
       expect(component).toBeTruthy();
       console.log(component.addressComponent.groupControl)
@@ -151,7 +151,7 @@ describe('TestReactiveAddressComponent', () => {
   let component: TestReactiveAddressComponent;
   let fixture: ComponentFixture<TestReactiveAddressComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TestReactiveAddressComponent],
       imports:[SharedModule, CoreModule, ReactiveFormsModule],
@@ -171,7 +171,7 @@ describe('TestReactiveAddressComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', async(() => {
+  it('should create', waitForAsync(() => {
     fixture.whenStable().then(() => {
       expect(component).toBeTruthy();
       //console.log(component.addressComponent.groupControl)
@@ -211,7 +211,7 @@ describe('TwoAddressComponent', () => {
   let component: TwoAddressComponent;
   let fixture: ComponentFixture<TwoAddressComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TwoAddressComponent, AddressComponent ],
       imports:[SharedModule, FormsModule]

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
 import {NgxBootstrapCheckBoxRowComponent} from "./ngx-bootstrap-check-box-row.component";
@@ -8,7 +8,7 @@ describe('NgxBootstrapCheckBoxRowComponent', () => {
   let component: NgxBootstrapCheckBoxRowComponent;
   let fixture: ComponentFixture<NgxBootstrapCheckBoxRowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
 
     TestBed.configureTestingModule({
       imports: [CoreModule], // we need FormsModule and NgModule so import all at once

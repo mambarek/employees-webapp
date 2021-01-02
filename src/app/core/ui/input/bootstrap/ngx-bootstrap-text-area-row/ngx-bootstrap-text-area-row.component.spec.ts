@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import {Component, DebugElement, ViewChild} from "@angular/core";
 import {By} from "@angular/platform-browser";
 import {FormControl, FormsModule, NgControl, NgModel} from "@angular/forms";
@@ -23,7 +23,7 @@ describe('NgxBootstrapTextAreaRowComponent', () => {
   let fixture: ComponentFixture<NgxBootstrapTextAreaRowComponent>;
   let el: DebugElement;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule], // we need FormsModule and NgModule so import all at once
       declarations: [ NgxBootstrapTextAreaRowComponent ],
@@ -55,7 +55,7 @@ describe('NgxBootstrapTextAreaRowComponent', () => {
   })
 
   it('No user input (dirty=false) component should NOT have "is-valid" class',
-    async(() => {
+    waitForAsync(() => {
       component.label = 'Description'
       component.value = 'This is test description';
       fixture.detectChanges();
@@ -71,7 +71,7 @@ describe('NgxBootstrapTextAreaRowComponent', () => {
   )
 
   it('After user input (dirty=true) component should have "is-valid" class',
-    async(() => {
+    waitForAsync(() => {
       component.label = 'Description'
       component.value = 'This is test description';
       fixture.detectChanges();
@@ -112,7 +112,7 @@ describe('NgxBootstrapTextAreaRowComponent', () => {
   )
 
   it('(2) should ADD class "is-invalid" when dirty and external control INVALID',
-    async(() => {
+    waitForAsync(() => {
       let ngModel = TestBed.inject(NgModel);
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
@@ -153,7 +153,7 @@ describe('NgxBootstrapTextAreaRowComponent', () => {
   );
 
   it('!(4) should NOT ADD class "is-invalid" when NOT submitted and NOT dirty and external control INVALID',
-    async(() => {
+    waitForAsync(() => {
       let ngModel = TestBed.inject(NgModel);
       spyOnProperty(ngModel,"invalid","get").and.returnValue(true);
       spyOnProperty(ngModel,"valid","get").and.returnValue(false);
@@ -219,7 +219,7 @@ describe('NgxBootstrapTextAreaRowComponent test in Component', () => {
   let fixture1;
   let component;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule( {
       declarations: [TestComponent],
       imports: [CoreModule, FormsModule]

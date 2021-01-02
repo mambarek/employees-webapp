@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import {DebugElement} from "@angular/core";
 import {CoreModule} from "../../../../core.module";
 import {FormControl, NgControl} from "@angular/forms";
@@ -28,7 +28,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
     label: 'Female'
   }];
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [CoreModule],
       declarations: [NgxBootstrapSelectRowComponent],
@@ -63,7 +63,7 @@ describe('NgxBootstrapSelectRowComponent', () => {
   })
 
   it('should select default value "Male", no "is-valid" class added, dirty == false',
-    async(() => {
+    waitForAsync(() => {
       component.value = 'MALE';
       fixture.detectChanges();
 

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
 import {EditCarComponent} from "./edit-car.component";
 import {AppModule} from "../../app.module";
 import {ApiModule as CarApiModule, CarsService} from "@angular-it2go/car-fleet-api";
@@ -14,7 +14,7 @@ describe('EditCarComponent', () => {
   let carsService: any;
   const car = CARS[0];
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     // create cars service spy and provide it
     const carsServiceSpy = jasmine.createSpyObj('CarsService',
       ['getCarByPublicId', 'updateCar', 'createCar', 'deleteCar']);
@@ -50,7 +50,7 @@ describe('EditCarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load car', async(() => {
+  it('should load car', waitForAsync(() => {
 
     fixture.whenStable().then(() => {
       const backLink = fixture.debugElement.query(By.css('#actions > .container > .row > .col-md-3 > a'));
@@ -74,7 +74,7 @@ describe('EditCarComponent', () => {
     })
   }))
 
-  it('Delete brand should disable "Save Changes" button', async(() => {
+  it('Delete brand should disable "Save Changes" button', waitForAsync(() => {
 
     fixture.whenStable().then(() => {
       const brandInput = fixture.debugElement.query(By.css('#brand'))
@@ -97,7 +97,7 @@ describe('EditCarComponent new Car', () =>{
   let component: EditCarComponent;
   let fixture: ComponentFixture<EditCarComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     // create cars service spy and provide it
     const carsServiceSpy = jasmine.createSpyObj('CarsService',
       ['getCarByPublicId', 'updateCar', 'createCar', 'deleteCar']);
@@ -119,7 +119,7 @@ describe('EditCarComponent new Car', () =>{
     });
   }));
 
-  it('It should hide "Delete Car" button for new car', async(() => {
+  it('It should hide "Delete Car" button for new car', waitForAsync(() => {
 
     fixture.whenStable().then(() => {
       const deleteButton = fixture.debugElement.query(By.css('#deleteCar'));

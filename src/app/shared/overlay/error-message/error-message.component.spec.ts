@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ErrorMessageComponent } from './error-message.component';
 import {OverlayService} from "../overlay.service";
 import {By} from "@angular/platform-browser";
@@ -8,7 +8,7 @@ describe('ErrorMessageComponent', () => {
   let fixture: ComponentFixture<ErrorMessageComponent>;
   let overlayService: OverlayService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ErrorMessageComponent ]
     })
@@ -26,7 +26,7 @@ describe('ErrorMessageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should display error dialog', async(() => {
+  it('Should display error dialog', waitForAsync(() => {
     overlayService.showErrorMessage({title: 'Error', message: 'This is an error message'});
     fixture.detectChanges();
 
@@ -46,7 +46,7 @@ describe('ErrorMessageComponent', () => {
     })
   }));
 
-  it('Close button should displayed and has focus', async(() => {
+  it('Close button should displayed and has focus', waitForAsync(() => {
     overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
     fixture.detectChanges();
 
@@ -73,7 +73,7 @@ describe('ErrorMessageComponent', () => {
     })
   }));
 
-  it('Click Close button should close ErrorDialog', async(() => {
+  it('Click Close button should close ErrorDialog', waitForAsync(() => {
     overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
     fixture.detectChanges();
 
@@ -91,7 +91,7 @@ describe('ErrorMessageComponent', () => {
     })
   }));
 
-  it('Click X button should close ErrorDialog', async(() => {
+  it('Click X button should close ErrorDialog', waitForAsync(() => {
     overlayService.showErrorMessage({title: 'Error', message: 'This is an error message', btnClass: 'btn-success'});
     fixture.detectChanges();
 

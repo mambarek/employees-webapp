@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TextInputRowComponent } from './text-input-row.component';
 import {Component, OnInit} from "@angular/core";
@@ -18,7 +18,7 @@ describe('TextInputRowComponent', () => {
   let component: TextInputRowComponent;
   let fixture: ComponentFixture<TextInputRowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TextInputRowComponent ]
     })
@@ -64,7 +64,7 @@ describe('TestTextInputRowComponent in Reactive form', () => {
   let component: TestTextInputRowComponent;
   let fixture: ComponentFixture<TestTextInputRowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TextInputRowComponent, TestTextInputRowComponent],
       imports:[SharedModule, CoreModule, ReactiveFormsModule]
@@ -83,7 +83,7 @@ describe('TestTextInputRowComponent in Reactive form', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', async(() => {
+  it('should create', waitForAsync(() => {
     fixture.whenStable().then(() => {
       expect(component).toBeTruthy();
       //console.log(component.addressComponent.groupControl)
@@ -118,7 +118,7 @@ fdescribe('TestInTemplateComponent',() => {
   let component: TestInTemplateComponent;
   let fixture: ComponentFixture<TestInTemplateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [TextInputRowComponent, TestInTemplateComponent],
       imports:[SharedModule, CoreModule, ReactiveFormsModule]

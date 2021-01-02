@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ConfirmationComponent } from './confirmation.component';
 import {OverlayService} from "../overlay.service";
 import {By} from "@angular/platform-browser";
@@ -8,7 +8,7 @@ describe('ConfirmationComponent', () => {
   let fixture: ComponentFixture<ConfirmationComponent>;
   let overlayService: OverlayService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ConfirmationComponent ]
     })
@@ -26,7 +26,7 @@ describe('ConfirmationComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show confirmation dialog, cancel button has focus', async(() => {
+  it('should show confirmation dialog, cancel button has focus', waitForAsync(() => {
     overlayService.showConfirmation({title: 'Confirmation', message: 'Confirmation Message',
       btnText: 'Ok', btnClass: 'btn-warning'});
     fixture.detectChanges();
@@ -51,7 +51,7 @@ describe('ConfirmationComponent', () => {
     })
   }))
 
-  it('Click confirm button (Ok) should close Dialog', async(() => {
+  it('Click confirm button (Ok) should close Dialog', waitForAsync(() => {
     overlayService.showConfirmation({title: 'Confirmation', message: 'Confirmation Message',
       btnText: 'Ok', btnClass: 'btn-warning'});
     fixture.detectChanges();
@@ -71,7 +71,7 @@ describe('ConfirmationComponent', () => {
     })
   }));
 
-  it('Click cancel button should close Dialog', async(() => {
+  it('Click cancel button should close Dialog', waitForAsync(() => {
     overlayService.showConfirmation({title: 'Confirmation', message: 'Confirmation Message',
       btnText: 'Ok', btnClass: 'btn-warning'});
     fixture.detectChanges();
@@ -91,7 +91,7 @@ describe('ConfirmationComponent', () => {
     })
   }));
 
-  it('Click X button should close Dialog', async(() => {
+  it('Click X button should close Dialog', waitForAsync(() => {
     overlayService.showConfirmation({title: 'Confirmation', message: 'Confirmation Message',
       btnText: 'Ok', btnClass: 'btn-warning'});
     fixture.detectChanges();
@@ -111,7 +111,7 @@ describe('ConfirmationComponent', () => {
     })
   }));
 
-  it('Close Dialog and open new one', async(() => {
+  it('Close Dialog and open new one', waitForAsync(() => {
     overlayService.showConfirmation({title: 'Confirmation', message: 'Confirmation Message',
       btnText: 'Ok', btnClass: 'btn-warning'});
     fixture.detectChanges();

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import {FormControl, NgControl, NgModel} from "@angular/forms";
 import {NgxBootstrapRadiosRowComponent} from "./ngx-bootstrap-radios-row.component";
 import {CoreModule} from "../../../../core.module";
@@ -21,7 +21,7 @@ describe('NgxBootstrapRadiosRowComponent', () => {
   let fixture: ComponentFixture<NgxBootstrapRadiosRowComponent>;
   const genders = [{value: 'MALE', label: 'Male'}, {value: 'FEMALE', label: 'Female' }];
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
 
     TestBed.configureTestingModule({
       imports: [CoreModule], // we need FormsModule and NgModule so import all at once
@@ -52,7 +52,7 @@ describe('NgxBootstrapRadiosRowComponent', () => {
   })
 
   it('should select default value "Male", no "is-valid" class added, dirty == false',
-    async(() => {
+    waitForAsync(() => {
       fixture.autoDetectChanges(true);
       component.value = 'MALE';
       fixture.whenStable().then(() => { // block needs zone

@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { LoaderComponent } from './loader.component';
 import {OverlayService} from "../overlay.service";
 import {By} from "@angular/platform-browser";
@@ -7,7 +7,7 @@ describe('LoaderComponent', () => {
   let component: LoaderComponent;
   let fixture: ComponentFixture<LoaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LoaderComponent ]
     })
@@ -24,7 +24,7 @@ describe('LoaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show loader', async(() => {
+  it('should show loader', waitForAsync(() => {
     const overlayService = TestBed.inject(OverlayService);
     const loaderMessage = 'My test loader ...';
     overlayService.showLoader({message: loaderMessage});
@@ -40,7 +40,7 @@ describe('LoaderComponent', () => {
     })
   }));
 
-  it('should hide loader', async(() => {
+  it('should hide loader', waitForAsync(() => {
     const overlayService = TestBed.inject(OverlayService);
     const loaderMessage = 'My test loader ...';
     overlayService.showLoader({message: loaderMessage});
@@ -63,7 +63,7 @@ describe('LoaderComponent', () => {
     })
   }));
 
-  it('should hide loader and reopen it with new message', async(() => {
+  it('should hide loader and reopen it with new message', waitForAsync(() => {
     const overlayService = TestBed.inject(OverlayService);
     const loaderMessage = 'My test loader ...';
     overlayService.showLoader({message: loaderMessage});
@@ -97,7 +97,7 @@ describe('LoaderComponent', () => {
     })
   }));
 
-  it('should hide loader after 3 second', async(() => {
+  it('should hide loader after 3 second', waitForAsync(() => {
     const overlayService = TestBed.inject(OverlayService);
     const loaderMessage = 'My test loader ...';
     overlayService.showLoader({message: loaderMessage, minTime: 3});
@@ -130,7 +130,7 @@ describe('LoaderComponent', () => {
   }));
 
 
-  it('should hide loader after async finished', async(() => {
+  it('should hide loader after async finished', waitForAsync(() => {
     const overlayService = TestBed.inject(OverlayService);
     const loaderMessage = 'My test loader ...';
 
