@@ -71,6 +71,21 @@
                 required
               ></ngx-bootstrap-text-area-row>
             </form>
+
+            <table class="table table-striped">
+              <thead class="thead-dark">
+              <tr>
+                <th>Name</th><th>Public ID</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let employee of employees">
+                <td>{{employee.data.firstName}} {{employee.data.lastName}}</td>
+                <td>{{employee.publicId}}</td>
+              </tr>
+              </tbody>
+            </table>
+
           </div>
         </div>
       </div>

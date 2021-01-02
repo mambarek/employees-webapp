@@ -57,14 +57,14 @@ install a specific version of "openapi-generator-cli"
 Next step is to create a new npm script in "package.json" that generates the code based on the OpenAPI schema:
 >{
   "scripts": {
-"generate:project-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/project-api.yaml -o ./build/openapi/project -c apis/project-api-config.json",
+"generate:project-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/projects-api.yaml -o ./build/openapi/project -c apis/projects-api-config.json",
 "generate:car-fleet-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o ./build/openapi/cars -c apis/car-fleet-api-config.json",
 "generate:employees-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/employees/v1/employees-api.yaml -o ./build/openapi/employees -c apis/employees-api-config.json"
   }
 }
  
 Run the script 
->npm run generate:project-api
+>npm run generate:projects-api
 
 ## Prepare Nexus npm registry
 To authenticate clients that communicate with nexus-npm you have to add under security in nexus 
@@ -83,7 +83,7 @@ Add new authentication to npm registry file .npmrc with following content
 >registry=http://localhost:8081/repository/npm-group/    
 > YWRtaW46YWRtaW4xMjM0
 
-build/openapi/.npmrc
+build/openapi/projects/.npmrc
 ```
 registry=http://localhost:9181/repository/npm-group/
 _auth=YWRtaW46YWRtaW4xMjM0
@@ -111,24 +111,10 @@ When compiler error occurred while building you can set the right TypeScript com
     "typescript": ">=3.9.2 <4.1.0",  
     "zone.js": "^0.10.2"  
   }
- ```   
-
-### update build/openapi/dist directory
-"../dist/.npmrc"
-```
-registry=http://localhost:9181/repository/npm-group/
-_auth=YWRtaW46YWRtaW4xMjM0
-```
-in "../dist/package.json" add at the bottom
-```
-"publishConfig": {
-     "registry": "http://localhost:9181/repository/npm-private/"
-   }
-```
-
+ ```
 ### publishing
 First build the package then run ```npm publish dist``` (don't forget to specify the `dist` folder!)
-> cd build/openapi
+> cd build/openapi/projects
 ../build/openapi/projects> npm publish dist
 
 
@@ -142,6 +128,7 @@ npm install @angular-it2go/project-management-api --save
 ## Install the generated API
 To use the generated API stubs you have to install the library.
 Go to project root and run:
+
 >npm install @angular-it2go/project-management-api --save
 
 Now you can import and use the stubs in your Application 
