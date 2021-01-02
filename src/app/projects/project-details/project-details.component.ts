@@ -1,10 +1,9 @@
 import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Project as IProject, ProjectControllerService} from '@angular-it2go/project-management-api';
 import {ActivatedRoute, Router} from '@angular/router';
-import StatusEnum = IProject.StatusEnum;
 import {NgForm} from '@angular/forms';
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {Employee, EmployeesControllerService} from "@angular-it2go/employees-api";
+import {Project, ProjectControllerService} from "@angular-it2go/project-management-api";
 
 @Component({
   selector: 'app-edit-project',
@@ -14,7 +13,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('projectForm', {static: false}) projectForm: NgForm;
   @ViewChild('saveButton') saveButton: ElementRef;
-  project: IProject;
+  project: Project;
   projectStatusList: ProjectStatus[] = [];
   employees: Employee[] = [];
 
@@ -30,7 +29,8 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
       this.employees = employees;
     })
 
-    this.project = <IProject>{};
+    this.project = <Project>{};
+
     this.route.params.subscribe(params => {
       const publicId = params['publicId'];
       if(publicId)

@@ -72,24 +72,37 @@
               ></ngx-bootstrap-text-area-row>
             </form>
 
-            <table class="table table-striped">
-              <thead class="thead-dark">
-              <tr>
-                <th>Name</th><th>Public ID</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let employee of employees">
-                <td>{{employee.data.firstName}} {{employee.data.lastName}}</td>
-                <td>{{employee.publicId}}</td>
-              </tr>
-              </tbody>
-            </table>
-
+            <div class="container p-0">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Available Employees</label>
+                </div>
+                <div class="col">
+                  <label>Assigned Employees</label>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <select class="custom-select" size="6" multiple>
+                    <option *ngFor="let employee of employees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-success btn-block">Add <i class="fa fa-angle-double-right"></i></button>
+                  <button class="btn btn-success btn-block"><i class="fa fa-angle-double-left"></i> Remove</button>
+                </div>
+                <div class="col-md-4">
+                  <select class="custom-select" size="6" multiple>
+                    <option *ngFor="let employee of project.assignedEmployees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
