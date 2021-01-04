@@ -18,6 +18,9 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-it2go/car-fleet-api": "^1.0.0-SNAPSHOT.202101022259",
+    "@angular-it2go/employees-api": "^1.0.0-SNAPSHOT.202101032219",
+    "@angular-it2go/project-management-api": "^1.0.0-SNAPSHOT.202101032231",
     "@angular/animations": "~11.0.5",
     "@angular/common": "~11.0.5",
     "@angular/compiler": "~11.0.5",
@@ -29,7 +32,7 @@
     "@angular/router": "~11.0.5",
     "@ng-bootstrap/ng-bootstrap": "^8.0.0",
     "bootstrap": "^4.5.2",
-    "rxjs": "~6.5.5",
+    "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "uuid": "^8.3.1",
     "zone.js": "~0.10.3"

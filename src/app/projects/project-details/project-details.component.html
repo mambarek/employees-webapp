@@ -83,16 +83,20 @@
               </div>
               <div class="row align-items-center">
                 <div class="col-md-4">
-                  <select class="custom-select" size="6" multiple>
-                    <option *ngFor="let employee of employees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
+                  <select class="custom-select" size="6" multiple [(ngModel)]="selectedAvailableEmployees">
+                    <option *ngFor="let employee of availableEmployees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
                   </select>
                 </div>
                 <div class="col-md-2">
-                  <button class="btn btn-success btn-block">Add <i class="fa fa-angle-double-right"></i></button>
-                  <button class="btn btn-success btn-block"><i class="fa fa-angle-double-left"></i> Remove</button>
+                  <button class="btn btn-success btn-block" (click)="addEmployees()" [disabled]="addButtonDisabled()">
+                    Add <i class="fa fa-angle-double-right"></i>
+                  </button>
+                  <button class="btn btn-success btn-block" (click)="removeEmployees()" [disabled]="removeButtonDisabled()">
+                    <i class="fa fa-angle-double-left"></i> Remove
+                  </button>
                 </div>
                 <div class="col-md-4">
-                  <select class="custom-select" size="6" multiple>
+                  <select class="custom-select" size="6" multiple [(ngModel)]="selectedToRemoveEmployees">
                     <option *ngFor="let employee of project.assignedEmployees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
                   </select>
                 </div>

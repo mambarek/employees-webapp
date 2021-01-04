@@ -2,8 +2,13 @@ import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angul
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {OverlayService} from "../../shared/overlay/overlay.service";
-import {Employee, EmployeesControllerService} from "@angular-it2go/employees-api";
-import {Project, ProjectControllerService} from "@angular-it2go/project-management-api";
+import {Employee} from "@angular-it2go/employees-api";
+import {
+  EmployeesControllerService,
+  Project,
+  ProjectControllerService
+} from "@angular-it2go/project-management-api";
+import StatusEnum = Project.StatusEnum;
 
 @Component({
   selector: 'app-edit-project',
@@ -13,24 +18,27 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
 
   @ViewChild('projectForm', {static: false}) projectForm: NgForm;
   @ViewChild('saveButton') saveButton: ElementRef;
+
   project: Project;
   projectStatusList: ProjectStatus[] = [];
-  employees: Employee[] = [];
+  availableEmployees: Employee[] = [];
+
+  selectedAvailableEmployees;
+  selectedToRemoveEmployees;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private projectControllerService: ProjectControllerService,
-              private employeeControllerService: EmployeesControllerService,
+              private employeesControllerService: EmployeesControllerService,
               private overlayService: OverlayService) {
   }
 
   ngOnInit(): void {
 
-    this.employeeControllerService.findAllEmployees().subscribe((employees) => {
-      this.employees = employees;
+    this.employeesControllerService.findAllEmployees().subscribe((employees) => {
+      this.availableEmployees = employees;
     })
 
     this.project = <Project>{};
-
     this.route.params.subscribe(params => {
       const publicId = params['publicId'];
       if(publicId)
@@ -58,6 +66,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
         console.log('Project loaded ', response);
         this.overlayService.hideLoader().then(() => {
           this.project = response;
+          this.initAvailableEmployees();
         })
       },
       error => {
@@ -163,6 +172,51 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
     projectStatus.push(new ProjectStatus(StatusEnum.STOPPED, 'Is stopped'));
 
     return projectStatus;
+  }
+
+  initAvailableEmployees(){
+    if(!this.availableEmployees) return;
+    this.availableEmployees = this.availableEmployees.filter(employee => {
+      return this.project.assignedEmployees.filter(empl => empl.publicId == employee.publicId).length == 0;
+  })
+  }
+
+  addButtonDisabled(): boolean {
+    return !this.selectedAvailableEmployees || this.selectedAvailableEmployees.length === 0;
+  }
+
+  removeButtonDisabled(): boolean {
+    return !this.selectedToRemoveEmployees || this.selectedToRemoveEmployees.length === 0;
+  }
+
+  addEmployees() {
+    if(!this.selectedAvailableEmployees) return;
+
+    let employees = this.availableEmployees.filter(employee =>
+      this.selectedAvailableEmployees.indexOf(employee.publicId) > -1);
+
+    this.project.assignedEmployees.push(...employees);
+
+    this.availableEmployees = this.availableEmployees.filter(employee =>
+      this.selectedAvailableEmployees.indexOf(employee.publicId) === -1);
+
+    // reset selection
+    this.selectedAvailableEmployees = [];
+  }
+
+  removeEmployees() {
+    if(!this.selectedToRemoveEmployees) return;
+
+    let employees = this.project.assignedEmployees.filter(employee =>
+      this.selectedToRemoveEmployees.indexOf(employee.publicId) > -1);
+
+    this.availableEmployees.push(...employees);
+
+    this.project.assignedEmployees = this.project.assignedEmployees.filter(employee =>
+      this.selectedToRemoveEmployees.indexOf(employee.publicId) === -1);
+
+    // reset selection
+    this.selectedToRemoveEmployees = [];
   }
 }
 
