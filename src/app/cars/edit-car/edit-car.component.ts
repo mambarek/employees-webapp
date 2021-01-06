@@ -1,8 +1,9 @@
 import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Car, CarsService} from "@angular-it2go/car-fleet-api";
+import {Car} from "@angular-it2go/car-fleet-api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
+import {CarFleetAppService} from "../../services/car-fleet-app.service";
 
 @Component({
   selector: 'app-edit-car',
@@ -19,7 +20,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
   carEditorTitle = "";
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private carsService: CarsService,
+              private carFleetAppService: CarFleetAppService,
               private overlayService: OverlayService) { }
 
   ngOnInit(): void {
@@ -41,7 +42,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
 
     this.overlayService.showLoader({message: "Loading car data ...", minTime: 2});
 
-    this.carsService.getCarByPublicId(publicId).subscribe(
+    this.carFleetAppService.findCarByPublicId(publicId).subscribe(
       response => {
         console.log('Car loaded ', response);
         this.overlayService.hideLoader().then(closed => {
@@ -83,7 +84,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
   private updateCar(){
     console.log('updateCar call!', this.car);
 
-    this.carsService.updateCar(this.car.publicId, this.car).subscribe(
+    this.carFleetAppService.updateCar(this.car).subscribe(
     response => {
         console.log('++ updateCar() call');
         this.overlayService.hideLoader().then(() => {
@@ -103,7 +104,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
   private createCar(){
     console.log('createCar call!', this.car);
 
-    this.carsService.createCar(this.car).subscribe(
+    this.carFleetAppService.createCar(this.car).subscribe(
     response => {
         this.overlayService.hideLoader().then(() => {
           console.log("Car successfully created", response);
@@ -131,7 +132,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
     if (this.car.publicId) {
       this.overlayService.showConfirmation(confirmConfig).then(() =>  {
           this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
-          this.carsService.deleteCar(this.car.publicId).subscribe(
+          this.carFleetAppService.deleteCar(this.car).subscribe(
             () => {
                 this.overlayService.hideLoader().then(() => {
                   console.log('Car delete SUCCESS');

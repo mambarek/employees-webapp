@@ -1,14 +1,11 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {
-  Employee as IEmployee,
-  PersonData as IPersonData,
-  EmployeesControllerService, ProjectsControllerService, Project
-} from "@angular-it2go/employees-api";
+import {Employee as IEmployee, PersonData as IPersonData, Project} from "@angular-it2go/employees-api";
 import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {NgbAccordion, NgbPanelChangeEvent} from "@ng-bootstrap/ng-bootstrap";
 import {Observable} from "rxjs";
+import {EmployeesAppService} from "../../services/employees-app.service";
 
 @Component({
   selector: 'app-edit-employee',
@@ -30,10 +27,9 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
   publicId: string;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private employeesService: EmployeesControllerService,
-              private projectsControllerService: ProjectsControllerService,
+              private employeesAppService: EmployeesAppService,
               private overlayService: OverlayService) {
-      this.projects$ = projectsControllerService.findAllProjects();
+      this.projects$ = employeesAppService.findAllProjects();
   }
 
   ngOnInit(): void {
@@ -50,7 +46,6 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if(!this.publicId)  this.accordion.expandAll();
-
   }
 
   // afterViewChecked is the right hook to change button state after every change
@@ -69,7 +64,7 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
 
     this.overlayService.showLoader({message: "Loading employee data ...", minTime: 2});
 
-    this.employeesService.findEmployeeByPublicId(this.publicId).subscribe(response => {
+    this.employeesAppService.findEmployeeByPublicId(this.publicId).subscribe(response => {
       console.log("--> Loaded employee can hide loader", response);
         this.overlayService.hideLoader().then(() => {
           console.log("-- Loader closed");
@@ -102,7 +97,7 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
 
         this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
 
-        this.employeesService.deleteEmployee(this.employee.publicId).subscribe(
+        this.employeesAppService.deleteEmployee(this.employee).subscribe(
           () => {
             this.overlayService.hideLoader().then(() => {
               console.log('Employee delete SUCCESS');
@@ -160,7 +155,7 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
   }
 
   updateEmployee(){
-    this.employeesService.updateEmploy(this.employee.publicId, this.employee).subscribe(
+    this.employeesAppService.updateEmployee(this.employee).subscribe(
       response => {
         console.log('Update employee SUCCESS');
         this.overlayService.hideLoader().then(() => {
@@ -176,7 +171,7 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
   }
 
   createEmployee(){
-    this.employeesService.saveNewEmployee(this.employee).subscribe(
+    this.employeesAppService.saveNewEmployee(this.employee).subscribe(
       response => {
         this.overlayService.hideLoader().then(() => {
           console.log("Employee successfully created", response);

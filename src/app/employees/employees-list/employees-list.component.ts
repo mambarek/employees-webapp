@@ -1,17 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  Employee, EmployeesSearchControllerService,
-  EmployeeTableItem,
-  EmployeeTableItemList,
-  Group
-} from '@angular-it2go/employees-api';
-import {
-  Group as IGroup,
-  Rule as IRule,
-  SearchTemplate as ISearchTemplate
-} from "@angular-it2go/car-fleet-api";
+import {EmployeeTableItemList, Group} from '@angular-it2go/employees-api';
+import {Group as IGroup, Rule as IRule, SearchTemplate as ISearchTemplate} from "@angular-it2go/car-fleet-api";
 import GroupOpEnum = Group.GroupOpEnum;
 import {ActivatedRoute, Router} from "@angular/router";
+import {EmployeesAppService} from "../../services/employees-app.service";
 
 @Component({
   selector: 'app-employees-list',
@@ -24,7 +16,7 @@ export class EmployeesListComponent implements OnInit {
   //employees: EmployeeTableItem[] = [];
   employeeTableItemList: EmployeeTableItemList;
 
-  constructor(private router: Router, private route: ActivatedRoute, private employeesSearchService: EmployeesSearchControllerService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private employeesAppService: EmployeesAppService) { }
 
   ngOnInit(): void {
     this.searchEmployees();
@@ -52,7 +44,7 @@ export class EmployeesListComponent implements OnInit {
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'firstName'};
     const searchTemplate: ISearchTemplate = {filters: group};
 
-    this.employeesSearchService.searchEmployees(searchTemplate).subscribe(response => {
+    this.employeesAppService.searchEmployees(searchTemplate).subscribe(response => {
       this.employeeTableItemList = response;
     }, error => console.error(error))
   }

@@ -9,6 +9,7 @@ import {
 import {ActivatedRoute, Router} from "@angular/router";
 import {Group} from "@angular-it2go/car-fleet-api";
 import GroupOpEnum = Group.GroupOpEnum;
+import {ProjectsAppService} from "../../services/projects-app.service";
 
 @Component({
   selector: 'app-project-list',
@@ -20,7 +21,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   projectTableItems: IProjectTableItem[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private projectControllerService: ProjectControllerService) {
+  constructor(private router: Router, private route: ActivatedRoute, private projectsAppService: ProjectsAppService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class ProjectListComponent implements OnInit {
     group.groupOp = GroupOpEnum.OR;
     const searchTemplate: ISearchTemplate = {filters: group};
 
-    this.projectControllerService.search(searchTemplate).subscribe(response => {
+    this.projectsAppService.search(searchTemplate).subscribe(response => {
       this.projectTableItems = response.rows;
     }, error => console.error(error));
   }

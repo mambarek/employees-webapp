@@ -3,12 +3,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {Employee} from "@angular-it2go/employees-api";
-import {
-  EmployeesControllerService,
-  Project,
-  ProjectControllerService
-} from "@angular-it2go/project-management-api";
+import {Project} from "@angular-it2go/project-management-api";
 import StatusEnum = Project.StatusEnum;
+import {ProjectsAppService} from "../../services/projects-app.service";
 
 @Component({
   selector: 'app-edit-project',
@@ -27,14 +24,13 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
   selectedToRemoveEmployees;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private projectControllerService: ProjectControllerService,
-              private employeesControllerService: EmployeesControllerService,
+              private projectsAppService: ProjectsAppService,
               private overlayService: OverlayService) {
   }
 
   ngOnInit(): void {
 
-    this.employeesControllerService.findAllEmployees().subscribe((employees) => {
+    this.projectsAppService.findAllEmployees().subscribe((employees) => {
       this.availableEmployees = employees;
     })
 
@@ -61,7 +57,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
 
     this.overlayService.showLoader({message: "Loading Project Data ...", minTime: 2});
 
-    this.projectControllerService.getProjectByPublicId(publicId).subscribe(
+    this.projectsAppService.getProjectByPublicId(publicId).subscribe(
       response => {
         console.log('Project loaded ', response);
         this.overlayService.hideLoader().then(() => {
@@ -100,7 +96,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
   }
 
   updateProject(): void {
-    this.projectControllerService.updateProject(this.project.publicId, this.project).subscribe(
+    this.projectsAppService.updateProject(this.project).subscribe(
       response => {
         this.overlayService.hideLoader().then(() => {
           console.log('Saved project SUCCESS', response);
@@ -117,7 +113,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
   };
 
   createProject(): void {
-    this.projectControllerService.saveProject(this.project).subscribe(
+    this.projectsAppService.saveProject(this.project).subscribe(
       response => {
         this.overlayService.hideLoader().then(() => {
           console.log('Create project SUCCESS', response);
@@ -146,7 +142,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
     if (this.project.publicId) {
       this.overlayService.showConfirmation(confirmConfig).then(() =>  {
         this.overlayService.showLoader({message: "Daten werden gelöscht ...", minTime: 5});
-        this.projectControllerService.deleteProject(this.project.publicId).subscribe(
+        this.projectsAppService.deleteProject(this.project).subscribe(
           () => {
             this.overlayService.hideLoader().then(() => {
               console.log('Project delete SUCCESS');

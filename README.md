@@ -57,7 +57,7 @@ install a specific version of "openapi-generator-cli"
 Next step is to create a new npm script in "package.json" that generates the code based on the OpenAPI schema:
 >{
   "scripts": {
-"generate:project-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/projects-api.yaml -o ./build/openapi/project -c apis/projects-api-config.json",
+"generate:projects-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/projects-api.yaml -o ./build/openapi/project -c apis/projects-api-config.json",
 "generate:car-fleet-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o ./build/openapi/cars -c apis/car-fleet-api-config.json",
 "generate:employees-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/employees/v1/employees-api.yaml -o ./build/openapi/employees -c apis/employees-api-config.json"
   }

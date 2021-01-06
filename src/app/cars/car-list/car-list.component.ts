@@ -4,6 +4,7 @@ import {Car, Group as IGroup, Rule as IRule} from "@angular-it2go/car-fleet-api"
 import {SearchTemplate as ISearchTemplate, CarTableItem as ICarTableItem} from "@angular-it2go/car-fleet-api";
 import GroupOpEnum = Group.GroupOpEnum;
 import {ActivatedRoute, Router} from "@angular/router";
+import {CarFleetAppService} from "../../services/car-fleet-app.service";
 
 @Component({
   selector: 'app-car-list',
@@ -15,7 +16,7 @@ export class CarListComponent implements OnInit {
   searchText = '';
   carTableItems: ICarTableItem[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private carSearchService: CarSearchService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private carFleetAppService: CarFleetAppService) { }
 
   ngOnInit(): void {
     this.searchCars();
@@ -48,7 +49,7 @@ export class CarListComponent implements OnInit {
     }
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model', orderDirection: 'ASC'};
     const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model'};
-    this.carSearchService.search(searchTemplate).subscribe(response => {
+    this.carFleetAppService.search(searchTemplate).subscribe(response => {
       this.setGridItems(response.rows);
       this.itemsCount = response.records;
     }, error => console.error(error))
