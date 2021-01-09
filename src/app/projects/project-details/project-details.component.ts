@@ -34,7 +34,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
       this.availableEmployees = employees;
     })
 
-    this.project = <Project>{};
+    this.project = <Project>{assignedEmployees: []};
     this.route.params.subscribe(params => {
       const publicId = params['publicId'];
       if(publicId)
@@ -62,6 +62,7 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
         console.log('Project loaded ', response);
         this.overlayService.hideLoader().then(() => {
           this.project = response;
+          if(this.project.assignedEmployees == null) this.project.assignedEmployees = [];
           this.initAvailableEmployees();
         })
       },
