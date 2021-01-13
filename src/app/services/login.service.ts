@@ -27,6 +27,9 @@ export class LoginService {
   private configure() {
     this.oauthService.configure(this.authConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    // To automatically refresh a token when/ some time before it expires
+    // it not works automatically as mentioned in the docs. you have to call it explicitly
+    this.oauthService.setupAutomaticSilentRefresh();
   }
 
   public login() {
