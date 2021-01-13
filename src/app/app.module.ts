@@ -25,6 +25,7 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import {SharedModule} from "./shared/shared.module";
+import {OAuthModule} from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,12 @@ import {SharedModule} from "./shared/shared.module";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: [environment.carfleetApiUrl, environment.employeesApiUrl, environment.projectsApiUrl],
+        sendAccessToken: true
+      }
+    }),
     SharedModule,
     ProjectsApiModule,
     NgbModule,

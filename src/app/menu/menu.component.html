@@ -21,9 +21,9 @@
       </ul>
 
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown mr-3">
+        <li class="nav-item dropdown mr-3" *ngIf="isLoggedIn()">
           <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-            <i class="fas fa-user"></i> Welcome Brad
+            <i class="fas fa-user"></i> Welcome {{getUserName()}}
           </a>
           <div class="dropdown-menu">
             <a href="profile.html" class="dropdown-item">
@@ -34,15 +34,11 @@
             </a>
           </div>
         </li>
-        <li class="nav-item">
-          <a routerLink="/login" class="nav-link">
-            <i class="fas fa-user"></i> Login
-          </a>
+        <li class="nav-item" *ngIf="!isLoggedIn()">
+          <button class="btn btn-link nav-link" (click)="login()"><i class="fas fa-sign-in-alt"></i> Login</button>
         </li>
-        <li class="nav-item">
-          <a routerLink="/login" class="nav-link">
-            <i class="fas fa-user-times"></i> Logout
-          </a>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <button class="btn btn-link nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </li>
       </ul>
     </div>
