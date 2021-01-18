@@ -181,7 +181,7 @@ clean the cache data to be reinitialized from calling routing method.
 ## Environment and Application Variable
 Angular has no concept of deployment variable. To get rid of setting application variable at deployment time.  
 The community has present many solutions on the internet.
-One of them using a env template with a placeholder and substitute them with the unix "envsubst" command.
+One of them using an env template with a placeholder and substitute them with the unix "envsubst" command.
 
 >https://pumpingco.de/blog/environment-variables-angular-docker/     
 

@@ -18,6 +18,7 @@ export class LoginService {
     clientId: environment.oauthClientId,
     scope: 'openid profile email offline_access',
     responseType: 'code',
+    requireHttps: false,
     // at_hash is not present in id token in older versions of keycloak.
     // use the following property only if needed!
     // disableAtHashCheck: true,
@@ -25,6 +26,7 @@ export class LoginService {
   }
 
   private configure() {
+    console.log("-- LoginService configure", this.authConfig);
     this.oauthService.configure(this.authConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // To automatically refresh a token when/ some time before it expires
