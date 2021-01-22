@@ -11,7 +11,8 @@ COPY docker/.npmrc /app
 #ADD docker/.npmrc /app
 RUN npm install
 COPY ./ /app
-RUN rm -rf /app/docker
+RUN rm -rf /app/docker /app/build /app/cypress app/e2e app/node_modules app/test
+RUN echo dir /app
 
 RUN npm install -g @angular/cli
 RUN ng build --configuration production --output-path=/dist
