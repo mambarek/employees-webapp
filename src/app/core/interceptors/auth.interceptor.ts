@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const xhr = req.clone({
       headers: req.headers.set('X-Requested-With', 'XMLHttpRequest')
     });
-    return next.handle(xhr);
-   // return next.handle(req);
+    //return next.handle(xhr);
+    return next.handle(req);
   }
 }

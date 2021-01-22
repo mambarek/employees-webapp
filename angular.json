@@ -55,6 +55,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "cloud": {
+              "fileReplacements": [
+                {
+                  "replace": "src/assets/env.js",
+                  "with": "src/assets/env.cloud.js"
+                }
+              ]
             }
           }
         },
@@ -66,6 +74,9 @@
           "configurations": {
             "production": {
               "browserTarget": "employees-webapp:build:production"
+            },
+            "cloud": {
+              "browserTarget": "employees-webapp:build:cloud"
             }
           }
         },

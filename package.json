@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "start:cloud": "ng serve --configuration=cloud",
+    "build:cloud": "ng build",
     "build:prod": "ng build --prod",
     "start:prod": "http-server ./dist -p 4200",
     "test": "ng test",
