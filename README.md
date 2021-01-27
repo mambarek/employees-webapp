@@ -192,7 +192,34 @@ In the Dockerfile we add this
 
 ```CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]``` 
  
-   
+## Switch Configuration/Profile
+To add e new configuration. add it to angular.json
+```
+"configurations": {
+    ...
+    "cloud": {
+      "fileReplacements": [
+        {
+          "replace": "src/assets/env.js",
+          "with": "src/assets/env.cloud.js"
+        }
+      ]
+    }
+}
+```
+and in package.json add new script for this
+```
+"scripts": {
+    "start:cloud": "ng serve --configuration=cloud",
+    "build:cloud": "ng build",
+}
+```
+
+Then you can run from CLI or change Intellij "Angular CLI"
+```
+ng start:cloud
+```
+
 ##Testing
 to add environment variables to tests we should add src/assets/env.js to angular.json
 
