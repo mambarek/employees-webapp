@@ -8,11 +8,9 @@ WORKDIR /app
 COPY package.json /app
 # copy custom nexus reposotory for custom libraries
 COPY docker/.npmrc /app
-#ADD docker/.npmrc /app
 RUN npm install
+# not wanted resources are to maintain in .dockerignore
 COPY ./ /app
-RUN rm -rf /app/docker /app/dist /app/build /app/cypress app/e2e app/node_modules app/test
-RUN echo dir /app
 
 RUN npm install -g @angular/cli
 RUN ng build --configuration production --output-path=/dist

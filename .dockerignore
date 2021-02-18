@@ -1,7 +1,14 @@
 .git
 .firebase
 .editorconfig
+.npmrc
 /build
+/test
+/cypress
+# expect docker dir because we copy from the .npmrc
+# when you enable this line the build would break
+#/docker
+/apis
 /dist
 /node_modules
 /e2e
