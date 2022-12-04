@@ -8,7 +8,7 @@ export const environment = {
   employeesApiUrl: window['env']['employeesApiUrl'] || 'http://localhost:80100',
   projectsApiUrl: window['env']['projectsApiUrl'] || 'http://localhost:80200',
   carfleetApiUrl: window['env']['carfleetApiUrl'] || 'http://localhost:80300',
-  oauthIssuerUrl: window['env']['oauthIssuerUrl'] || 'http://localhost:8080/auth/realms/employees-webapp',
+  oauthIssuerUrl: window['env']['oauthIssuerUrl'] || 'http://localhost:8880/auth/realms/employees-webapp',
   oauthClientId: window['env']['oauthClientId'] || 'ema_pkce'
 };
 

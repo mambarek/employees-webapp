@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {CarSearchService, CarsService} from "@angular-it2go/car-fleet-api";
-import {Car, CarSearchResult, SearchTemplate} from "@angular-it2go/car-fleet-api/model/models";
+import {CarSearchService, CarsService} from "../apis/it-2go/car-fleet-api";
+import {Car, CarSearchResult, SearchTemplate} from "../apis/it-2go/car-fleet-api/model/models";
 import {Observable} from "rxjs";
 
 /**

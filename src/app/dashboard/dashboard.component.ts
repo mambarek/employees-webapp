@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ProjectControllerService} from '@angular-it2go/project-management-api';
+import {ProjectControllerService} from '../apis/it-2go/project-management-api';
 import {ModalComponent} from '../modal/modal.component';
-import {CarsService} from "@angular-it2go/car-fleet-api";
-import {EmployeesControllerService} from "@angular-it2go/employees-api";
+import {CarsService} from "../apis/it-2go/car-fleet-api";
+import {EmployeesControllerService} from "../apis/it-2go/employees-api";
 
 @Component({
   selector: 'app-dashboard',

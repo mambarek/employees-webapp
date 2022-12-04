@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {CarSearchService, Group} from "@angular-it2go/car-fleet-api";
-import {Car, Group as IGroup, Rule as IRule} from "@angular-it2go/car-fleet-api";
-import {SearchTemplate as ISearchTemplate, CarTableItem as ICarTableItem} from "@angular-it2go/car-fleet-api";
+import {CarSearchService, Group} from "../../apis/it-2go/car-fleet-api";
+import {Car, Group as IGroup, Rule as IRule} from "../../apis/it-2go/car-fleet-api";
+import {SearchTemplate as ISearchTemplate, CarTableItem as ICarTableItem} from "../../apis/it-2go/car-fleet-api";
 import GroupOpEnum = Group.GroupOpEnum;
 import {ActivatedRoute, Router} from "@angular/router";
 import {CarFleetAppService} from "../../services/car-fleet-app.service";
@@ -28,24 +28,24 @@ export class CarListComponent implements OnInit {
       const brandRule: IRule = {
         field: 'brand',
         data: this.searchText,
-        op: IRule.OpEnum.CONTAINS,
-        type: IRule.TypeEnum.STRING
+        op: IRule.OpEnum.Contains,
+        type: IRule.TypeEnum.String
       };
       const modelRule: IRule = {
         field: 'model',
         data: this.searchText,
-        op: IRule.OpEnum.CONTAINS,
-        type: IRule.TypeEnum.STRING
+        op: IRule.OpEnum.Contains,
+        type: IRule.TypeEnum.String
       };
       // color is translated so this search will work only if you give the color id may use a dropdownlist for colors
       const colorRule: IRule = {
         field: 'color',
         data: this.searchText,
-        op: IRule.OpEnum.CONTAINS,
-        type: IRule.TypeEnum.STRING
+        op: IRule.OpEnum.Contains,
+        type: IRule.TypeEnum.String
       };
       group.rules = [brandRule, modelRule, colorRule];
-      group.groupOp = GroupOpEnum.OR;
+      group.groupOp = GroupOpEnum.Or;
     }
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model', orderDirection: 'ASC'};
     const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model'};

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {EmployeeTableItemList, Group} from '@angular-it2go/employees-api';
-import {Group as IGroup, Rule as IRule, SearchTemplate as ISearchTemplate} from "@angular-it2go/car-fleet-api";
+import {EmployeeTableItemList, Group} from '../../apis/it-2go/employees-api';
+import {Group as IGroup, Rule as IRule, SearchTemplate as ISearchTemplate} from "../../apis/it-2go/employees-api";
 import GroupOpEnum = Group.GroupOpEnum;
 import {ActivatedRoute, Router} from "@angular/router";
 import {EmployeesAppService} from "../../services/employees-app.service";
@@ -28,23 +28,25 @@ export class EmployeesListComponent implements OnInit {
       const firstNameRule: IRule = {
         field: 'firstName',
         data: this.searchText,
-        op: IRule.OpEnum.CONTAINS,
-        type: IRule.TypeEnum.STRING
+        op: IRule.OpEnum.Contains,
+        type: IRule.TypeEnum.String
       };
       const lastNameRule: IRule = {
         field: 'lastName',
         data: this.searchText,
-        op: IRule.OpEnum.CONTAINS,
-        type: IRule.TypeEnum.STRING
+        op: IRule.OpEnum.Contains,
+        type: IRule.TypeEnum.String
       };
       group = {rules: [firstNameRule, lastNameRule]};
-      group.groupOp = GroupOpEnum.OR;
+      group.groupOp = GroupOpEnum.Or;
     }
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'model', orderDirection: 'ASC'};
     //const searchTemplate: ISearchTemplate = {filters: group, orderBy: 'firstName'};
     const searchTemplate: ISearchTemplate = {filters: group};
 
     this.employeesAppService.searchEmployees(searchTemplate).subscribe(response => {
+      console.log("Response Employees: " + response);
+      console.log("All Employees: " + response.resultList);
       this.employeeTableItemList = response;
     }, error => console.error(error))
   }

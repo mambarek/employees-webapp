@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  EmployeesControllerService,
-  ProjectControllerService
-} from "@angular-it2go/project-management-api";
 import {Observable} from "rxjs";
+
 import {
-  Employee,
-  Project, SearchResultProjectTableItem,
-  SearchTemplate
-} from "@angular-it2go/project-management-api/model/models";
+  Project,
+  ProjectControllerService,
+  SearchResultProjectTableItem
+} from "../apis/it-2go/project-management-api";
+import {Employee, EmployeesControllerService, SearchTemplate} from "../apis/it-2go/employees-api";
 
 /**
  * The Facade for Projects App

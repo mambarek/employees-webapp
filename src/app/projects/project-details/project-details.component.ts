@@ -2,10 +2,11 @@ import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angul
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {OverlayService} from "../../shared/overlay/overlay.service";
-import {Employee} from "@angular-it2go/employees-api";
-import {Project} from "@angular-it2go/project-management-api";
+
 import StatusEnum = Project.StatusEnum;
 import {ProjectsAppService} from "../../services/projects-app.service";
+import {Project} from "../../apis/it-2go/project-management-api";
+import {Employee} from "../../apis/it-2go/employees-api";
 
 @Component({
   selector: 'app-edit-project',
@@ -163,10 +164,11 @@ export class ProjectDetailsComponent implements OnInit, AfterViewChecked {
 
   getStatusList(): ProjectStatus[] {
     const projectStatus: Array<ProjectStatus> = [];
-    projectStatus.push(new ProjectStatus(StatusEnum.WAITING, 'Is waiting'));
-    projectStatus.push(new ProjectStatus(StatusEnum.WORKING, 'On working'));
-    projectStatus.push(new ProjectStatus(StatusEnum.FINISHED, 'Is finished'));
-    projectStatus.push(new ProjectStatus(StatusEnum.STOPPED, 'Is stopped'));
+    // @ts-ignore
+    projectStatus.push(new ProjectStatus(StatusEnum.Waiting, 'Is waiting'));
+    projectStatus.push(new ProjectStatus(StatusEnum.Working, 'On working'));
+    projectStatus.push(new ProjectStatus(StatusEnum.Finished, 'Is finished'));
+    projectStatus.push(new ProjectStatus(StatusEnum.Stopped, 'Is stopped'));
 
     return projectStatus;
   }

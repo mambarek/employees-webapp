@@ -2,5 +2,5 @@
   "npmName": "@angular-it2go/car-fleet-api",
   "npmVersion": "1.0.0",
   "snapshot": true,
-  "ngVersion": "10.0.9"
+  "ngVersion": "11.0.5"
 }

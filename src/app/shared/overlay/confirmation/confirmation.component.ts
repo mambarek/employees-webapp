@@ -5,6 +5,7 @@ import {trapFocus} from "../../../core/ui/util";
 
 /**
  * Confirmation Dialog for user decision yes/no
+ * Der Dialog subscribed sich bei overlay service in ein dafür vorgesehene observer
  */
 @Component({
   selector: 'app-confirmation',
@@ -29,7 +30,7 @@ export class ConfirmationComponent implements OnInit, OnDestroy, AfterViewChecke
 
   subscribeToService(){
     this.subscriptions.push(
-      this.overlayService.showConfirmation$.subscribe(next => {
+      this.overlayService.showConfirmation$.subscribe(next => { // next ist dialog data
 
         // the service returns this decision observable to caller view
         // this the user decision to save changes

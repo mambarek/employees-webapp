@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Employee as IEmployee, PersonData as IPersonData, Project} from "@angular-it2go/employees-api";
+import {Employee as IEmployee, PersonData as IPersonData, Project} from "../../apis/it-2go/employees-api";
 import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {NgbAccordion, NgbPanelChangeEvent} from "@ng-bootstrap/ng-bootstrap";

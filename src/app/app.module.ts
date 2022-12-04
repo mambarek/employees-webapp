@@ -14,9 +14,6 @@ import { EditCarComponent } from './cars/edit-car/edit-car.component';
 import { CarListComponent } from './cars/car-list/car-list.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {ApiModule as ProjectsApiModule, BASE_PATH as projectBasePath} from '@angular-it2go/project-management-api';
-import {ApiModule as CarApiModule, BASE_PATH as carBasePath} from '@angular-it2go/car-fleet-api';
-import {ApiModule as EmployeesApiModule, BASE_PATH as employeesBasePath} from '@angular-it2go/employees-api';
 import {ErrorComponent} from './error/error.component';
 import {ModalComponent} from './modal/modal.component';
 import {environment} from '../environments/environment';
@@ -26,6 +23,9 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import {SharedModule} from "./shared/shared.module";
 import {OAuthModule} from "angular-oauth2-oidc";
+import {ProjectsApiModule, BASE_PATH as projectBasePath} from "./apis/it-2go/project-management-api";
+import {CarApiModule, BASE_PATH as carBasePath} from "./apis/it-2go/car-fleet-api";
+import {EmployeesApiModule, BASE_PATH as employeesBasePath} from "./apis/it-2go/employees-api";
 
 @NgModule({
   declarations: [

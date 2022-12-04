@@ -1,15 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectControllerService, Project} from '@angular-it2go/project-management-api';
-import {
-  SearchTemplate as ISearchTemplate,
-  Rule as IRule,
-  Group as IGroup,
-  ProjectTableItem as IProjectTableItem
-} from '@angular-it2go/project-management-api';
+
 import {ActivatedRoute, Router} from "@angular/router";
-import {Group} from "@angular-it2go/car-fleet-api";
+
 import GroupOpEnum = Group.GroupOpEnum;
 import {ProjectsAppService} from "../../services/projects-app.service";
+import {Project, ProjectTableItem} from "../../apis/it-2go/project-management-api";
+import {Group, Rule as IRule, SearchTemplate} from "../../apis/it-2go/project-management-api";
 
 @Component({
   selector: 'app-project-list',
@@ -19,7 +15,7 @@ export class ProjectListComponent implements OnInit {
 
   projectName = '';
   projects: Project[] = [];
-  projectTableItems: IProjectTableItem[] = [];
+  projectTableItems: ProjectTableItem[] = [];
 
   constructor(private router: Router, private route: ActivatedRoute, private projectsAppService: ProjectsAppService) {
   }
@@ -31,9 +27,9 @@ export class ProjectListComponent implements OnInit {
 
   searchProjects(): void {
     const rule: IRule = {field: 'name', data: this.projectName, op: 'CONTAINS', type: 'STRING'};
-    const group: IGroup = {rules: [rule]};
-    group.groupOp = GroupOpEnum.OR;
-    const searchTemplate: ISearchTemplate = {filters: group};
+    const group: Group = {rules: [rule]};
+    group.groupOp = GroupOpEnum.Or;
+    const searchTemplate: SearchTemplate = {filters: group};
 
     this.projectsAppService.search(searchTemplate).subscribe(response => {
       this.projectTableItems = response.rows;

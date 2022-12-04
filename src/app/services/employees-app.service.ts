@@ -3,14 +3,14 @@ import {
   EmployeesControllerService,
   EmployeesSearchControllerService,
   ProjectsControllerService
-} from "@angular-it2go/employees-api";
+} from "../apis/it-2go/employees-api";
 import {Observable} from "rxjs";
 import {
   Employee,
   EmployeeTableItemList,
   Project,
   SearchTemplate
-} from "@angular-it2go/employees-api/model/models";
+} from "../apis/it-2go/employees-api/model/models";
 
 /**
  * The Facade for Employees App

@@ -8,7 +8,7 @@ import {
   SkipSelf,
   ViewChild
 } from '@angular/core';
-import {Address} from "@angular-it2go/employees-api";
+
 import {
   ControlContainer,
   ControlValueAccessor,
@@ -18,6 +18,7 @@ import {
   NgForm,
   NgModelGroup
 } from "@angular/forms";
+import {Address} from "../../../apis/it-2go/car-fleet-api";
 
 @Component({
   selector: 'app-address',

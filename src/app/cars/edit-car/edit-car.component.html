@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-3">
         <a routerLink="/cars" class="btn btn-light btn-block">
-          <i class="fas fa-arrow-left"></i> Back To Projects
+          <i class="fas fa-arrow-left"></i> Back To Cars
         </a>
       </div>
       <div class="col-md-3">
@@ -43,7 +43,7 @@
           <div class="card-header">
             <h4>Edit Car</h4>
           </div>
-          <div class="card-body">
+          <div class="card-body" #carEditor>
             <form (ngSubmit)="saveCar()" #carForm="ngForm" #nativeForm id="carForm">
               <ngx-bootstrap-text-input-row
                 name="brand"  label="Brand"

@@ -1,9 +1,10 @@
 import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Car} from "@angular-it2go/car-fleet-api";
+import {Car} from "../../apis/it-2go/car-fleet-api";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {OverlayService} from "../../shared/overlay/overlay.service";
 import {CarFleetAppService} from "../../services/car-fleet-app.service";
+import {trapFocus} from "../../core/ui/util";
 
 @Component({
   selector: 'app-edit-car',
@@ -11,6 +12,7 @@ import {CarFleetAppService} from "../../services/car-fleet-app.service";
 })
 export class EditCarComponent implements OnInit, AfterViewChecked {
 
+  @ViewChild('nativeForm') carEditor: ElementRef;
   @ViewChild('carForm', {static: false}) carForm: NgForm;
   @ViewChild('saveButton') saveButton: ElementRef;
   car: Car;
@@ -36,6 +38,7 @@ export class EditCarComponent implements OnInit, AfterViewChecked {
   // afterViewChecked is the right hook to change button state
   ngAfterViewChecked(): void {
     this.saveButton.nativeElement.disabled = this.carForm && this.carForm.invalid;
+    //trapFocus(this.carEditor.nativeElement); funktioniert nicht
   }
 
   private initView(publicId: string): void {
