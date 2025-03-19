@@ -52,7 +52,7 @@ export class OverlayService {
       }, error => reject(error));
 
       // call next after subscription
-      this.hideLoader$.next();
+      this.hideLoader$.next({});
     })
   }
 
