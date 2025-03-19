@@ -1,5 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# generated apis nicht in git mitnehmen. kann man immer wieder generieren
+# in package.json run following scripty "generate:projects-api" and the toe others
+src/app/apis
+.angular
+
 #Open API Generation folder
 /build
 
@@ -48,3 +53,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/openapitools.json
