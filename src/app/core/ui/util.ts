@@ -2,7 +2,7 @@ import {AbstractControl} from "@angular/forms";
 
 export function hasRequired(abstractControl: AbstractControl): boolean{
   if (abstractControl.validator) {
-    const validator = abstractControl.validator({}as AbstractControl);
+    const validator = abstractControl.validator({} as AbstractControl);
     //if(validator) console.log("--Validator",validator);
     if (validator && validator.required) {
       return true;
@@ -11,6 +11,12 @@ export function hasRequired(abstractControl: AbstractControl): boolean{
   return false;
 }
 
+/*
+  Trapfocus lässt den focus wenn du Tab klickst innerhalb den aktuellen Fenster.
+  Dies gilt vor allem für die Pop-up-Fenster wie Confirmation. Damit kann man mit TAB
+  zwischen alle Buttons switchen ohne den Fenster zu verlassen
+  NICE TOOL
+ */
 export function trapFocus(element) {
   let focusableEls = element.querySelectorAll('a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]), select:not([disabled])');
   let firstFocusableEl = focusableEls[0];
