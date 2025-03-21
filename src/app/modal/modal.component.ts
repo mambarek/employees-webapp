@@ -2,8 +2,7 @@ import {Component, Input, OnChanges, OnInit, Output, SimpleChange, TemplateRef, 
 
 @Component({
   selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  templateUrl: './modal.component.html'
 })
 export class ModalComponent implements OnInit {
 

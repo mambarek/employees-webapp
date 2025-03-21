@@ -7,9 +7,7 @@
     <div class="modal-content">
       <div class="modal-header" [ngClass]="headerNgClass">
         <h5 class="modal-title">{{title}}</h5>
-        <button class="close" data-dismiss="modal" (click)="show=false">
-          <span>&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-dismiss="modal" (click)="show=false"></button>
       </div>
       <div class="modal-body">
         <ng-container *ngTemplateOutlet="bodyTemplate? bodyTemplate:defaultTemplate"></ng-container>
