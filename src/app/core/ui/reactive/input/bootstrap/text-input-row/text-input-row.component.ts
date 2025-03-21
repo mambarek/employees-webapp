@@ -20,8 +20,7 @@ import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-text-input-row',
-  templateUrl: './text-input-row.component.html',
-  styleUrls: ['./text-input-row.component.css']
+  templateUrl: './text-input-row.component.html'
 })
 export class TextInputRowComponent implements ControlValueAccessor, OnInit, OnDestroy {
 
