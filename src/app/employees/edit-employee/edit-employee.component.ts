@@ -20,7 +20,9 @@ export class EditEmployeeComponent implements OnInit, AfterViewInit {
   employee: IEmployee;
   genders = [{ value: 'MALE', label: 'Male'}, {value: 'FEMALE' , label: 'Female' }];
 
+  // Einsatz von messageMap: Eigene Validator-Fehlermeldungen
   myMessageMap = {required: "Bitte geben Sie einen Wert!", minlength: "Der Wert muss mindestens"};
+
   projects$: Observable<Project[]>;
   projects: Project[] = [];
 
