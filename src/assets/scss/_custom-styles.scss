@@ -1,4 +1,12 @@
 
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -25,4 +33,3 @@
   box-shadow: none;
   color: #007bff;
 }
-

@@ -5,7 +5,11 @@
   "projects": {
     "employees-webapp": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -24,9 +28,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -98,12 +104,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/assets/css/fontawesome-free-5.0.6/web-fonts-with-css/css/fontawesome-all.css",
-              "src/assets/css/bootstrap.min.css",
-              "src/assets/css/style.css",
-              "src/styles.css"
+              "src/styles.scss"
             ],
-            "scripts": ["src/assets/env.js"]
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           }
         },
         "lint": {

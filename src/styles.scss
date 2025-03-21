@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+// Import Font Awesome
+@import 'assets/scss/fontawesome';
+// Import Bootstrap
+@import "assets/scss/custom-bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+/* ag-grid to be done
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
+*/
+
+// custom styles
+@import "assets/scss/custom-styles";
