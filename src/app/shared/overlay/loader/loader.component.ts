@@ -71,7 +71,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
   /**
    * hide is a little tricky
    * hide would be called from an async process.
-   * the process can take time less or greater then loader miTime
+   * the process can take time less or greater then loader minTime
    * In the first case the loader would wait for minTime the hide it self
    * In the second case the loader will wait for an Observable to finish loading
    * then hide it self.

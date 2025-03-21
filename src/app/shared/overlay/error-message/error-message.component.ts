@@ -5,8 +5,7 @@ import {trapFocus} from "../../../core/ui/util";
 
 @Component({
   selector: 'app-error-message',
-  templateUrl: './error-message.component.html',
-  styleUrls: ['./error-message.component.css']
+  templateUrl: './error-message.component.html'
 })
 export class ErrorMessageComponent implements OnInit, OnDestroy, AfterViewChecked {
 

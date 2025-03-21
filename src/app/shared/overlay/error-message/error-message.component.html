@@ -1,13 +1,11 @@
 <!-- Modal -->
 <ng-container *ngIf="visible">
   <div class="modal-backdrop" id="errorModal" role="dialog" aria-hidden="true" #errorDialog>
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="errorModalLabel">{{title}}</h5>
-          <button type="button" class="close" aria-label="Close" (click)="onClose()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button type="button" class="btn-close" aria-label="Close" (click)="onClose()"></button>
         </div>
         <div class="modal-body">
           {{message}}

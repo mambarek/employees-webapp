@@ -83,11 +83,11 @@
               </div>
               <div class="row align-items-center">
                 <div class="col-md-4">
-                  <select class="custom-select" size="6" multiple [(ngModel)]="selectedAvailableEmployees">
+                  <select class="form-select" size="6" multiple [(ngModel)]="selectedAvailableEmployees">
                     <option *ngFor="let employee of availableEmployees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
                   </select>
                 </div>
-                <div class="col-md-2">
+                <div class="d-grid gap-2 col-md-2 max-auto">
                   <button class="btn btn-success btn-block" (click)="addEmployees()" [disabled]="addButtonDisabled()">
                     Add <i class="fa fa-angle-double-right"></i>
                   </button>
@@ -96,12 +96,13 @@
                   </button>
                 </div>
                 <div class="col-md-4">
-                  <select class="custom-select" size="6" multiple [(ngModel)]="selectedToRemoveEmployees">
+                  <select class="form-select" size="6" multiple [(ngModel)]="selectedToRemoveEmployees">
                     <option *ngFor="let employee of project.assignedEmployees" value="{{employee.publicId}}">{{employee.data.firstName}} {{employee.data.lastName}}</option>
                   </select>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
