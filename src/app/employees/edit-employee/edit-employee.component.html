@@ -35,76 +35,97 @@
 </section>
 
 <!-- DETAILS -->
-<section id="details" *ngIf="employee">
+<section id="details" >
   <div class="container">
     <div class="row">
       <div class="col">
-          <ngb-accordion #acc="ngbAccordion" activeIds="person-data" (panelChange)="validateAccordion($event)">
-            <ngb-panel title="Personal Data" id="person-data">
-              <ng-template ngbPanelHeader>
-                <button ngbPanelToggle class="btn btn-link">Person Data</button>
-              </ng-template>
-              <ng-template ngbPanelContent>
-                <form  #personDataForm="ngForm" id="personDataForm">
-                  <ngx-bootstrap-text-input-row
-                    name="firstName" label="First name"
-                    [(ngModel)]="employee.data.firstName"
-                    required minlength="3" maxlength="50"
-                    [messagesMap]="myMessageMap"
-                  >
-                  </ngx-bootstrap-text-input-row>
-                  <ngx-bootstrap-text-input-row
-                    name="lastName" label="Last name"
-                    [(ngModel)]="employee.data.lastName"
-                    required minlength="3" maxlength="50"
-                  >
-                  </ngx-bootstrap-text-input-row>
-                  <ngx-bootstrap-date-row
-                    name="birthDate" label="Birthdate"
-                    [(ngModel)]="employee.data.birthDate"
-                    required
-                  >
-                  </ngx-bootstrap-date-row>
-                  <ngx-bootstrap-text-input-row
-                    name="email" label="Email" type="email"
-                    [(ngModel)]="employee.data.email"
-                    required minlength="3" maxlength="100"
-                  ></ngx-bootstrap-text-input-row>
 
-                  <ngx-bootstrap-radios-row
-                    label="Gender" name="gender"
-                    [items]="genders"
-                    [(ngModel)]="employee.data.gender"
-                    required
-                  ></ngx-bootstrap-radios-row>
-                </form>
-              </ng-template>
-            </ngb-panel>
-            <ngb-panel title="Address" id="address-data">
-              <ng-template ngbPanelContent>
-                <form  #addressForm="ngForm" id="addressForm">
-                <app-address prefix="empl_addr" [address]="employee.data.address" ></app-address>
-                </form>
-              </ng-template>
-            </ngb-panel>
-            <ngb-panel title="Projects" id="projects-data">
-              <ng-template ngbPanelContent>
-                <table class="table table-striped">
-                  <thead class="thead-dark">
+        <!-- new -->
+        <div ngbAccordion>
+          <div ngbAccordionItem [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Personal Data</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <form  #personDataForm="ngForm" id="personDataForm">
+                    <ngx-bootstrap-text-input-row
+                      name="firstName" label="First name"
+                      [(ngModel)]="employee.data.firstName"
+                      required minlength="3" maxlength="50"
+                      [messagesMap]="myMessageMap"
+                    >
+                    </ngx-bootstrap-text-input-row>
+                    <ngx-bootstrap-text-input-row
+                      name="lastName" label="Last name"
+                      [(ngModel)]="employee.data.lastName"
+                      required minlength="3" maxlength="50"
+                    >
+                    </ngx-bootstrap-text-input-row>
+                    <ngx-bootstrap-date-row
+                      name="birthDate" label="Birthdate"
+                      [(ngModel)]="employee.data.birthDate"
+                      required
+                    >
+                    </ngx-bootstrap-date-row>
+                    <ngx-bootstrap-text-input-row
+                      name="email" label="Email" type="email"
+                      [(ngModel)]="employee.data.email"
+                      required minlength="3" maxlength="100"
+                    ></ngx-bootstrap-text-input-row>
+
+                    <ngx-bootstrap-radios-row
+                      label="Gender" name="gender"
+                      [items]="genders"
+                      [(ngModel)]="employee.data.gender"
+                      required
+                    ></ngx-bootstrap-radios-row>
+                  </form>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Address Data</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <form  #addressForm="ngForm" id="addressForm">
+                    <app-address prefix="empl_addr" [address]="employee.data.address" ></app-address>
+                  </form>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div ngbAccordionItem [collapsed]="false">
+            <h2 ngbAccordionHeader>
+              <button ngbAccordionButton>Projects</button>
+            </h2>
+            <div ngbAccordionCollapse>
+              <div ngbAccordionBody>
+                <ng-template>
+                  <table class="table table-striped">
+                    <thead class="thead-dark">
                     <tr>
                       <th>Name</th><th>Description</th>
                     </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let project of employee.assignedProjects">
-                    <td>{{project.name}}</td>
-                    <td>{{project.description}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let project of employee.assignedProjects">
+                      <td>{{project.name}}</td>
+                      <td>{{project.description}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
