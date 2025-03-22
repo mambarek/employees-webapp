@@ -12,7 +12,6 @@ import {
 } from "@angular/forms";
 import {SharedModule} from "../../../../../../shared/shared.module";
 import {CoreModule} from "../../../../../core.module";
-import {TestReactiveAddressComponent} from "../../../../../../shared/ui/address/address.component.spec";
 
 describe('TextInputRowComponent', () => {
   let component: TextInputRowComponent;
