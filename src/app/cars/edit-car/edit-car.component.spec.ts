@@ -1,10 +1,10 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from "@angular/core/testing";
+import {ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from "@angular/core/testing";
 import {EditCarComponent} from "./edit-car.component";
 import {AppModule} from "../../app.module";
-import {ApiModule as CarApiModule, CarsService} from "@angular-it2go/car-fleet-api";
+import {CarApiModule, CarsService} from "@angular-it2go/car-fleet-api";
 import {ActivatedRoute} from "@angular/router";
 import {of} from "rxjs";
-import {CARS} from "../../../../test/carfleet/Cars";
+import {CARS} from "../../../../test/carfleet/cars";
 import {By} from "@angular/platform-browser";
 
 describe('EditCarComponent', () => {

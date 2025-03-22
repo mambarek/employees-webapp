@@ -36,7 +36,10 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.5.0",
     "uuid": "^9.0.0",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "@angular-it2go/project-management-api": "file:src/app/apis/it-2go/project-management-api",
+    "@angular-it2go/employees-api": "file:src/app/apis/it-2go/employees-api",
+    "@angular-it2go/car-fleet-api": "file:src/app/apis/it-2go/car-fleet-api"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.0",
@@ -50,6 +53,7 @@
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.0.4"

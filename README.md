@@ -62,7 +62,17 @@ Next step is to create a new npm script in "package.json" that generates the cod
 "generate:employees-api": "openapi-generator generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/employees/v1/employees-api.yaml -o ./build/openapi/employees -c apis/employees-api-config.json"
   }
 }
- 
+
+Script changed, now the base is -o src/app/apis/it-2go/project-management-api not  -o ./build/openapi/project
+>{
+"generate:projects-api": "openapi-generator-cli generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/projects/v1/projects-api.yaml -o src/app/apis/it-2go/project-management-api -c apis/projects-api-config-local.json",
+"generate:car-fleet-api": "openapi-generator-cli generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/carfleet/v1/car-fleet-api.yaml -o src/app/apis/it-2go/car-fleet-api -c apis/car-fleet-api-config-local.json",
+"generate:employees-api": "openapi-generator-cli generate -g typescript-angular -i https://raw.githubusercontent.com/mambarek/apis-definitions-repo/master/definitions/employees/v1/employees-api.yaml -o src/app/apis/it-2go/employees-api -c apis/employees-api-config-local.json"
+},
+
+
+
+
 Run the script 
 >npm run generate:projects-api
 
