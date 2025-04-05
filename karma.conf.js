@@ -5,6 +5,29 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    files: [
+      { pattern: './src/test.ts', watched: false },
+    ],
+  //  preprocessors: {
+  //    './src/test.ts': ['webpack'],
+  //  },
+    webpack: {
+      mode: 'development',
+      module: {
+        rules: [
+          {
+            test: /\.ts$/,
+            use: 'ts-loader',
+            exclude: /node_modules/,
+          }
+        ]
+      },
+      resolve: {
+        fallback: { "fs": false } // ⬅ Fix for Webpack 5
+      }
+    },
+    browsers: ['Chrome'],
+    singleRun: false,
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
